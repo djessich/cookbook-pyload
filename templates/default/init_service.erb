@@ -1,5 +1,4 @@
-# This file is managed by Chef. Any changes will be overwritten!
-#!/bin/sh -e
+#!/bin/sh
 ### BEGIN INIT INFO
 # Provides:          pyload
 # Required-Start:    $local_fs $remote_fs $network
@@ -11,11 +10,11 @@
 ### END INIT INFO
 
 NAME="pyload"
-DAEMON="<%= @install_dir %>/pyLoadCore"
+DAEMON="<%= @install_dir %>/pyLoadCore.py"
 USER="<%= @user %>"
 GROUP="<%= @group %>"
 PIDFILE="<%= @pid_file %>"
-OPTIONS=""
+OPTIONS="--daemon --configdir=<%= @config_dir %> --pidfile=<%= @pid_file %>"
 
 export PATH="${PATH:+$PATH:}/sbin"
 
@@ -39,22 +38,22 @@ status_daemon () {
 
 case "$1" in
     start)
-        log_daemon_msg "Starting " "$NAME"
+        log_daemon_msg "Starting downloadtool for One-Click-Hoster written in python" "$NAME"
         start_daemon
-        log_end_msg 0
+        log_end_msg 0d
         ;;
     stop)
-        log_daemon_msg "Stopping " "$NAME"
+        log_daemon_msg "Stopping downloadtool for One-Click-Hoster written in python" "$NAME"
         stop_daemon
         log_end_msg 0
         ;;
     status)
-        log_daemon_msg "Status " "$NAME"
+        log_daemon_msg "Checking status of downloadtool for One-Click-Hoster written in python" "$NAME"
         status_daemon
         log_end_msg 0
         ;;
     restart)
-        log_daemon_msg "Restarting " "$NAME"
+        log_daemon_msg "Restarting downloadtool for One-Click-Hoster written in python" "$NAME"
         stop_daemon
         start_daemon
         log_end_msg 0

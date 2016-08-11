@@ -16,4 +16,4 @@ setgid <%= @group %>
 kill signal SIGQUIT
 umask 0775
 
-exec <%= @install_dir %>/pyLoadCore --daemon --pidfile=<%= @pid_file %>
+exec <%= @install_dir %>/pyLoadCore.py --daemon --configdir=<%= @config_dir %> --pidfile=<%= @pid_file %>

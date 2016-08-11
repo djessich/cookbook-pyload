@@ -17,11 +17,12 @@
 # limitations under the License.
 #
 
+default['pyload']['install_flavour'] = 'source'
 default['pyload']['install_dir'] = '/usr/share/pyload'
 default['pyload']['download_dir'] = 'Downloads'
 default['pyload']['pid_file'] = '/var/run/pyload.pid'
-default['pyload']['user'] = 'pyload'
-default['pyload']['group'] = 'pyload'
+default['pyload']['user'] = 'root'
+default['pyload']['group'] = 'root'
 default['pyload']['dir_mode'] = '0755'
 default['pyload']['file_mode'] = '0644'
 default['pyload']['init_style'] = nil
@@ -41,3 +42,19 @@ default['pyload']['config_dir'] = if node['pyload']['user'] == 'root'
                                   else
                                     "/home/#{node['pyload']['user']}/.pyload"
                                   end
+
+default['pyload']['packages'] = %w(
+  git curl python openssl gocr rhino python-pycurl python-crypto python-imaging python-django python-jinja2
+  python-beaker python-simplejson python-feedparser python-beautifulsoup python-html5lib
+)
+
+case node['platform_family']
+when 'debian'
+  default['pyload']['packages'] += %w(tesseract-ocr tesseract-ocr-eng unrar-free python-qt4 python-openssl)
+when 'rhel'
+  default['pyload']['packages'] += %w(tesseract unrar PyQt4 pyOpenSSL js)
+end
+
+if platform?('ubuntu') && node['platform_version'] > '12.04'
+  default['pyload']['packages'] += %w(python-thrift libmozjs-24-bin)
+end

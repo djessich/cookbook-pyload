@@ -17,8 +17,16 @@
 # limitations under the License.
 #
 
-include_recipe 'poise-python'
+# preprare package manager
+if platform_family?('debian')
+  include_recipe 'apt'
+else
+  include_recipe 'yum'
+  include_recipe 'yum-epel'
+  include_recipe 'yum-repoforge'
+end
 
+# add user unless root
 unless node['pyload']['user'].eql?('root')
   group node['pyload']['group']
 
@@ -29,5 +37,18 @@ unless node['pyload']['user'].eql?('root')
   end
 end
 
+# install required packages
+node['pyload']['packages'].each do |pkg|
+  package pkg
+end
+
+directory node['pyload']['install_dir'] do
+  user node['pyload']['user']
+  group node['pyload']['group']
+  mode node['pyload']['dir_mode']
+  recursive true
+end
+
+include_recipe "pyload::#{node['pyload']['install_flavour']}"
 include_recipe 'pyload::config'
 include_recipe 'pyload::service'

@@ -5,7 +5,7 @@ After=local-fs.target remote-fs.target network.target network-online.target
 
 [Service]
 Type=forking
-ExecStart=<%= @install_dir %>/pyLoadCore --daemon --pidfile=<%= @pid_file %>
+ExecStart=<%= @install_dir %>/pyLoadCore.py --daemon --configdir=<%= @config_dir %> --pidfile=<%= @pid_file %>
 User=<%= @user %>
 Group=<%= @group %>
 Restart=on-abort

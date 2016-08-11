@@ -13,4 +13,8 @@ end
 source_url 'https://github.com/djessich/pyload' if respond_to?(:source_url)
 issues_url 'https://github.com/djessich/pyload/issues' if respond_to?(:issues_url)
 
+depends 'apt', '~> 4.0.1'
+depends 'yum', '~> 3.11.0'
+depends 'yum-epel', '~> 0.7.0'
+depends 'yum-repoforge', '~> 0.7.0'
 depends 'poise-python', '~> 1.4.0'

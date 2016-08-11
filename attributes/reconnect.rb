@@ -19,5 +19,5 @@
 
 default['pyload']['reconnect']['activated'] = false
 default['pyload']['reconnect']['method'] = nil
-default['pyload']['reconnect']['start_time'] = nil # '0:00'
-default['pyload']['reconnect']['end_time'] = nil # '0:00'
+default['pyload']['reconnect']['start_time'] = nil
+default['pyload']['reconnect']['end_time'] = nil

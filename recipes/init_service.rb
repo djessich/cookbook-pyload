@@ -21,9 +21,10 @@ template '/etc/init.d/pyload' do
   source 'init_service.erb'
   user 'root'
   group 'root'
-  mode '0644'
+  mode '0755'
   variables(
     install_dir: node['pyload']['install_dir'],
+    config_dir: node['pyload']['config_dir'],
     user: node['pyload']['user'],
     group: node['pyload']['group'],
     pid_file: node['pyload']['pid_file']
