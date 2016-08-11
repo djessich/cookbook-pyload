@@ -1,0 +1,75 @@
+# This file is managed by Chef. Any changes will be overwritten!
+version: 1
+
+general - "General":
+	en;de;fr;it;es;nl;sv;ru;pl;cs;sr;pt_BR language : "Language" = <%= @language %>
+	folder download_folder : "Download Folder" = <%= @download_dir %>
+	bool debug_mode : "Debug Mode" = <%= @debug_mode %>
+	bool checksum : "Use Checksum" = <%= @use_checksum %>
+	int min_free_space : "Min Free Space (MB)" = <%= @min_free_space %>
+	bool folder_per_package : "Create folder for each package" = <%= @folder_per_package %>
+	int renice : "CPU Priority" = <%= @cpu_priority %>
+
+remote - "Remote":
+  bool activated : "Activated" = <%= @remote_activated %>
+	ip listenaddr : "Adress" = <%= @remote_listen_address %>
+  int port : "Port" = <%= @remote_port %>
+	bool nolocalauth : "No authentication on local connections" = <%= @remote_no_local_auth %>
+
+webinterface - "Webinterface":
+	bool activated : "Activated" = <%= @webinterface_activated %>
+	builtin;threaded;fastcgi;lightweight server : "Server" = <%= @webinterface_server_type %>
+  ip host : "IP" = <%= @webinterface_listen_address %>
+  int port : "Port" = <%= @webinterface_port %>
+  str template : "Template" = <%= @webinterface_template %>
+  str prefix: "Path Prefix" = <%= @webinterface_prefix %>
+	bool https : "Use HTTPS" = <%= @ssl_activated %>
+
+ssl - "SSL":
+	bool activated : "Activated"= <%= @ssl_activated %>
+	file cert : "SSL Certificate" = <%= @ssl_cert %>
+	file key : "SSL Key" = <%= @ssl_key %>
+
+download - "Download":
+  str interface : "Download interface to bind (ip or Name)" = <%= @download_bind_interface %>
+  bool ipv6 : "Allow IPv6" = <%= @download_allow_ipv6 %>
+  int chunks : "Max connections for one download" = <%= @download_max_connections %>
+  int max_downloads : "Max Parallel Downloads" = <%= @download_max_downloads %>
+  int max_speed : "Max Download Speed in kb/s" = <%= @download_max_speed %>
+  bool limit_speed : "Limit Download Speed" = <%= @download_limit_speed %>
+  bool skip_existing : "Skip already existing files" = <%= @download_skip_existing %>
+
+downloadTime - "Download Time":
+	time start : "Start" = <%= @download_start_time %>
+	time end : "End" = <%= @download_end_time %>
+
+log - "Log":
+	bool file_log : "File Log" = <%= @log_activated %>
+	folder log_folder : "Folder" = <%= @log_dir %>
+	int log_count : "Count" = <%= @log_count %>
+	int log_size : "Size in kb" = <%= @log_size %>
+	bool log_rotate : "Log Rotate" = <%= @log_rotate %>
+
+permission - "Permissions":
+  str user : "Username" = <%= @user %>
+  str group : "Groupname" = <%= @group %>
+  str folder : "Folder Permission mode" = <%= @dir_mode %>
+  str file : "Filemode for Downloads" = <%= @file_mode %>
+  bool change_dl : "Change Group and User of Downloads" = <%= @change_downloads %>
+  bool change_file : "Change file mode of downloads" = <%= @change_file %>
+  bool change_user : "Change user of running process" = <%= @change_user %>
+  bool change_group : "Change group of running process" = <%= @change_group %>
+
+reconnect - "Reconnect":
+	bool activated : "Use Reconnect" = <%= @reconnect_activated %>
+	str method : "Method" = <%= @reconnect_method %>
+	time startTime : "Start" = <%= @reconnect_start_time %>
+	time endTime : "End" = <%= @reconnect_end_time %>
+
+proxy - "Proxy":
+  bool proxy : "Use Proxy" = <%= @proxy_activated %>
+	str address : "Address" = <%= @proxy_bind_address %>
+	int port : "Port" = <%= @proxy_port %>
+	http;socks4;socks5 type : "Protocol" = <%= @proxy_protocol %>
+	str username : "Username" = <%= @proxy_user %>
+	password password : "Password" = <%= @proxy_group %>

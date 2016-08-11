@@ -1,0 +1,17 @@
+# This file is managed by Chef. Any changes will be overwritten!
+[Unit]
+Description=Downloadtool for One-Click-Hoster written in python.
+After=local-fs.target remote-fs.target network.target network-online.target
+
+[Service]
+Type=forking
+ExecStart=<%= @install_dir %>/pyLoadCore --daemon --pidfile=<%= @pid_file %>
+User=<%= @user %>
+Group=<%= @group %>
+Restart=on-abort
+KillSignal=SIGQUIT
+PIDFile=<%= @pid_file %>
+UMask=0775
+
+[Install]
+WantedBy=multi-user.target

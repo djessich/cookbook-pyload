@@ -1,0 +1,19 @@
+# This file is managed by Chef. Any changes will be overwritten!
+
+# pyload
+#
+# Downloadtool for One-Click-Hoster written in python.
+description	"pyload"
+
+start on (local-filesystems and remote-filesystems and net-device-up IFACE!=lo)
+stop on runlevel [016]
+
+expect fork
+
+setuid <%= @user %>
+setgid <%= @group %>
+
+kill signal SIGQUIT
+umask 0775
+
+exec <%= @install_dir %>/pyLoadCore --daemon --pidfile=<%= @pid_file %>
