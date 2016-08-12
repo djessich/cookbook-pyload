@@ -27,7 +27,7 @@ template '/etc/systemd/system/pyload.service' do
     config_dir: node['pyload']['config_dir'],
     user: node['pyload']['user'],
     group: node['pyload']['group'],
-    pid_file: node['pyload']['pid_file']
+    pid_file: "#{node['pyload']['pid_dir']}/pyload.pid"
   )
   notifies :restart, 'service[pyload]', :delayed
 end

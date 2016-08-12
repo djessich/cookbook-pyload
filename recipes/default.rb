@@ -49,6 +49,13 @@ directory node['pyload']['install_dir'] do
   recursive true
 end
 
+directory node['pyload']['pid_dir'] do
+  user node['pyload']['user']
+  group node['pyload']['group']
+  mode node['pyload']['dir_mode']
+  recursive true
+end
+
 include_recipe "pyload::#{node['pyload']['install_flavour']}"
 include_recipe 'pyload::config'
 include_recipe 'pyload::service'

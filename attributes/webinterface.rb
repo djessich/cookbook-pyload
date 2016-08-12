@@ -20,6 +20,6 @@
 default['pyload']['webinterface']['activated'] = true
 default['pyload']['webinterface']['server_type'] = 'builtin'
 default['pyload']['webinterface']['listen_address'] = '0.0.0.0'
-default['pyload']['webinterface']['port'] = 8001
+default['pyload']['webinterface']['port'] = 8080
 default['pyload']['webinterface']['template'] = 'default'
 default['pyload']['webinterface']['prefix'] = nil

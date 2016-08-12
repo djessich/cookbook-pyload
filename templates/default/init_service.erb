@@ -25,38 +25,54 @@ export PATH="${PATH:+$PATH:}/sbin"
 . /lib/lsb/init-functions
 
 start_daemon () {
-    start-stop-daemon --start --pidfile "$PIDFILE" --user "$USER:$GROUP" --chuid "$USER" --exec "$DAEMON" -- $OPTIONS | cut -d" " -f 3 > $PIDFILE
+    start-stop-daemon --start --pidfile "$PIDFILE" --user "$USER" --group "$GROUP" --chuid "$USER:$GROUP" --exec "$DAEMON" -- $OPTIONS | cut -d" " -f 3 > $PIDFILE
+    chown $USER:$GROUP $PIDFILE
+    return $?
 }
 
 stop_daemon () {
-    start-stop-daemon --stop --retry="TERM/30/KILL/5" --pidfile "$PIDFILE" --user "$USER:$GROUP" --chuid "$USER"
+    start-stop-daemon --stop --retry="TERM/30/KILL/5" --pidfile "$PIDFILE" --user "$USER" --group "$GROUP" --chuid "$USER:$GROUP"
+    return $?
 }
 
 status_daemon () {
-    start-stop-daemon --status --pidfile "$PIDFILE" --user "$USER:$GROUP" --chuid "$USER"
+    start-stop-daemon --status --pidfile "$PIDFILE" --user "$USER" --group "$GROUP" --chuid "$USER:$GROUP"
+    return $?
 }
 
 case "$1" in
     start)
         log_daemon_msg "Starting downloadtool for One-Click-Hoster written in python" "$NAME"
         start_daemon
-        log_end_msg 0d
+        log_end_msg $?
         ;;
     stop)
         log_daemon_msg "Stopping downloadtool for One-Click-Hoster written in python" "$NAME"
         stop_daemon
-        log_end_msg 0
+        log_end_msg $?
         ;;
     status)
         log_daemon_msg "Checking status of downloadtool for One-Click-Hoster written in python" "$NAME"
         status_daemon
-        log_end_msg 0
+        log_end_msg $?
         ;;
     restart)
         log_daemon_msg "Restarting downloadtool for One-Click-Hoster written in python" "$NAME"
         stop_daemon
-        start_daemon
-        log_end_msg 0
+        case "$?" in
+            0|1)
+                start_daemon
+                case "$?" in
+                        0) log_end_msg 0 ;;
+                        1) log_end_msg 1 ;; # Old process is still running
+                        *) log_end_msg 1 ;; # Failed to start
+                esac
+                ;;
+            *)
+                # Failed to stop
+                log_end_msg 1
+                ;;
+        esac
         ;;
     *)
         echo "Usage: /etc/init.d/$NAME {start|stop|status|restart}"

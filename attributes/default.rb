@@ -20,9 +20,9 @@
 default['pyload']['install_flavour'] = 'source'
 default['pyload']['install_dir'] = '/usr/share/pyload'
 default['pyload']['download_dir'] = 'Downloads'
-default['pyload']['pid_file'] = '/var/run/pyload.pid'
-default['pyload']['user'] = 'root'
-default['pyload']['group'] = 'root'
+default['pyload']['pid_dir'] = '/var/run/pyload'
+default['pyload']['user'] = 'pyload'
+default['pyload']['group'] = 'pyload'
 default['pyload']['dir_mode'] = '0755'
 default['pyload']['file_mode'] = '0644'
 default['pyload']['init_style'] = nil

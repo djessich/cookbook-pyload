@@ -83,5 +83,5 @@ template "#{node['pyload']['config_dir']}/pyload.conf" do
     webinterface_template: node['pyload']['webinterface']['template'],
     webinterface_prefix: node['pyload']['webinterface']['prefix']
   )
-#  action :create_if_missing
+  action :create_if_missing
 end
