@@ -20,7 +20,7 @@
 git node['pyload']['install_dir'] do
   repository 'https://github.com/pyload/pyload.git'
   revision 'stable'
-#  checkout_branch 'stable'
+  #  checkout_branch 'stable'
   user node['pyload']['user']
   group node['pyload']['group']
   action :sync
