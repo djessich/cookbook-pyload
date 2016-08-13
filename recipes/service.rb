@@ -30,7 +30,7 @@ init_style = node['pyload']['init_style'] || value_for_platform(
   },
   :ubuntu => {
     '< 15.04' => 'init',
-    #    '>= 12.04' => 'upstart',
+    # '>= 12.04' => 'upstart',
     '>= 15.04' => 'systemd'
   },
   [:centos, :redhat] => {

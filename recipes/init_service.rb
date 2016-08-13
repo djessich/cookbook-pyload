@@ -17,8 +17,13 @@
 # limitations under the License.
 #
 
+dist_dir = value_for_platform_family(
+  ['debian'] => 'debian',
+  ['rhel'] => 'rhel'
+)
+
 template '/etc/init.d/pyload' do
-  source 'init_service.erb'
+  source "#{dist_dir}/init.d/pyload.erb"
   user 'root'
   group 'root'
   mode '0755'

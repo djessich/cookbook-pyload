@@ -44,15 +44,15 @@ default['pyload']['config_dir'] = if node['pyload']['user'] == 'root'
                                   end
 
 default['pyload']['packages'] = %w(
-  git curl python openssl gocr rhino python-pycurl python-crypto python-imaging python-django python-jinja2
-  python-beaker python-simplejson python-feedparser python-beautifulsoup python-html5lib
+  git curl python openssl rhino python-pycurl python-crypto python-imaging python-django python-jinja2
+  python-beaker python-simplejson python-feedparser python-html5lib
 )
 
 case node['platform_family']
 when 'debian'
-  default['pyload']['packages'] += %w(tesseract-ocr tesseract-ocr-eng unrar-free python-qt4 python-openssl)
+  default['pyload']['packages'] += %w(python-bs4 tesseract-ocr tesseract-ocr-eng unrar-free python-qt4 python-openssl)
 when 'rhel'
-  default['pyload']['packages'] += %w(tesseract unrar PyQt4 pyOpenSSL js)
+  default['pyload']['packages'] += %w(python-beautifulsoup4 tesseract unrar PyQt4 pyOpenSSL js)
 end
 
 if platform?('ubuntu') && node['platform_version'] > '12.04'
