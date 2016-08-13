@@ -18,8 +18,8 @@
 #
 
 dist_dir = value_for_platform_family(
-  ['debian'] => 'debian',
-  ['rhel'] => 'rhel'
+  :debian => 'debian',
+  [:rhel, :fedora] => 'rhel'
 )
 
 template '/etc/init.d/pyload' do

@@ -17,6 +17,9 @@ GROUP="<%= @group %>"
 PID_FILE="<%= @pid_file %>"
 OPTIONS="--daemon --configdir=<%= @config_dir %> --pidfile=<%= @pid_file %>"
 
+START_TIMEOUT=2
+STOP_TIMEOUT=2
+
 #export PATH="${PATH:+$PATH:}/sbin"
 
 [ -x $DAEMON ] || exit 1
@@ -67,13 +70,14 @@ stop () {
 
 case "$1" in
     start)
-        log_daemon_msg "Starting $DESC: " "$NAME"
+        log_daemon_msg "Starting $DESC" "$NAME"
         if running ;  then
             log_progress_msg "apparently already running"
             log_end_msg 0
             exit 0
         fi
         if start ; then
+            [ -n "$START_TIMEOUT" ] && sleep $START_TIMEOUT
             if  running ;  then
                 log_end_msg 0
             else
@@ -84,10 +88,11 @@ case "$1" in
         fi
         ;;
     stop)
-        log_daemon_msg "Stopping $DESC: " "$NAME"
+        log_daemon_msg "Stopping $DESC" "$NAME"
         if running ; then
             RETVAL=0
             stop || RETVAL=$?
+            sleep 1
             log_end_msg $RETVAL
         else
             log_progress_msg "apparently not running"
@@ -96,16 +101,17 @@ case "$1" in
         fi
         ;;
     restart)
-        log_daemon_msg "Restarting $DESC: " "$NAME"
+        log_daemon_msg "Restarting $DESC" "$NAME"
         RETVAL=0
         stop || RETVAL=$?
-        sleep 2
+        [ -n "$STOP_TIMEOUT" ] && sleep $STOP_TIMEOUT
         start || RETVAL=$?
+        [ -n "$START_TIMEOUT" ] && sleep $START_TIMEOUT
         running || RETVAL=$?
         log_end_msg $RETVAL
         ;;
     status)
-        log_daemon_msg "Checking status of $DESC: " "$NAME"
+        log_daemon_msg "Checking status of $DESC" "$NAME"
         if running ;  then
             log_progress_msg "running"
             log_end_msg 0
