@@ -39,3 +39,9 @@ directory node['pyload']['pid_dir'] do
   mode node['pyload']['dir_mode']
   recursive true
 end
+
+%w(pyLoadCli pyLoadCore pyLoadGui).each do |bin|
+  link "#{node['pyload']['install_dir']}/#{bin}.py" do
+    to "/usr/bin/#{bin}"
+  end
+end
