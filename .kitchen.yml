@@ -15,7 +15,6 @@ platforms:
   - name: ubuntu-16.04
   - name: debian-7.10
   - name: debian-8.4
-  - name: centos-5.11
   - name: centos-6.7
   - name: centos-7.2
 
@@ -42,7 +41,6 @@ suites:
       - recipe[yum-repoforge]
       - recipe[pyload::packages]
     includes: [
-      'centos-5.11',
       'centos-6.7',
       'centos-7.2'
     ]
@@ -51,7 +49,6 @@ suites:
       - recipe[pyload::default]
     includes: [
       'debian-7.10',
-      'centos-5.11',
       'centos-6.7'
     ]
   - name: service-systemd

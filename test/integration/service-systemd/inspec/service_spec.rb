@@ -18,7 +18,7 @@
 # limitations under the License.
 #
 
-describe service('pyload') do
+describe systemd_service('pyload') do
   it { should be_enabled }
   it { should be_running }
 end
