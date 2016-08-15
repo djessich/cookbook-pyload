@@ -37,23 +37,17 @@ end
 describe file('/usr/bin/pyLoadCli') do
   it { should exist }
   it { should be_symlink }
-  it { should_not be_file }
-  it { should_not be_directory }
   it { should be_linked_to '/usr/share/pyload/pyLoadCli.py' }
 end
 
 describe file('/usr/bin/pyLoadCore') do
   it { should exist }
   it { should be_symlink }
-  it { should_not be_file }
-  it { should_not be_directory }
   it { should be_linked_to '/usr/share/pyload/pyLoadCore.py' }
 end
 
 describe file('/usr/bin/pyLoadGui') do
   it { should exist }
   it { should be_symlink }
-  it { should_not be_file }
-  it { should_not be_directory }
   it { should be_linked_to '/usr/share/pyload/pyLoadGui.py' }
 end

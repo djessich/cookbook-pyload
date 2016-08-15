@@ -41,7 +41,7 @@ directory node['pyload']['pid_dir'] do
 end
 
 %w(pyLoadCli pyLoadCore pyLoadGui).each do |bin|
-  link "#{node['pyload']['install_dir']}/#{bin}.py" do
-    to "/usr/bin/#{bin}"
+  link "/usr/bin/#{bin}" do
+    to "#{node['pyload']['install_dir']}/#{bin}.py"
   end
 end
