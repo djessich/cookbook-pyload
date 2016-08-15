@@ -1,6 +1,7 @@
 #
 # Cookbook Name:: pyload
-# Recipe:: systemd_service
+# Suite:: service-systemd
+# Test:: service-spec
 #
 # Copyright 2016, Dominik Jessich
 #
@@ -17,22 +18,11 @@
 # limitations under the License.
 #
 
-template '/etc/init/pyload.conf' do
-  source 'upstart_service.erb'
-  user 'root'
-  group 'root'
-  mode '0755'
-  variables(
-    install_dir: node['pyload']['install_dir'],
-    config_dir: node['pyload']['config_dir'],
-    user: node['pyload']['user'],
-    group: node['pyload']['group'],
-    pid_file: "#{node['pyload']['pid_dir']}/pyload.pid"
-  )
-  notifies :restart, 'service[pyload]', :delayed
+describe service('pyload') do
+  it { should be_enabled }
+  it { should be_running }
 end
 
-service 'pyload' do
-  provider Chef::Provider::Service::Upstart
-  action [:enable, :start]
+describe command('ps aux | grep py[load]') do
+  its(:stdout) { should match(/pyload/) }
 end

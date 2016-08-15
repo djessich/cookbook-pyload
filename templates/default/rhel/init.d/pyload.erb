@@ -17,6 +17,9 @@ PID_FILE="<%= @pid_file %>"
 LOCK_FILE="/var/lock/$NAME"
 OPTIONS="--daemon --configdir=<%= @config_dir %> --pidfile=<%= @pid_file %>"
 
+START_TIMEOUT=2
+STOP_TIMEOUT=2
+
 [ -x $DAEMON ] || exit 1
 
 [ -e /etc/sysconfig/$NAME ] && . /etc/sysconfig/$NAME
@@ -38,27 +41,39 @@ stop () {
 }
 
 restart () {
-    stop
-    sleep 2
-    start
+    stop || RETVAL=$?
+    [ -n "$STOP_TIMEOUT" ] && sleep $STOP_TIMEOUT
+    start || RETVAL=$?
+    [ -n "$START_TIMEOUT" ] && sleep $START_TIMEOUT
+    status || RETVAL=$?
     RETVAL=$?
     return $RETVAL
 }
 
 status () {
-    status -p $PID_FILE $DAEMON
-    RETVAL=$?
-    return $RETVAL
+    # as /etc/init.d/functions#status is not working during testing phase ...
+    #status -p $PID_FILE -l $LOCK_FILE $DAEMON
+    #RETVAL=$?
+    #return $RETVAL
+    # ... we need different approach of getting process status
+
+    [ ! -f "$PID_FILE" ] && return 1
+    pid=`cat $PID_FILE`
+    [ -z "$pid" ] && return 1
+    [ ! -d /proc/$pid ] &&  return 1
+    cmd=`cat /proc/$pid/cmdline | tr '\000' '\n' | awk 'NR==2'`
+    [ "$cmd" != "$DAEMON" ] &&  return 1
+    return 0
 }
 
 case "$1" in
     start)
-        echo -n "Starting $NAME: "
+        echo -n $"Starting $NAME: "
         start
         echo
         ;;
     stop)
-        echo -n "Stopping $NAME: "
+        echo -n $"Stopping $NAME: "
         stop
         echo
         ;;
@@ -69,7 +84,11 @@ case "$1" in
         ;;
     status)
         echo -n $"Checking status of $NAME: "
-        status
+        if status ; then
+            echo -n "running"
+        else
+            echo -n "apparently not running"
+        fi
         echo
         ;;
     *)

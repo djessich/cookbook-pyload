@@ -18,17 +18,18 @@
 #
 
 directory node['pyload']['config_dir'] do
-  owner node['pyload']['user']
+  user node['pyload']['user']
   group node['pyload']['group']
   mode node['pyload']['dir_mode']
   recursive true
 end
 
+# TODO config mode
 template "#{node['pyload']['config_dir']}/pyload.conf" do
   source 'pyload.conf.erb'
   owner node['pyload']['user']
   group node['pyload']['group']
-  mode node['pyload']['file_mode']
+  mode 0600
   variables(
     language: node['pyload']['language'],
     download_dir: node['pyload']['download_dir'],
@@ -64,7 +65,7 @@ template "#{node['pyload']['config_dir']}/pyload.conf" do
     proxy_port: node['pyload']['proxy']['port'],
     proxy_protocol: node['pyload']['proxy']['protocol'],
     proxy_user: node['pyload']['proxy']['user'].nil? ? 'None' : node['pyload']['proxy']['user'],
-    proxy_group: node['pyload']['proxy']['password'].nil? ? 'None' : node['pyload']['proxy']['password'],
+    proxy_password: node['pyload']['proxy']['password'].nil? ? 'None' : node['pyload']['proxy']['password'],
     ssl_activated: node['pyload']['ssl']['activated'].to_s.capitalize,
     ssl_cert: node['pyload']['ssl']['cert'],
     ssl_key: node['pyload']['ssl']['key'],

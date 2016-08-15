@@ -1,6 +1,7 @@
 #
 # Cookbook Name:: pyload
-# Recipe:: default
+# Suite:: default
+# Test:: service-spec
 #
 # Copyright 2016, Dominik Jessich
 #
@@ -17,11 +18,11 @@
 # limitations under the License.
 #
 
-git node['pyload']['install_dir'] do
-  repository 'https://github.com/pyload/pyload.git'
-  revision 'stable'
-  #  checkout_branch 'stable'
-  user node['pyload']['user']
-  group node['pyload']['group']
-  action :sync
+describe service('pyload') do
+  it { should be_enabled }
+  it { should be_running }
+end
+
+describe command('ps aux | grep py[load]') do
+  its(:stdout) { should match(/pyload/) }
 end

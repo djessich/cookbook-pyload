@@ -17,7 +17,6 @@
 # limitations under the License.
 #
 
-default['pyload']['install_flavour'] = 'source'
 default['pyload']['install_dir'] = '/usr/share/pyload'
 default['pyload']['download_dir'] = 'Downloads'
 default['pyload']['pid_dir'] = '/var/run/pyload'

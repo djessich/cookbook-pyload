@@ -7,6 +7,7 @@ provisioner:
 
 verifier:
   name: inspec
+  format: doc
 
 platforms:
   - name: ubuntu-12.04
@@ -14,6 +15,7 @@ platforms:
   - name: ubuntu-16.04
   - name: debian-7.10
   - name: debian-8.4
+  - name: centos-5.11
   - name: centos-6.7
   - name: centos-7.2
 
@@ -22,3 +24,41 @@ suites:
     run_list:
       - recipe[pyload::default]
     attributes:
+  - name: debian-packages
+    run_list:
+      - recipe[apt]
+      - recipe[pyload::packages]
+    includes: [
+      'ubuntu-12.04',
+      'ubuntu-14.04',
+      'ubuntu-16.04',
+      'debian-7.10',
+      'debian-8.4'
+    ]
+  - name: rhel-packages
+    run_list:
+      - recipe[yum]
+      - recipe[yum-epel]
+      - recipe[yum-repoforge]
+      - recipe[pyload::packages]
+    includes: [
+      'centos-5.11',
+      'centos-6.7',
+      'centos-7.2'
+    ]
+  - name: service-init
+    run_list:
+      - recipe[pyload::default]
+    includes: [
+      'debian-7.10',
+      'centos-5.11',
+      'centos-6.7'
+    ]
+  - name: service-systemd
+    run_list:
+      - recipe[pyload::default]
+    includes: [
+      'ubuntu-16.04',
+      'debian-8.4',
+      'centos-7.2'
+    ]

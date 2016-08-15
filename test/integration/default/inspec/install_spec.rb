@@ -1,6 +1,7 @@
 #
 # Cookbook Name:: pyload
-# Recipe:: default
+# Suite:: default
+# Test:: default
 #
 # Copyright 2016, Dominik Jessich
 #
@@ -17,27 +18,18 @@
 # limitations under the License.
 #
 
-# preprare package manager
-if platform_family?('debian')
-  include_recipe 'apt'
-else
-  include_recipe 'yum'
-  include_recipe 'yum-epel'
-  include_recipe 'yum-repoforge'
+describe file('/usr/share/pyload') do
+  it { should exist }
+  it { should be_directory }
+  its('owner') { should eq 'pyload' }
+  its('group') { should eq 'pyload' }
+  its('mode') { should eq 0755 }
 end
 
-# add user unless root
-unless node['pyload']['user'].eql?('root')
-  group node['pyload']['group']
-
-  user node['pyload']['user'] do
-    gid node['pyload']['group']
-    home "/home/#{node['pyload']['user']}"
-    system true
-  end
+describe file('/var/run/pyload') do
+  it { should exist }
+  it { should be_directory }
+  its('owner') { should eq 'pyload' }
+  its('group') { should eq 'pyload' }
+  its('mode') { should eq 0755 }
 end
-
-include_recipe 'pyload::packages'
-include_recipe 'pyload::install'
-include_recipe 'pyload::config'
-include_recipe 'pyload::service'

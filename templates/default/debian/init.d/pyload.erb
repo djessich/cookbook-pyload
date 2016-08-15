@@ -20,15 +20,13 @@ OPTIONS="--daemon --configdir=<%= @config_dir %> --pidfile=<%= @pid_file %>"
 START_TIMEOUT=2
 STOP_TIMEOUT=2
 
-#export PATH="${PATH:+$PATH:}/sbin"
-
 [ -x $DAEMON ] || exit 1
 
 [ -e /etc/default/$NAME ] && . /etc/default/$NAME
 
 . /lib/lsb/init-functions
 
-running_pid() {
+running_pid () {
   pid=$1
   name=$2
   [ -z "$pid" ] && return 1
@@ -38,7 +36,7 @@ running_pid() {
   return 0
 }
 
-running() {
+running () {
   [ ! -f "$PID_FILE" ] && return 1
   pid=`cat $PID_FILE`
   running_pid $pid $DAEMON || return 1
@@ -112,7 +110,7 @@ case "$1" in
         ;;
     status)
         log_daemon_msg "Checking status of $DESC" "$NAME"
-        if running ;  then
+        if running ; then
             log_progress_msg "running"
             log_end_msg 0
         else

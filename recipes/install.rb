@@ -17,27 +17,25 @@
 # limitations under the License.
 #
 
-# preprare package manager
-if platform_family?('debian')
-  include_recipe 'apt'
-else
-  include_recipe 'yum'
-  include_recipe 'yum-epel'
-  include_recipe 'yum-repoforge'
-end
-
-# add user unless root
-unless node['pyload']['user'].eql?('root')
+directory node['pyload']['install_dir'] do
+  user node['pyload']['user']
   group node['pyload']['group']
-
-  user node['pyload']['user'] do
-    gid node['pyload']['group']
-    home "/home/#{node['pyload']['user']}"
-    system true
-  end
+  mode node['pyload']['dir_mode']
+  recursive true
 end
 
-include_recipe 'pyload::packages'
-include_recipe 'pyload::install'
-include_recipe 'pyload::config'
-include_recipe 'pyload::service'
+git node['pyload']['install_dir'] do
+  repository 'https://github.com/pyload/pyload.git'
+  revision 'stable'
+  #  checkout_branch 'stable'
+  user node['pyload']['user']
+  group node['pyload']['group']
+  action :sync
+end
+
+directory node['pyload']['pid_dir'] do
+  user node['pyload']['user']
+  group node['pyload']['group']
+  mode node['pyload']['dir_mode']
+  recursive true
+end
