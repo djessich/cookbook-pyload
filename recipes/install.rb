@@ -19,11 +19,24 @@
 
 # TODO: Execute system check script to ensure that everything is correctly setup
 
+directory node['pyload']['pid_dir'] do
+  user node['pyload']['user']
+  group node['pyload']['group']
+  mode node['pyload']['dir_mode']
+  recursive true
+end
+
 directory node['pyload']['install_dir'] do
   user node['pyload']['user']
   group node['pyload']['group']
   mode node['pyload']['dir_mode']
   recursive true
+end
+
+execute 'system_check_pyload' do
+  command 'python systemCheck.py'
+  cwd node['pyload']['install_dir']
+  action :nothing
 end
 
 git node['pyload']['install_dir'] do
@@ -33,13 +46,7 @@ git node['pyload']['install_dir'] do
   user node['pyload']['user']
   group node['pyload']['group']
   action :sync
-end
-
-directory node['pyload']['pid_dir'] do
-  user node['pyload']['user']
-  group node['pyload']['group']
-  mode node['pyload']['dir_mode']
-  recursive true
+  notifies :run, 'execute[system_check_pyload]', :immediately
 end
 
 %w(pyLoadCli pyLoadCore pyLoadGui).each do |bin|

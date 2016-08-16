@@ -60,13 +60,13 @@ platforms:
       intermediate_instructions:
         - RUN yum -y install which initscripts
 
-  - name: centos-7
-    driver:
-      image: centos:7
-      platform: rhel
-      pid_one_command: /usr/lib/systemd/systemd
-      intermediate_instructions:
-        - RUN yum -y install lsof which systemd-sysv initscripts
+  #- name: centos-7
+  #  driver:
+  #    image: centos:7
+  #    platform: rhel
+  #    pid_one_command: /usr/lib/systemd/systemd
+  #    intermediate_instructions:
+  #      - RUN yum -y install lsof which systemd-sysv initscripts
 
 suites:
   - name: default
@@ -92,7 +92,7 @@ suites:
       - recipe[pyload::packages]
     includes: [
       'centos-6',
-      'centos-7'
+      #'centos-7'
     ]
   - name: service-init
     run_list:
@@ -109,5 +109,5 @@ suites:
     includes: [
       'ubuntu-16.04',
       'debian-8',
-      'centos-7'
+      #'centos-7'
     ]
