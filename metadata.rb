@@ -1,8 +1,8 @@
 name 'pyload'
-maintainer 'Dominik Jessich'
-maintainer_email 'dominik.jessich@chello.at'
+maintainer 'Gridtec'
+maintainer_email 'projects@gridtec.at'
 license 'Apache 2.0'
-description 'Installs/Configures pyload'
+description 'Installs/Configures Pyload'
 long_description IO.read(File.join(File.dirname(__FILE__), 'README.md'))
 version IO.read(File.join(File.dirname(__FILE__), 'VERSION'))
 
