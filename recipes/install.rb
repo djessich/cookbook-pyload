@@ -17,6 +17,8 @@
 # limitations under the License.
 #
 
+# TODO: Execute system check script to ensure that everything is correctly setup
+
 directory node['pyload']['install_dir'] do
   user node['pyload']['user']
   group node['pyload']['group']

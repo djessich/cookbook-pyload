@@ -1,0 +1,113 @@
+---
+driver:
+  name: dokken
+  chef_version: latest
+  privileged: true # because Docker and SystemD/Upstart
+
+transport:
+  name: dokken
+
+provisioner:
+  name: dokken
+
+verifier:
+  name: inspec
+  format: doc
+
+platforms:
+  - name: ubuntu-12.04
+    driver:
+      image: ubuntu:12.04
+      pid_one_command: /sbin/init
+      intermediate_instructions:
+        - RUN /usr/bin/apt-get update
+
+  - name: ubuntu-14.04
+    driver:
+      image: ubuntu:14.04
+      pid_one_command: /sbin/init
+      intermediate_instructions:
+        - RUN /usr/bin/apt-get update
+
+  - name: ubuntu-16.04
+    driver:
+      image: ubuntu:16.04
+      pid_one_command: /bin/systemd
+      intermediate_instructions:
+        - RUN /usr/bin/apt-get update
+
+  - name: debian-7
+    driver:
+      image: debian:7
+      pid_one_command: /sbin/init
+      intermediate_instructions:
+        - RUN /usr/bin/apt-get update
+        - RUN /usr/bin/apt-get install lsb-release -y
+
+  - name: debian-8
+    driver:
+      image: debian:8
+      pid_one_command: /bin/systemd
+      intermediate_instructions:
+        - RUN /usr/bin/apt-get update
+        - RUN /usr/bin/apt-get install lsb-release -y
+
+  - name: centos-6
+    driver:
+      image: centos:6
+      platform: rhel
+      pid_one_command: /sbin/init
+      intermediate_instructions:
+        - RUN yum -y install which initscripts
+
+  - name: centos-7
+    driver:
+      image: centos:7
+      platform: rhel
+      pid_one_command: /usr/lib/systemd/systemd
+      intermediate_instructions:
+        - RUN yum -y install lsof which systemd-sysv initscripts
+
+suites:
+  - name: default
+    run_list:
+      - recipe[pyload::default]
+    attributes:
+  - name: debian-packages
+    run_list:
+      - recipe[apt]
+      - recipe[pyload::packages]
+    includes: [
+      'ubuntu-12.04',
+      'ubuntu-14.04',
+      'ubuntu-16.04',
+      'debian-7',
+      'debian-8'
+    ]
+  - name: rhel-packages
+    run_list:
+      - recipe[yum]
+      - recipe[yum-epel]
+      - recipe[yum-repoforge]
+      - recipe[pyload::packages]
+    includes: [
+      'centos-6',
+      'centos-7'
+    ]
+  - name: service-init
+    run_list:
+      - recipe[pyload::default]
+    includes: [
+      'ubuntu-12.04',
+      'ubuntu-14.04',
+      'debian-7',
+      'centos-6'
+    ]
+  - name: service-systemd
+    run_list:
+      - recipe[pyload::default]
+    includes: [
+      'ubuntu-16.04',
+      'debian-8',
+      'centos-7'
+    ]

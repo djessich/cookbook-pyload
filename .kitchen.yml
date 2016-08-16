@@ -13,8 +13,8 @@ platforms:
   - name: ubuntu-12.04
   - name: ubuntu-14.04
   - name: ubuntu-16.04
-  - name: debian-7.10
-  - name: debian-8.4
+  - name: debian-7.11
+  - name: debian-8.5
   - name: centos-6.7
   - name: centos-7.2
 
@@ -31,8 +31,8 @@ suites:
       'ubuntu-12.04',
       'ubuntu-14.04',
       'ubuntu-16.04',
-      'debian-7.10',
-      'debian-8.4'
+      'debian-7.11',
+      'debian-8.5'
     ]
   - name: rhel-packages
     run_list:
@@ -48,7 +48,9 @@ suites:
     run_list:
       - recipe[pyload::default]
     includes: [
-      'debian-7.10',
+      'ubuntu-12.04',
+      'ubuntu-14.04',
+      'debian-7.11',
       'centos-6.7'
     ]
   - name: service-systemd
@@ -56,6 +58,6 @@ suites:
       - recipe[pyload::default]
     includes: [
       'ubuntu-16.04',
-      'debian-8.4',
+      'debian-8.5',
       'centos-7.2'
     ]
