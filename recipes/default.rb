@@ -17,15 +17,6 @@
 # limitations under the License.
 #
 
-# preprare package manager
-if platform_family?('debian')
-  include_recipe 'apt'
-else
-  include_recipe 'yum'
-  include_recipe 'yum-epel'
-  include_recipe 'yum-repoforge'
-end
-
 # add user unless root
 unless node['pyload']['user'].eql?('root')
   group node['pyload']['group']

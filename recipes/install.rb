@@ -46,7 +46,7 @@ git node['pyload']['install_dir'] do
   user node['pyload']['user']
   group node['pyload']['group']
   action :sync
-  notifies :run, 'execute[system_check_pyload]', :immediately
+  # notifies :run, 'execute[system_check_pyload]', :immediately
 end
 
 %w(pyLoadCli pyLoadCore pyLoadGui).each do |bin|
