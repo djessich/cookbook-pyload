@@ -1,6 +1,6 @@
 # Pyload Cookbook
 
-This cookbook is used to install and configure [Pyload](https://github.com/pyload/pyload) on a system. It installs Pyload from Git repository, installs all required dependencies for Pyload, prepares configuration folder and files and installs the appropriate configuration for your platform's init system.
+This cookbook is used to install and configure [Pyload](https://github.com/pyload/pyload) on a system. Just put it in your nodes `run_list` or the default recipe using `include_recipe`. This cookbook installs Pyload from Git repository (stable branch), installs all required dependencies for Pyload, prepares configuration folder and files and installs the appropriate configuration for your platform's init system.
 
 ## Requirements
 
@@ -10,8 +10,6 @@ This cookbook is used to install and configure [Pyload](https://github.com/pyloa
 * Debian 7+
 * RHEL 6+
 * Ubuntu 12.04+
-
-*May work on other platforms too, but the cookbook is tested for the platforms above.*
 
 ### Chef
 
@@ -23,15 +21,16 @@ This cookbook has no direct external dependencies.
 
 Regarding your OS, you may need additional recipes or cookbooks for this cookbook's recipes to converge on the node. In particular, the following things should be considered.
 
-On Debian/Ubuntu, use the [apt](https://github.com/chef-cookbooks/apt) cookbook to ensure the package cache is updated so Chef can install packages, or consider putting apt-get in your bootstrap process or knife bootstrap template. Otherwise this cookbook won't install latest versions of Pyload dependencies, to be installed by apt.
-
-On RHEL and derivatives, some 3rd party repositories are necessary to be installed and enabaled in yum to install required dependencies for Pyload. The [yum](https://github.com/chef-cookbooks/yum) and [yum-epel](https://github.com/chef-cookbooks/yum-epel) cookbooks are therefore suggested to be in your `run_list`.
+* On Debian/Ubuntu, use the [apt](https://github.com/chef-cookbooks/apt) cookbook to ensure the package cache is updated so Chef can install packages, or consider putting apt-get in your bootstrap process or knife bootstrap template. Otherwise this cookbook won't install latest versions of Pyload dependencies using sysem package manager (apt).
+* On Red Hat Enterprise Linux (RHEL) and derivatives, some 3rd party repositories may be necessary to be installed and enabaled in yum to install required packages/dependencies for Pyload used in certain recipes of this cookbook. The [yum](https://github.com/chef-cookbooks/yum) and [yum-epel](https://github.com/chef-cookbooks/yum-epel) cookbooks are therefore suggested to be in your `run_list`.
 
 ## Attributes
 
 The attributes used by this cookbook are in the `node['pyload']` namespace which is broken up into different groups.
 
-### General settings
+### General Settings
+
+The `node['pyload']` global namespace defines general settings for this cookbook.
 
 * `node['pyload']['install_dir']` - Specifies the location for Pyload package itself. By default, this is set to */usr/share/pyload*.
 * `node['pyload']['config_dir']` - Specifies the location for Pyload configuration folders and files. By default, this is set to */home/&lt;user&gt;/.pyload* (interpolates to */home/pyload/.pyload* if defaults are used).
@@ -44,7 +43,7 @@ The attributes used by this cookbook are in the `node['pyload']` namespace which
 * `node['pyload']['init_style']` - Specifies the platforms init system type which can be either set to `init` or `systemd`. If something else is specified, no install script will be created. The correct init system type is determined by this cookbook itself, so this attribute is not required to be set. This attribute only exists to override this cookbook if this is required. By default, this is set to *nil*.
 * `node['pyload']['packages']` - Specifies a list of dependencies of Pyload which are required to successfully start Pyload. The correct package names are determined by this cookbook, regarding platform family and platfom version. By default, this is set to all required dependencies for Pyload, including optional ones, which can be examined at Pyload repository or in the corresponding attribute file of this cookbook.
 
-### General configuration file settings
+The `node['pyload']` global namespace also defines the following general settings for Pyload, which will be set in *pyload.conf* configuration file.
 
 * `node['pyload']['language']` - Specifies Pyload language. Allowed values are `en`, `de`, `fr`, `it`, `es`, `nl`, `sv`, `ru`, `pl`, `cs`, `sr`, `pt_BR`. If something else is specified, Pyload may not start. By default, this is set to *en*.
 * `node['pyload']['debug_mode']` - Specifies if Pyload should be started in debug mode. By default, this is set to *false*.
@@ -53,11 +52,121 @@ The attributes used by this cookbook are in the `node['pyload']` namespace which
 * `node['pyload']['cpu_priority']` - Specifies the CPU priority of the Pyload process. By default, this is set to *0*.
 * `node['pyload']['use_checksum']` - Specifies if Pyload should use checksums. By default, this is set to *false*.
 
+### Download Settings
+
+The `node['pyload']['download']` namespace defines download settings for Pyload, which will be set in *pyload.conf* configuration file.
+
+* `node['pyload']['download']['bind_interface']` - Specifies the download interface to bind to, which can be represented by an interface name or an ip. If this is set to *None*, there is no specific binding defined. By default, this is set to *nil*.
+* `node['pyload']['download']['allow_ipv6']` - Specifies if IPv6 should be allowed. By default, this is set to *false*.
+* `node['pyload']['download']['max_connections']` - Specifies the maximum of connections for downloads. By default, this is set to *3*.
+* `node['pyload']['download']['max_downloads']` - Specifies the maximum of parallel downloads. By default, this is set to *3*.
+* `node['pyload']['download']['limit_speed']` - Specifies if the download speed should be limited. By default, the is no limit, which means that this is set to *false*.
+* `node['pyload']['download']['max_speed']` - Specifies the global, maximmum allowed speed. By default, there is no limit, which means that this is set to *-1*.
+* `node['pyload']['download']['skip_existing']` - Specifies if already downloaded files should be skipped, to avoid redownload. By default, this is set to *false*.
+* `node['pyload']['download']['start_time']` - Specifies the download start time in <hour>:<min> format. By default, this is set to *nil*.
+* `node['pyload']['download']['end_time']` - Specifies the download end time in <hour>:<min> format. By default, this is set to *nil*.
+
+### Logging Settings
+
+The `node['pyload']['database']` namespace defines logging settings for Pyload, which will be set in *pyload.conf* configuration file.
+
+* `node['pyload']['log']['activated']` - Enables or disables logging. By default, this is enabled, which means that this is set to *true*.
+* `node['pyload']['log']['dir']` - Specifies the location where log files will be placed. By default, this is set to *Logs*.
+* `node['pyload']['log']['count']` - Specifies the maximum allowed logging files to keep, until they get deleted. By default, this is set to *5*.
+* `node['pyload']['log']['size']` - Specifies the maximum size of the log files in KB. By default, this is set to *100*.
+* `node['pyload']['log']['rotate']` - Specifies if logfiles should be rotated. This means, that the standard log file name represents the last logging output. By default, this is enabled, which means, that this is set to *true*.
+
+### Permission Settings
+
+The `node['pyload']['permission']` namespace defines permissive settings for Pyload, which will be set in *pyload.conf* configuration file.
+
+* `node['pyload']['permission']['user']` - Specifies the username which will be set for all downloads. By default, this is set to *user*, which represents just a dummy. Its recommended to set this to another value.
+* `node['pyload']['permission']['group']` - Specifies the groupname which will be set for all downloads. By default, this is set to *users*, which represents just a dummy. Its recommended to set this to another value.
+* `node['pyload']['permission']['dir_mode']` - Specifies the directory mode which will be set for all downloads. By defalt, this is set to *0755*.
+* `node['pyload']['permission']['file_mode']` - Specifies the file mode which will be set for all downloads. By defalt, this is set to *0644*.
+* `node['pyload']['permission']['change_downloads']` - Specifies if the user and group of a downloaded package should be changed. By default, this is set to *false*.
+* `node['pyload']['permission']['change_file']` - Specifies if the file mode of a downloaded package should changed. By default, this is set to *false*.
+* `node['pyload']['permission']['change_user']` - Specifies if the user of the running process should be changed to the user specified in `node['pyload']['permission']['user']`. By default, this is set to *false*.
+* `node['pyload']['permission']['change_group']` - Specifies if the group of the running process should be changed to the group specified in `node['pyload']['permission']['group']`. By default, this is set to *false*.
+
+### Proxy Settings
+
+The `node['pyload']['proxy']` namespace defines proxy settings for Pyload, which will be set in *pyload.conf* configuration file.
+
+* `node['pyload']['proxy']['activated']` - Enables or disables the use of a proxy. By default, this is disabled, which means that this is set to *false*.
+* `node['pyload']['proxy']['bind_address']` - Specifies the proxy address to bind to. By default, this is set to *localhost*.
+* `node['pyload']['proxy']['port']` - Specifies the proxy port to connect to. By default, this is set to *7070*.
+* `node['pyload']['proxy']['protocol']` - Specifies the proxy protocol used to connect to the proxy. Allowed values are `http`, `socks4` and `socks5`. By default, this is set to *http*.
+* `node['pyload']['proxy']['user']` - Specifies the user to authenticate at the proxy. By default, this is set to *nil*.
+* `node['pyload']['proxy']['password']` - Specifies the password of the user which authenticates at the proxy. By default, this is set to *nil*.
+
+### Reconnect Settings
+
+The `node['pyload']['reconnect']` namespace defines reconnect settings for Pyload, which will be set in *pyload.conf* configuration file.
+
+* `node['pyload']['reconnect']['activated']` - Enables or disables the use of reconnects. By default, this is disabled, which means that this is set to *false*.
+* `node['pyload']['reconnect']['method']` - Specifies the reconnect method. By default, this is set to *nil*.
+* `node['pyload']['reconnect']['start_time']` - Specifies the reconnect start time in <hour>:<min> format. By default, this is set to *nil*.
+* `node['pyload']['reconnect']['end_time']` - Specifies the reconnect end time in <hour>:<min> format. By default, this is set to *nil*.
+
+### Remote Settings
+
+The `node['pyload']['remote']` namespace defines remote API settings for Pyload, which will be set in *pyload.conf* configuration file.
+
+* `node['pyload']['remote']['activated']` - Enables or disables remote API. By default, this is enabled, which means that this is set to *true*.
+* `node['pyload']['remote']['listen_address']` - Specifies the address on which the remote API should listen on. By default, this is set to *0.0.0.0*.
+* `node['pyload']['remote']['port']` - Specifies the port for the remote API to connect to. By default, this is set to *7227*.
+* `node['pyload']['remote']['no_local_auth']` - Specifies if local connections to remote API does not require authentication. By default, local connections do not require authentication, which means that this is set to *true*.
+
+### SSL Settings
+
+The `node['pyload']['ssl']` namespace defines SSL settings for Pyload, which will be set in *pyload.conf* configuration file.
+
+* `node['pyload']['ssl']['activated']` - Enables or disables SSL. By default, this is disabled, which means that this is set to *false*.
+* `node['pyload']['ssl']['cert_path']` - Specifies the path where SSL certificates should be searched for. This is set to *nil*, which means that SSL certificates are search for in configuration directory, as specified in `node['pyload']['config_dir']`.
+* `node['pyload']['ssl']['cert']` - Specifies the SSL certificate name. By default, this is set to *ssl.crt*.
+* `node['pyload']['ssl']['key']` - Specifies the SSL certificate key name. By default, this is set to *ssl.key*.
+
+### Webinterface Settings
+
+The `node['pyload']['webinterface']` namespace defines webinterface settings for Pyload, which will be set in *pyload.conf* configuration file.
+
+* `node['pyload']['webinterface']['activated']` - Enables or disables Pyload webinterface. By default, this is enabled, which means that this is set to *true*.
+* `node['pyload']['webinterface']['server_type']` - Specifies the webinterface server type. Allowed values are `builtin`, `threaded`, `fastcgi` and `lightweight`. More information on these types can be found in Pyload documentation. By default, this is set to *builtin*.
+* `node['pyload']['webinterface']['listen_address']` - Specifies the address on which the webinterface should listen on. By default, this is set to *0.0.0.0*.
+* `node['pyload']['webinterface']['port']` - Specifies the port for the webinterface to connect to. By default, this is set to *8080*.
+* `node['pyload']['webinterface']['template']` - Specifies the template for the webinterface. By default, this is set to *default*.
+* `node['pyload']['webinterface']['prefix']` - Specifies the path where all files of the webinterface are located. By default, the webinterface files are stored in the install directory, which means that this is set to *nil*.
+
 ## Recipes
 
 ### default
 
-TODO: Enter default recipe description here.
+This is the only recipe which should be included either in your nodes `run_list` or by using `include_recipe` in your wrapper cookbook. The recipe will create the specified user and group for pyload and includes all other recipes of this cookbook.
+
+### config
+
+This recipe creates the configuration directory for Pyload, as specified in `node['pyload']['conf_dir']`, creates all required folders and places all required configuration files in it.
+
+### install
+
+This recipe does a number of things to install Pyload. This includes, creating the install directory for Pyload, as specified in `node['pyload']['install_dir']` and the PID file directory, as specified in `node['pyload']['pid_dir']`. Moreover, it will clone Pyload source code from the [official Pyload Git repository](https://github.com/pyload/pyload) and checkout the *stable* branch. Next, it will perform a system check, to check if Pyload is able to run by using the [*systemCheck.py*](https://github.com/pyload/pyload/blob/stable/systemCheck.py) script. In the end it creates symbolic links to */usr/bin* for all Pyload executeables ([pyLoadCli](https://github.com/pyload/pyload/blob/stable/pyLoadCli.py), [pyLoadCore](https://github.com/pyload/pyload/blob/stable/pyLoadCore.py), [pyLoadGui](https://github.com/pyload/pyload/blob/stable/pyLoadGui.py)), to allow running Pyload directly from bash as command.
+
+### packages
+
+This will install all packages regarding your systems platform type, as specified in `node['pyload']['packages']`.
+
+### service
+
+This will place an init system script, regarding your systems platform type by either including `init_service` or `systemd_service` recipes. The init system type for the target platform is determined in this recipe and can be overwritten by setting `node['pyload']['init_style']`.
+
+#### Notes for Ubuntu Platforms prior 16.04:
+
+Ubuntu uses Upstart which is backwards-compatible to Sys-V-Init prior to versio 16.04. As this cookbook currently does not support Upstart, it will install the Sys-V-Init script to start Pyload.
+
+## Tests
+
+This cookbook uses Kitchen and Inspec for testing.
 
 ## Frequently Asked Questions
 
