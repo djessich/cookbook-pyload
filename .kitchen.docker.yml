@@ -89,6 +89,14 @@ suites:
       'debian-7',
       'debian-8'
     ]
+  - name: debian-packages-specific
+    run_list:
+      - recipe[pyload::packages]
+    includes: [
+      'ubuntu-14.04',
+      'ubuntu-16.04',
+      'debian-8.5'
+    ]
   - name: rhel-packages
     run_list:
       - recipe[pyload::packages]
