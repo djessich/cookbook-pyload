@@ -50,10 +50,6 @@ describe package('python-imaging') do
   it { should be_installed }
 end
 
-describe package('python-django') do
-  it { should be_installed }
-end
-
 describe package('python-jinja2') do
   it { should be_installed }
 end
@@ -74,6 +70,18 @@ describe package('python-html5lib') do
   it { should be_installed }
 end
 
+describe package('p7zip') do
+  it { should be_installed }
+end
+
+describe package('zip') do
+  it { should be_installed }
+end
+
+describe package('unzip') do
+  it { should be_installed }
+end
+
 describe package('python-bs4') do
   it { should be_installed }
 end
@@ -87,6 +95,10 @@ describe package('tesseract-ocr-eng') do
 end
 
 describe package('unrar-free') do
+  it { should be_installed }
+end
+
+describe package('p7zip-full') do
   it { should be_installed }
 end
 

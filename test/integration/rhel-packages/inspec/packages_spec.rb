@@ -23,11 +23,6 @@ describe yum.repo('epel') do
   it { should be_enabled }
 end
 
-describe yum.repo('rpmforge') do
-  it { should exist }
-  it { should be_enabled }
-end
-
 describe package('git') do
   it { should be_installed }
 end
@@ -60,10 +55,6 @@ describe package('python-imaging') do
   it { should be_installed }
 end
 
-describe package('python-django') do
-  it { should be_installed }
-end
-
 describe package('python-jinja2') do
   it { should be_installed }
 end
@@ -84,6 +75,18 @@ describe package('python-html5lib') do
   it { should be_installed }
 end
 
+describe package('p7zip') do
+  it { should be_installed }
+end
+
+describe package('zip') do
+  it { should be_installed }
+end
+
+describe package('unzip') do
+  it { should be_installed }
+end
+
 describe package('python-beautifulsoup4') do
   it { should be_installed }
 end
@@ -92,13 +95,14 @@ describe package('tesseract') do
   it { should be_installed }
 end
 
-describe package('unrar') do
-  it { should be_installed }
-end
-
 describe package('PyQt4') do
   it { should be_installed }
 end
+
+describe package('p7zip-plugins') do
+  it { should be_installed }
+end
+
 describe package('pyOpenSSL') do
   it { should be_installed }
 end

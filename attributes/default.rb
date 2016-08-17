@@ -48,7 +48,6 @@ when 'debian'
   default['pyload']['packages'] += %w(python-bs4 tesseract-ocr tesseract-ocr-eng unrar-free p7zip-full python-qt4 python-openssl)
   case node['platform']
   when 'ubuntu'
-    default['pyload']['packages'] += %w(p7zip-rar)
     if node['platform_version'].to_f >= 14.04
       default['pyload']['packages'] += %w(python-thrift libmozjs-24-bin)
     end
