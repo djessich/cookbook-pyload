@@ -14,14 +14,14 @@ log - "Log":
         bool log_rotate : "Log Rotate" = <%= @log_rotate %>
 
 permission - "Permissions":
-        str user : "Username" = <%= @user %>
-        str group : "Groupname" = <%= @group %>
-        str folder : "Folder Permission mode" = <%= @dir_mode %>
-        str file : "Filemode for Downloads" = <%= @file_mode %>
-        bool change_dl : "Change Group and User of Downloads" = <%= @change_downloads %>
-        bool change_file : "Change file mode of downloads" = <%= @change_file %>
-        bool change_user : "Change user of running process" = <%= @change_user %>
-        bool change_group : "Change group of running process" = <%= @change_group %>
+        str user : "Username" = <%= @permission_user %>
+        str group : "Groupname" = <%= @permission_group %>
+        str folder : "Folder Permission mode" = <%= @permission_dir_mode %>
+        str file : "Filemode for Downloads" = <%= @permission_file_mode %>
+        bool change_dl : "Change Group and User of Downloads" = <%= @permission_change_downloads %>
+        bool change_file : "Change file mode of downloads" = <%= @permission_change_file %>
+        bool change_user : "Change user of running process" = <%= @permission_change_user %>
+        bool change_group : "Change group of running process" = <%= @permission_change_group %>
 
 general - "General":
         en;de;fr;it;es;nl;sv;ru;pl;cs;sr;pt_BR language : "Language" = <%= @language %>

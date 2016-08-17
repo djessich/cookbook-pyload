@@ -1,6 +1,6 @@
 #
 # Cookbook Name:: pyload
-# Attributes:: default
+# Attributes:: download
 #
 # Copyright 2016, Gridtec
 #

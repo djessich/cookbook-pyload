@@ -34,9 +34,10 @@ directory node['pyload']['install_dir'] do
 end
 
 execute 'system_check_pyload' do
-  command 'python systemCheck.py'
+  command 'echo \n | python systemCheck.py'
   cwd node['pyload']['install_dir']
   action :nothing
+  not_if node['platform'].eql?('rhel') && node['platform_version'].to_f == 7
 end
 
 git node['pyload']['install_dir'] do
@@ -46,7 +47,7 @@ git node['pyload']['install_dir'] do
   user node['pyload']['user']
   group node['pyload']['group']
   action :sync
-  # notifies :run, 'execute[system_check_pyload]', :immediately
+  notifies :run, 'execute[system_check_pyload]', :immediately
 end
 
 %w(pyLoadCli pyLoadCore pyLoadGui).each do |bin|

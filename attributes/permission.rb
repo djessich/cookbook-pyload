@@ -1,6 +1,6 @@
 #
 # Cookbook Name:: pyload
-# Recipe:: service
+# Attributes:: permission
 #
 # Copyright 2016, Gridtec
 #
@@ -17,28 +17,11 @@
 # limitations under the License.
 #
 
-init_styles = %w(
-  init
-  systemd
-)
-
-init_style = node['pyload']['init_style'] || value_for_platform(
-  :debian => {
-    '< 8' => 'init',
-    '>= 8' => 'systemd'
-  },
-  :ubuntu => {
-    '< 15.04' => 'init',
-    '>= 15.04' => 'systemd'
-  },
-  [:centos, :redhat] => {
-    '< 7' => 'init',
-    '>= 7' => 'systemd'
-  }
-)
-
-if init_styles.include?(init_style)
-  include_recipe "pyload::#{init_style}_service"
-else
-  log "Could not determine service init style #{init_style}, manual intervention required to start up the pyload service."
-end
+default['pyload']['permission']['user'] = 'user'
+default['pyload']['permission']['group'] = 'users'
+default['pyload']['permission']['dir_mode'] = '0755'
+default['pyload']['permission']['file_mode'] = '0644'
+default['pyload']['permission']['change_downloads'] = false
+default['pyload']['permission']['change_file'] = false
+default['pyload']['permission']['change_user'] = false
+default['pyload']['permission']['change_group'] = false

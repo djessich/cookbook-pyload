@@ -30,10 +30,6 @@ default['pyload']['debug_mode'] = false
 default['pyload']['min_free_space'] = 200
 default['pyload']['folder_per_package'] = true
 default['pyload']['cpu_priority'] = 0
-default['pyload']['change_downloads'] = false
-default['pyload']['change_file'] = false
-default['pyload']['change_user'] = false
-default['pyload']['change_group'] = false
 default['pyload']['use_checksum'] = false
 
 default['pyload']['config_dir'] = if node['pyload']['user'] == 'root'
@@ -43,17 +39,25 @@ default['pyload']['config_dir'] = if node['pyload']['user'] == 'root'
                                   end
 
 default['pyload']['packages'] = %w(
-  git curl python openssl rhino python-pycurl python-crypto python-imaging python-django python-jinja2
-  python-beaker python-simplejson python-feedparser python-html5lib
+  git curl python openssl rhino python-pycurl python-crypto python-imaging python-jinja2 python-beaker python-simplejson
+  python-feedparser python-html5lib p7zip zip unzip
 )
 
 case node['platform_family']
 when 'debian'
-  default['pyload']['packages'] += %w(python-bs4 tesseract-ocr tesseract-ocr-eng unrar-free python-qt4 python-openssl)
-when 'rhel'
-  default['pyload']['packages'] += %w(python-beautifulsoup4 tesseract unrar PyQt4 pyOpenSSL js)
-end
-
-if platform?('ubuntu') && node['platform_version'] > '12.04'
-  default['pyload']['packages'] += %w(python-thrift libmozjs-24-bin)
+  default['pyload']['packages'] += %w(python-bs4 tesseract-ocr tesseract-ocr-eng unrar-free p7zip-full python-qt4 python-openssl)
+  case node['platform']
+  when 'ubuntu'
+    default['pyload']['packages'] += %w(p7zip-rar)
+    if node['platform_version'].to_f >= 14.04
+      default['pyload']['packages'] += %w(python-thrift libmozjs-24-bin)
+    end
+  when 'debian'
+    if node['platform_version'].to_f >= 8
+      default['pyload']['packages'] += %w(python-thrift libmozjs-24-bin)
+    end
+  end
+when 'rhel', 'fedora'
+  default['pyload']['packages'] += %w(python-beautifulsoup4 tesseract PyQt4 p7zip-plugins pyOpenSSL js)
+  # default['pyload']['packages'] += %w(unrar)
 end
