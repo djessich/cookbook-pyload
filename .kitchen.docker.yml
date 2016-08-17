@@ -102,7 +102,7 @@ suites:
       - recipe[pyload::packages]
     includes: [
       'centos-6',
-      #'centos-7'
+      'centos-7'
     ]
   - name: service-init
     run_list:
@@ -119,5 +119,5 @@ suites:
     includes: [
       'ubuntu-16.04',
       'debian-8',
-      #'centos-7'
+      'centos-7'
     ]
