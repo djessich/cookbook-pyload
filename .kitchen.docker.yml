@@ -62,19 +62,17 @@ platforms:
     run_list:
       - recipe[yum]
       - recipe[yum-epel]
-      - recipe[yum-repoforge]
 
-  #- name: centos-7
-  #  driver:
-  #    image: centos:7
-  #    platform: rhel
-  #    pid_one_command: /usr/lib/systemd/systemd
-  #    intermediate_instructions:
-  #      - RUN yum -y install lsof which systemd-sysv initscripts
-  #  run_list:
-  #    - recipe[yum]
-  #    - recipe[yum-epel]
-  #    - recipe[yum-repoforge]
+  - name: centos-7
+    driver:
+      image: centos:7
+      platform: rhel
+      pid_one_command: /usr/lib/systemd/systemd
+      intermediate_instructions:
+        - RUN yum -y install lsof which systemd-sysv initscripts
+    run_list:
+      - recipe[yum]
+      - recipe[yum-epel]
 
 suites:
   - name: default
