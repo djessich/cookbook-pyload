@@ -24,7 +24,6 @@ directory node['pyload']['config_dir'] do
   recursive true
 end
 
-# TODO: config mode
 template "#{node['pyload']['config_dir']}/pyload.conf" do
   source 'pyload.conf.erb'
   owner node['pyload']['user']

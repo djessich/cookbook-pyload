@@ -17,8 +17,6 @@
 # limitations under the License.
 #
 
-# TODO: Execute system check script to ensure that everything is correctly setup
-
 directory node['pyload']['pid_dir'] do
   user node['pyload']['user']
   group node['pyload']['group']
@@ -43,7 +41,8 @@ end
 git node['pyload']['install_dir'] do
   repository 'https://github.com/pyload/pyload.git'
   revision 'stable'
-  #  checkout_branch 'stable'
+  checkout_branch 'stable'
+  enable_checkout false
   user node['pyload']['user']
   group node['pyload']['group']
   action :sync
