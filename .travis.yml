@@ -17,18 +17,29 @@ services: docker
 
 env:
   matrix:
-  - INSTANCE=package-install-ubuntu-1604
-  - INSTANCE=package-install-ubuntu-1404
-  - INSTANCE=package-install-ubuntu-1204
-  - INSTANCE=package-install-centos-7
-  - INSTANCE=package-install-centos-6
-  - INSTANCE=package-install-centos-5
-  - INSTANCE=resource-test-ubuntu-1604
-  - INSTANCE=resource-test-ubuntu-1404
-  - INSTANCE=resource-test-ubuntu-1204
-  - INSTANCE=resource-test-centos-7
-  - INSTANCE=resource-test-centos-6
-  - INSTANCE=resource-test-centos-5
+  - INSTANCE=default-ubuntu-1204
+  - INSTANCE=default-ubuntu-1404
+  - INSTANCE=default-ubuntu-1604
+  - INSTANCE=default-debian-7
+  - INSTANCE=default-debian-8
+  - INSTANCE=default-centos-6
+  - INSTANCE=default-centos-7
+  - INSTANCE=debian-packages-ubuntu-1204
+  - INSTANCE=debian-packages-ubuntu-1404
+  - INSTANCE=debian-packages-ubuntu-1604
+  - INSTANCE=debian-packages-debian-7
+  - INSTANCE=debian-packages-debian-8
+  - INSTANCE=debian-packages-specific-ubuntu-1404
+  - INSTANCE=debian-packages-specific-ubuntu-1604
+  - INSTANCE=rhel-packages-centos-6
+  - INSTANCE=rhel-packages-centos-7
+  - INSTANCE=service-init-ubuntu-1204
+  - INSTANCE=service-init-ubuntu-1404
+  - INSTANCE=service-init-debian-7
+  - INSTANCE=service-init-centos-6
+  - INSTANCE=service-systemd-ubuntu-1604
+  - INSTANCE=service-systemd-debian-8
+  - INSTANCE=service-systemd-centos-7
 
 # Don't `bundle install`
 install: echo "skip bundle install"
