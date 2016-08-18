@@ -3,11 +3,12 @@
 # Style tests. Rubocop and Foodcritic
 namespace :style do
   begin
+    require 'cookstyle'
     require 'rubocop/rake_task'
     desc 'Run Ruby style checks'
     RuboCop::RakeTask.new(:ruby)
-  rescue LoadError
-    puts '>>>>> Rubocop gem not loaded, omitting tasks' unless ENV['CI']
+  rescue LoadError => e
+    puts ">>> Gem load error: #{e}, omitting style:ruby" unless ENV['CI']
   end
 
   begin
@@ -16,11 +17,12 @@ namespace :style do
     desc 'Run Chef style checks'
     FoodCritic::Rake::LintTask.new(:chef) do |t|
       t.options = {
-        fail_tags: ['any']
+        fail_tags: ['any'],
+        progress: true
       }
     end
-  rescue LoadError
-    puts '>>>>> foodcritic gem not loaded, omitting tasks' unless ENV['CI']
+  rescue LoadError => e
+    puts ">>> Gem load error: #{e}, omitting style:chef" unless ENV['CI']
   end
 end
 
@@ -30,10 +32,11 @@ task style: ['style:chef', 'style:ruby']
 # Rspec and ChefSpec
 begin
   require 'rspec/core/rake_task'
+
   desc 'Run ChefSpec examples'
   RSpec::Core::RakeTask.new(:spec)
-rescue LoadError
-  puts '>>>>> rspec gem not loaded, omitting tasks' unless ENV['CI']
+rescue LoadError => e
+  puts ">>> Gem load error: #{e}, omitting spec" unless ENV['CI']
 end
 
 # Integration tests. Kitchen.ci
@@ -43,8 +46,10 @@ namespace :integration do
 
     desc 'Run kitchen integration tests'
     Kitchen::RakeTasks.new
-  rescue LoadError
-    puts '>>>>> Kitchen gem not loaded, omitting tasks' unless ENV['CI']
+  rescue LoadError => e
+    puts ">>> Gem load error: #{e}, omitting #{task.name}" unless ENV['CI']
+  rescue Kitchen::UserError => e
+    puts ">>> Test Kitchen error: #{e}" unless ENV['CI']
   end
 end
 
@@ -60,5 +65,4 @@ rescue LoadError
 end
 
 # Default
-desc 'Combines everything together. Run style checks, run ChefSpec examples and run kitchen integration tests.'
-task default: ['style', 'spec', 'integration:kitchen:all']
+task default: %w(style spec integration:kitchen:all)

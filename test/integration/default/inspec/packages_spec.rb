@@ -70,7 +70,6 @@ describe package('python-html5lib') do
   it { should be_installed }
 end
 
-
 describe package('p7zip') do
   it { should be_installed }
 end
