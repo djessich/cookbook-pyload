@@ -39,13 +39,15 @@ default['pyload']['config_dir'] = if node['pyload']['user'] == 'root'
                                   end
 
 default['pyload']['packages'] = %w(
-  git curl python openssl rhino python-pycurl python-crypto python-imaging python-jinja2 python-beaker python-simplejson
-  python-feedparser python-html5lib p7zip zip unzip
+  git curl python openssl rhino python-pycurl python-jinja2 python-beaker python-simplejson python-feedparser python-html5lib
+  p7zip zip unzip
 )
 
 case node['platform_family']
 when 'debian'
-  default['pyload']['packages'] += %w(python-bs4 tesseract-ocr tesseract-ocr-eng unrar-free p7zip-full python-qt4 python-openssl)
+  default['pyload']['packages'] += %w(
+    python-crypto python-imaging python-bs4 tesseract-ocr tesseract-ocr-eng unrar-free p7zip-full python-qt4 python-openssl
+  )
   case node['platform']
   when 'ubuntu'
     if node['platform_version'].to_f >= 14.04
@@ -56,7 +58,12 @@ when 'debian'
       default['pyload']['packages'] += %w(python-thrift libmozjs-24-bin)
     end
   end
-when 'rhel', 'fedora'
+when 'rhel'
   default['pyload']['packages'] += %w(python-beautifulsoup4 tesseract PyQt4 p7zip-plugins pyOpenSSL js)
   # default['pyload']['packages'] += %w(unrar)
+  default['pyload']['packages'] += if node['platform_version'].to_f < 7
+                                     %w(python-crypto python-imaging)
+                                   else
+                                     %w(python2-crypto python-pillow)
+                                   end
 end

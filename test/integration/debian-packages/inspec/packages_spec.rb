@@ -42,14 +42,6 @@ describe package('python-pycurl') do
   it { should be_installed }
 end
 
-describe package('python-crypto') do
-  it { should be_installed }
-end
-
-describe package('python-imaging') do
-  it { should be_installed }
-end
-
 describe package('python-jinja2') do
   it { should be_installed }
 end
@@ -67,6 +59,14 @@ describe package('python-feedparser') do
 end
 
 describe package('python-html5lib') do
+  it { should be_installed }
+end
+
+describe package('python-crypto') do
+  it { should be_installed }
+end
+
+describe package('python-imaging') do
   it { should be_installed }
 end
 

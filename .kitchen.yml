@@ -63,6 +63,18 @@ suites:
       'centos-6.7',
       'centos-7.2'
     ]
+  - name: rhel-packages-specific-6
+    run_list:
+      - recipe[pyload::packages]
+    includes: [
+      'centos-6.7'
+    ]
+  - name: rhel-packages-specific-7
+    run_list:
+      - recipe[pyload::packages]
+    includes: [
+      'centos-7.2'
+    ]
   - name: service-init
     run_list:
       - recipe[pyload::default]
