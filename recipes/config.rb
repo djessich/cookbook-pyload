@@ -57,7 +57,7 @@ template "#{node['pyload']['config_dir']}/pyload.conf" do
     log_rotate: node['pyload']['log']['rotate'].to_s.capitalize,
     permission_user: node['pyload']['permission']['user'],
     permission_group: node['pyload']['permission']['group'],
-    permission_dir_mode: node['pyload']['permission']['dir-mode'],
+    permission_dir_mode: node['pyload']['permission']['dir_mode'],
     permission_file_mode: node['pyload']['permission']['file_mode'],
     permission_change_downloads: node['pyload']['permission']['change_downloads'].to_s.capitalize,
     permission_change_file: node['pyload']['permission']['change_file'].to_s.capitalize,
