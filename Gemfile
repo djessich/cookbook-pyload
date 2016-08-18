@@ -2,7 +2,7 @@ source 'https://rubygems.org/'
 
 gem 'rake'
 gem 'foodcritic', '~> 7.0'
-gem 'rubocop", "~> 0.28.0'
+gem 'rubocop', '~> 0.28.0'
 gem 'inspec', '~> 0.26.0'
 gem 'test-kitchen', '>= 1.10'
 gem 'kitchen-dokken'
