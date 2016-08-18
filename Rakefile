@@ -53,16 +53,5 @@ namespace :integration do
   end
 end
 
-# Version tests
-begin
-  require 'rake/version_task'
-
-  Rake::VersionTask.new do |task|
-    task.with_git_tag = true
-  end
-rescue LoadError
-  puts '>>>>> Version gem not loaded, omitting tasks' unless ENV['CI']
-end
-
 # Default
 task default: %w(style spec integration:kitchen:all)
