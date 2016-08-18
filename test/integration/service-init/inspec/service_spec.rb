@@ -22,7 +22,3 @@ describe sysv_service('pyload') do
   it { should be_enabled }
   it { should be_running }
 end
-
-describe command('ps aux | grep py[load]') do
-  its(:stdout) { should match(/pyload/) }
-end
