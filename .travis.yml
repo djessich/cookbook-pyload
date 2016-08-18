@@ -29,10 +29,12 @@ env:
   - INSTANCE=debian-packages-ubuntu-1604
   - INSTANCE=debian-packages-debian-7
   - INSTANCE=debian-packages-debian-8
-  - INSTANCE=debian-packages-specific-ubuntu-1404
-  - INSTANCE=debian-packages-specific-ubuntu-1604
+  - INSTANCE=debian-specific-packages-ubuntu-1404
+  - INSTANCE=debian-specific-packages-ubuntu-1604
   - INSTANCE=rhel-packages-centos-6
   - INSTANCE=rhel-packages-centos-7
+  - INSTANCE=rhel-specific-packages-6-centos-6
+  - INSTANCE=rhel-specific-packages-7-centos-7
   - INSTANCE=service-init-ubuntu-1204
   - INSTANCE=service-init-ubuntu-1404
   - INSTANCE=service-init-debian-7

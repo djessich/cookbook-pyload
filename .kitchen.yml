@@ -48,7 +48,7 @@ suites:
       'debian-7.11',
       'debian-8.5'
     ]
-  - name: debian-packages-specific
+  - name: debian-specific-packages
     run_list:
       - recipe[pyload::packages]
     includes: [
@@ -63,13 +63,13 @@ suites:
       'centos-6.7',
       'centos-7.2'
     ]
-  - name: rhel-packages-specific-6
+  - name: rhel-specific-packages-6
     run_list:
       - recipe[pyload::packages]
     includes: [
       'centos-6.7'
     ]
-  - name: rhel-packages-specific-7
+  - name: rhel-specific-packages-7
     run_list:
       - recipe[pyload::packages]
     includes: [
