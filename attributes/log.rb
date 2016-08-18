@@ -18,7 +18,6 @@
 #
 
 default['pyload']['log']['activated'] = true
-default['pyload']['log']['dir'] = 'Logs'
 default['pyload']['log']['count'] = 5
 default['pyload']['log']['size'] = 100
 default['pyload']['log']['rotate'] = true

@@ -37,8 +37,9 @@ The `node['pyload']` global namespace defines general settings for this cookbook
 
 * `node['pyload']['install_dir']` - Specifies the location for Pyload package itself. By default, this is set to */usr/share/pyload*.
 * `node['pyload']['config_dir']` - Specifies the location for Pyload configuration folders and files. By default, this is set to */home/&lt;user&gt;/.pyload* (interpolates to */home/pyload/.pyload* if defaults are used).
+* `node['pyload']['download_dir']` - Specifies the location for all Pyload downloaded files. By default, this is set to *node['pyload']['config_dir']/downloads* (interpolates to */home/pyload/.pyload/downloads* if defaults are used).
+* `node['pyload']['log_dir']` - Specifies the location where log files will be placed. By default, this is set to *node['pyload']['config_dir']/logs* (interpolates to */home/pyload/.pyload/logs* if defaults are used).
 * `node['pyload']['pid_dir']` - Specifies the location of the PID file for Pyload. By default, this is set to */var/run/pyload*.
-* `node['pyload']['download_dir']` - Specifies the location for all Pyload downloaded files. By default, this is set to *Downloads*.
 * `node['pyload']['user']` - Specifies the user which is used to run Pyload. By default, this is set to *pyload*.
 * `node['pyload']['group']` - Specifies the group which is used to run Pyload. By default, this is set to *pyload*.
 * `node['pyload']['dir_mode']` - Specifies the mode for all folders created by this cookbook. By default, this is set to *0755*.
@@ -126,7 +127,7 @@ The `node['pyload']['remote']` namespace defines remote API settings for Pyload,
 The `node['pyload']['ssl']` namespace defines SSL settings for Pyload, which will be set in *pyload.conf* configuration file.
 
 * `node['pyload']['ssl']['activated']` - Enables or disables SSL. By default, this is disabled, which means that this is set to *false*.
-* `node['pyload']['ssl']['cert_path']` - Specifies the path where SSL certificates should be searched for. This is set to *nil*, which means that SSL certificates are search for in configuration directory, as specified in `node['pyload']['config_dir']`.
+* `node['pyload']['ssl']['cert_path']` - Specifies the path where SSL certificates should be searched for. This is set to *nil*, which means that SSL certificates are searched for in configuration directory, as specified in `node['pyload']['config_dir']`.
 * `node['pyload']['ssl']['cert']` - Specifies the SSL certificate name. By default, this is set to *ssl.crt*.
 * `node['pyload']['ssl']['key']` - Specifies the SSL certificate key name. By default, this is set to *ssl.key*.
 

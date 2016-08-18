@@ -26,6 +26,22 @@ describe file('/home/pyload/.pyload') do
   its('mode') { should eq 0755 }
 end
 
+describe file('/home/pyload/.pyload/downloads') do
+  it { should exist }
+  it { should be_directory }
+  its('owner') { should eq 'pyload' }
+  its('group') { should eq 'pyload' }
+  its('mode') { should eq 0777 }
+end
+
+describe file('/home/pyload/.pyload/logs') do
+  it { should exist }
+  it { should be_directory }
+  its('owner') { should eq 'pyload' }
+  its('group') { should eq 'pyload' }
+  its('mode') { should eq 0777 }
+end
+
 describe file('/home/pyload/.pyload/pyload.conf') do
   it { should exist }
   it { should be_file }
@@ -33,7 +49,7 @@ describe file('/home/pyload/.pyload/pyload.conf') do
   its('group') { should eq 'pyload' }
   its('mode') { should eq 0600 }
   its('content') { should match(/language.*en/) }
-  its('content') { should match(/download_folder.*Downloads/) }
+  its('content') { should match(/download_folder.*downloads/) }
   its('content') { should match(/debug_mode.*False/) }
   its('content') { should match(/checksum.*False/) }
   its('content') { should match(/min_free_space.*200/) }
@@ -62,11 +78,11 @@ describe file('/home/pyload/.pyload/pyload.conf') do
   its('content') { should match(%r{download\s[a-zA-Z0-9\-\.\"\:\;\_\=\(\)/\n\s]*skip_existing.*False}) }
   its('content') { should match(/downloadTime\s[a-zA-Z0-9\-\.\"\:\;\_\=\n\s]*time\sstart.*0:00/) }
   its('content') { should match(/downloadTime\s[a-zA-Z0-9\-\.\"\:\;\_\=\n\s]*time\send.*0:00/) }
-  its('content') { should match(/log\s[a-zA-Z0-9\-\.\"\:\;\_\=\n\s]*file_log.*True/) }
-  its('content') { should match(/log\s[a-zA-Z0-9\-\.\"\:\;\_\=\n\s]*log_folder.*Logs/) }
-  its('content') { should match(/log\s[a-zA-Z0-9\-\.\"\:\;\_\=\n\s]*log_count.*5/) }
-  its('content') { should match(/log\s[a-zA-Z0-9\-\.\"\:\;\_\=\n\s]*log_size.*100/) }
-  its('content') { should match(/log\s[a-zA-Z0-9\-\.\"\:\;\_\=\n\s]*log_rotate.*True/) }
+  its('content') { should match(%r{log\s[a-zA-Z0-9\-\.\"\:\;\_\=/\n\s]*file_log.*True}) }
+  its('content') { should match(%r{log\s[a-zA-Z0-9\-\.\"\:\;\_\=/\n\s]*log_folder.*logs}) }
+  its('content') { should match(%r{log\s[a-zA-Z0-9\-\.\"\:\;\_\=/\n\s]*log_count.*5}) }
+  its('content') { should match(%r{log\s[a-zA-Z0-9\-\.\"\:\;\_\=/\n\s]*log_size.*100}) }
+  its('content') { should match(%r{log\s[a-zA-Z0-9\-\.\"\:\;\_\=/\n\s]*log_rotate.*True}) }
   its('content') { should match(/permission\s[a-zA-Z0-9\-\.\"\:\;\_\=\n\s]*user.*user/) }
   its('content') { should match(/permission\s[a-zA-Z0-9\-\.\"\:\;\_\=\n\s]*group.*users/) }
   its('content') { should match(/permission\s[a-zA-Z0-9\-\.\"\:\;\_\=\n\s]*folder.*0755/) }

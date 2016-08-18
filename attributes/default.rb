@@ -17,11 +17,18 @@
 # limitations under the License.
 #
 
-default['pyload']['install_dir'] = '/usr/share/pyload'
-default['pyload']['download_dir'] = 'Downloads'
-default['pyload']['pid_dir'] = '/var/run/pyload'
 default['pyload']['user'] = 'pyload'
 default['pyload']['group'] = 'pyload'
+default['pyload']['install_dir'] = '/usr/share/pyload'
+default['pyload']['config_dir'] = if node['pyload']['user'] == 'root'
+                                    '/root/.pyload'
+                                  else
+                                    "/home/#{node['pyload']['user']}/.pyload"
+                                  end
+
+default['pyload']['download_dir'] = "#{node['pyload']['config_dir']}/downloads"
+default['pyload']['log_dir'] = "#{node['pyload']['config_dir']}/logs"
+default['pyload']['pid_dir'] = '/var/run/pyload'
 default['pyload']['dir_mode'] = '0755'
 default['pyload']['file_mode'] = '0644'
 default['pyload']['init_style'] = nil
@@ -31,12 +38,6 @@ default['pyload']['min_free_space'] = 200
 default['pyload']['folder_per_package'] = true
 default['pyload']['cpu_priority'] = 0
 default['pyload']['use_checksum'] = false
-
-default['pyload']['config_dir'] = if node['pyload']['user'] == 'root'
-                                    '/root/.pyload'
-                                  else
-                                    "/home/#{node['pyload']['user']}/.pyload"
-                                  end
 
 default['pyload']['packages'] = %w(
   git curl python openssl rhino python-pycurl python-jinja2 python-beaker python-simplejson python-feedparser python-html5lib

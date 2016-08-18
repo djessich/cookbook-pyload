@@ -24,6 +24,20 @@ directory node['pyload']['config_dir'] do
   recursive true
 end
 
+directory node['pyload']['download_dir'] do
+  user node['pyload']['user']
+  group node['pyload']['group']
+  mode 0777
+  recursive true
+end
+
+directory node['pyload']['log_dir'] do
+  user node['pyload']['user']
+  group node['pyload']['group']
+  mode 0777
+  recursive true
+end
+
 template "#{node['pyload']['config_dir']}/pyload.conf" do
   source 'pyload.conf.erb'
   owner node['pyload']['user']
@@ -51,7 +65,7 @@ template "#{node['pyload']['config_dir']}/pyload.conf" do
     download_start_time: node['pyload']['download']['start_time'].nil? ? '0:00' : node['pyload']['download']['start_time'],
     download_end_time: node['pyload']['download']['end_time'].nil? ? '0:00' : node['pyload']['download']['end_time'],
     log_activated: node['pyload']['log']['activated'].to_s.capitalize,
-    log_dir: node['pyload']['log']['dir'],
+    log_dir: node['pyload']['log_dir'],
     log_count: node['pyload']['log']['count'],
     log_size: node['pyload']['log']['size'],
     log_rotate: node['pyload']['log']['rotate'].to_s.capitalize,
