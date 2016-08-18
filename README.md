@@ -1,5 +1,8 @@
 # Pyload Cookbook
 
+[![Build Status](https://travis-ci.org/gridtec/cookbook-pyload.svg?branch=master)](https://travis-ci.org/gridtec/cookbook-pyload)
+[![License](https://img.shields.io/badge/license-Apache_2-blue.svg)](https://www.apache.org/licenses/LICENSE-2.0)
+
 This cookbook is used to install and configure [Pyload](https://github.com/pyload/pyload) on a system. Just put it in your nodes `run_list` or the default recipe using `include_recipe`. This cookbook installs Pyload from Git repository (stable branch), installs all required dependencies for Pyload, prepares configuration folder and files and installs the appropriate configuration for your platform's init system.
 
 ## Requirements
