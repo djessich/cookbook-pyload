@@ -31,13 +31,27 @@ default['pyload']['log_dir'] = "#{node['pyload']['config_dir']}/logs"
 default['pyload']['pid_dir'] = '/var/run/pyload'
 default['pyload']['dir_mode'] = '0755'
 default['pyload']['file_mode'] = '0644'
-default['pyload']['init_style'] = nil
 default['pyload']['language'] = 'en'
 default['pyload']['debug_mode'] = false
 default['pyload']['min_free_space'] = 200
 default['pyload']['folder_per_package'] = true
 default['pyload']['cpu_priority'] = 0
 default['pyload']['use_checksum'] = false
+
+default['pyload']['init_style'] = value_for_platform(
+  :debian => {
+    '< 8' => 'init',
+    '>= 8' => 'systemd'
+  },
+  :ubuntu => {
+    '< 15.04' => 'init',
+    '>= 15.04' => 'systemd'
+  },
+  [:centos, :redhat] => {
+    '< 7' => 'init',
+    '>= 7' => 'systemd'
+  }
+)
 
 default['pyload']['packages'] = %w(
   git curl python openssl rhino python-pycurl python-jinja2 python-beaker python-simplejson python-feedparser python-html5lib

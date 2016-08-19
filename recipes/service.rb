@@ -22,20 +22,7 @@ init_styles = %w(
   systemd
 )
 
-init_style = node['pyload']['init_style'] || value_for_platform(
-  :debian => {
-    '< 8' => 'init',
-    '>= 8' => 'systemd'
-  },
-  :ubuntu => {
-    '< 15.04' => 'init',
-    '>= 15.04' => 'systemd'
-  },
-  [:centos, :redhat] => {
-    '< 7' => 'init',
-    '>= 7' => 'systemd'
-  }
-)
+init_style = node['pyload']['init_style']
 
 if init_styles.include?(init_style)
   include_recipe "pyload::#{init_style}_service"

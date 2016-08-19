@@ -47,8 +47,7 @@ TODO* `node['pyload']['log_dir']` - Specifies the location where log files will 
 * `node['pyload']['dir_mode']` - Specifies the mode for all folders created by this cookbook. By default, this is set to *0755*.
 <!-- TODO: Remove the 'all' here -->
 * `node['pyload']['file_mode']` - Specifies the mode for all files created by this cookbook. By default, this is set to *0644*.
-<!-- TODO: move to attributes and simplify recipe -->
-* `node['pyload']['init_style']` - Specifies the platforms init system type which can be either set to `init` or `systemd`. If something else is specified, no install script will be created. The correct init system type is determined by this cookbook itself, so this attribute is not required to be set. This attribute only exists to override this cookbook if this is required. By default, this is set to *nil*.
+* `node['pyload']['init_style']` - Specifies the platforms init system type which can be either set to `init` or `systemd`. If something else is specified, no install script will be created. By default, the correct init system type is determined by this cookbook itself, which means that this attribute should not be required to be set manually.
 <!-- TODO: Only for platform, no use of plattform family at all -->
 * `node['pyload']['packages']` - Specifies a list of dependencies of Pyload which are required to successfully start Pyload. The correct package names are determined by this cookbook, regarding platform and platfom version. By default, this is set to all required dependencies for Pyload, including optional ones, which can be examined at Pyload repository or in the corresponding attribute file of this cookbook.
 
@@ -166,10 +165,9 @@ This recipe does a number of things to install Pyload. This includes, creating t
 
 This will install all packages regarding your systems platform type, as specified in `node['pyload']['packages']`.
 
-<!-- TODO: If moved to attributes -> reqrite -->
 ### service
 
-This will place an init system script, regarding your systems platform type by either including `init_service` or `systemd_service` recipes. The init system type for the target platform is determined in this recipe and can be overwritten by setting `node['pyload']['init_style']`.
+This will place an init system script, regarding your systems platform type by either including `init_service` or `systemd_service` recipes. The init system type for the target platform is determined by this cookbook and set to `node['pyload']['init_style']` attribute.
 
 #### Notes for Ubuntu Platforms prior 16.04:
 
