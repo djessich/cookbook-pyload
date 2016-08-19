@@ -5,7 +5,7 @@ We're glad that you want to contribute to the Pyload cookbook! The first step is
 ## Quick Contributing Steps
 
 1. Create an account on [GitHub](https://github.com).
-2. Create an issue on on [GitHub](https://github.com) (see [Issue Tracking](https://github.com/gridtec/cookbook-pyload/issues))
+2. Create an issue on on [GitHub](https://github.com) (see [Issue Tracker](https://github.com/gridtec/cookbook-pyload/issues))
 3. Create a pull request for your change on [GitHub](https://github.com).
 4. Link to your patch as a rebased git branch or pull request from the ticket
 
@@ -29,7 +29,7 @@ This cookbook is tested with integration tests using Test Kitchen to ensure chan
 
 This cookbook is set up to run tests under Test Kitchen. It uses [inspec](https://github.com/chef/inspec) to run integration tests after the node has been converged to verify the state of the node.
 
-Test kitchen should run completely without exception using the default baseboxes provided by Chef. Because Test Kitchen creates VirtualBox machines and runs through every configuration in the .kitchen.yml file, it may take some time for these tests to complete.
+Test Kitchen should run completely without exception using the default baseboxes provided by Chef. Because Test Kitchen creates VirtualBox machines and runs through every configuration in the .kitchen.yml file, it may take some time for these tests to complete.
 
 If your changes are only for a specific recipe, run only its configuration with Test Kitchen. If you are adding a new recipe, or other functionality such as a custom resource, please add appropriate tests and ensure they run with Test Kitchen.
 
@@ -51,6 +51,6 @@ Please do indicate new platform (families) or platform versions in the commit me
 
 Please do ensure that your changes do not break or modify behavior for other platforms supported by the cookbook. For example if your changes are for Debian, make sure that they do not break on CentOS.
 
-Please do **not** modify the version number in the `metadata.rb`, a maintainer will select the appropriate version based on the release cycle information above.
+Please do **not** modify the version number in the `VERSION` file or change the versiion section of `metadata.rb`, a maintainer will select the appropriate version regarding your change.
 
-Please do **not** modify the following files of this project, which are chefignore, gitignore, LICENSE, Rakefile or VERSION.
+Please do **not** modify the following files of this project, which are `chefignore`, `.gitignore`, `LICENSE` or `Rakefile`.

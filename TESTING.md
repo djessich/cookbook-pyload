@@ -1,12 +1,12 @@
 # Cookbook TESTING doc
 
-This document describes the process for testing Pyload cookbook using ChefDK. Cookbooks can be tested using the test dependencies defined in the cookbooks Gemfile alone, but that process will not be covered in this document in order to maintain simplicity.
+This document describes the process for testing the Pyload cookbook using the ChefDK. Cookbooks can be tested using the test dependencies defined in the cookbooks Gemfile alone, but that process will not be covered in this document in order to maintain simplicity.
 
 ## Testing Prerequisites
 
 A working ChefDK installation set as your system's default ruby. ChefDK can be downloaded at <https://downloads.chef.io/chef-dk/>
 
-Hashicorp's [Vagrant](https://www.vagrantup.com/downloads.html) and Oracle's [Virtualbox](https://www.virtualbox.org/wiki/Downloads) or [Docker](https://www.docker.com/) for integration testing.
+Hashicorp's [Vagrant](https://www.vagrantup.com/downloads.html) and Oracle's [Virtualbox](https://www.virtualbox.org/wiki/Downloads) or [Docker](https://www.docker.com/) for integration testing should also be installed.
 
 ## Installing dependencies
 
@@ -26,7 +26,7 @@ chef exec bundle update
 
 ## Rakefile
 
-The cookbook contains a Rakefile which includes a number of tasks, each of which can be ran individually, or in groups. Typing "rake" by itself will perform the default checks: style checks (Rubocop and Foodcritic), unit tests (Chefspec) and integration tests (Kitchen). To see a complete list of available tasks run `rake -T`
+The cookbook contains a Rakefile which includes a number of tasks, each of which can be ran individually, or in groups. Typing *rake* by itself will perform the default checks: style checks (Rubocop/Cookstyle and Foodcritic), unit tests (Chefspec) and integration tests (Kitchen). To see a complete list of available tasks run `rake -T`
 
 ```
 $ chef exec rake -T
@@ -78,4 +78,4 @@ This cookbook provides an easy way of testing Ruby and Chef style/correctness, u
 chef exec rake default
 ```
 
-This is the suggested way of testing this cookbook.
+This is the recommended way of testing this cookbook.

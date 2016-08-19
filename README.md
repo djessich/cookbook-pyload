@@ -25,7 +25,7 @@ This cookbook has no direct external dependencies.
 Regarding your OS, you may need additional recipes or cookbooks for this cookbook's recipes to converge on the node. In particular, the following things should be considered.
 
 * On Debian/Ubuntu, use the [apt](https://github.com/chef-cookbooks/apt) cookbook to ensure the package cache is updated so Chef can install packages, or consider putting apt-get in your bootstrap process or knife bootstrap template. Otherwise this cookbook won't install latest versions of Pyload dependencies using sysem package manager (apt).
-* On Red Hat Enterprise Linux (RHEL) and derivatives, some 3rd party repositories may be necessary to be installed and enabaled in yum to install required packages/dependencies for Pyload used in certain recipes of this cookbook. The [yum](https://github.com/chef-cookbooks/yum) and [yum-epel](https://github.com/chef-cookbooks/yum-epel) cookbooks are therefore suggested to be in your `run_list`.
+* On Red Hat Enterprise Linux (RHEL) and derivatives, some 3rd party repositories may be necessary to be installed and enabled in yum to install required packages/dependencies for Pyload used in certain recipes of this cookbook. The [yum](https://github.com/chef-cookbooks/yum) and [yum-epel](https://github.com/chef-cookbooks/yum-epel) cookbooks are therefore suggested to be in your `run_list`.
 
 ## Attributes
 
@@ -38,15 +38,21 @@ The `node['pyload']` global namespace defines general settings for this cookbook
 * `node['pyload']['install_dir']` - Specifies the location for Pyload package itself. By default, this is set to */usr/share/pyload*.
 * `node['pyload']['config_dir']` - Specifies the location for Pyload configuration folders and files. By default, this is set to */home/&lt;user&gt;/.pyload* (interpolates to */home/pyload/.pyload* if defaults are used).
 * `node['pyload']['download_dir']` - Specifies the location for all Pyload downloaded files. By default, this is set to *node['pyload']['config_dir']/downloads* (interpolates to */home/pyload/.pyload/downloads* if defaults are used).
-* `node['pyload']['log_dir']` - Specifies the location where log files will be placed. By default, this is set to *node['pyload']['config_dir']/logs* (interpolates to */home/pyload/.pyload/logs* if defaults are used).
+<!-- TODO: should be changed to /var/log/pyload -->
+TODO* `node['pyload']['log_dir']` - Specifies the location where log files will be placed. By default, this is set to *node['pyload']['config_dir']/logs* (interpolates to */home/pyload/.pyload/logs* if defaults are used).
 * `node['pyload']['pid_dir']` - Specifies the location of the PID file for Pyload. By default, this is set to */var/run/pyload*.
 * `node['pyload']['user']` - Specifies the user which is used to run Pyload. By default, this is set to *pyload*.
 * `node['pyload']['group']` - Specifies the group which is used to run Pyload. By default, this is set to *pyload*.
+<!-- TODO: Remove the 'all' here -->
 * `node['pyload']['dir_mode']` - Specifies the mode for all folders created by this cookbook. By default, this is set to *0755*.
+<!-- TODO: Remove the 'all' here -->
 * `node['pyload']['file_mode']` - Specifies the mode for all files created by this cookbook. By default, this is set to *0644*.
+<!-- TODO: move to attributes and simplify recipe -->
 * `node['pyload']['init_style']` - Specifies the platforms init system type which can be either set to `init` or `systemd`. If something else is specified, no install script will be created. The correct init system type is determined by this cookbook itself, so this attribute is not required to be set. This attribute only exists to override this cookbook if this is required. By default, this is set to *nil*.
-* `node['pyload']['packages']` - Specifies a list of dependencies of Pyload which are required to successfully start Pyload. The correct package names are determined by this cookbook, regarding platform family and platfom version. By default, this is set to all required dependencies for Pyload, including optional ones, which can be examined at Pyload repository or in the corresponding attribute file of this cookbook.
+<!-- TODO: Only for platform, no use of plattform family at all -->
+* `node['pyload']['packages']` - Specifies a list of dependencies of Pyload which are required to successfully start Pyload. The correct package names are determined by this cookbook, regarding platform and platfom version. By default, this is set to all required dependencies for Pyload, including optional ones, which can be examined at Pyload repository or in the corresponding attribute file of this cookbook.
 
+<!-- TODO: Move these to global attributes file -->
 The `node['pyload']` global namespace also defines the following general settings for Pyload, which will be set in *pyload.conf* configuration file.
 
 * `node['pyload']['language']` - Specifies Pyload language. Allowed values are `en`, `de`, `fr`, `it`, `es`, `nl`, `sv`, `ru`, `pl`, `cs`, `sr`, `pt_BR`. If something else is specified, Pyload may not start. By default, this is set to *en*.
@@ -67,15 +73,14 @@ The `node['pyload']['download']` namespace defines download settings for Pyload,
 * `node['pyload']['download']['limit_speed']` - Specifies if the download speed should be limited. By default, the is no limit, which means that this is set to *false*.
 * `node['pyload']['download']['max_speed']` - Specifies the global, maximmum allowed speed. By default, there is no limit, which means that this is set to *-1*.
 * `node['pyload']['download']['skip_existing']` - Specifies if already downloaded files should be skipped, to avoid redownload. By default, this is set to *false*.
-* `node['pyload']['download']['start_time']` - Specifies the download start time in <hour>:<min> format. By default, this is set to *nil*.
-* `node['pyload']['download']['end_time']` - Specifies the download end time in <hour>:<min> format. By default, this is set to *nil*.
+* `node['pyload']['download']['start_time']` - Specifies the download start time in &lt;hour&gt;:&lt;min&gt; format. By default, this is set to *nil*.
+* `node['pyload']['download']['end_time']` - Specifies the download end time in &lt;hour&gt;:&lt;min&gt; format. By default, this is set to *nil*.
 
 ### Logging Settings
 
 The `node['pyload']['database']` namespace defines logging settings for Pyload, which will be set in *pyload.conf* configuration file.
 
 * `node['pyload']['log']['activated']` - Enables or disables logging. By default, this is enabled, which means that this is set to *true*.
-* `node['pyload']['log']['dir']` - Specifies the location where log files will be placed. By default, this is set to *Logs*.
 * `node['pyload']['log']['count']` - Specifies the maximum allowed logging files to keep, until they get deleted. By default, this is set to *5*.
 * `node['pyload']['log']['size']` - Specifies the maximum size of the log files in KB. By default, this is set to *100*.
 * `node['pyload']['log']['rotate']` - Specifies if logfiles should be rotated. This means, that the standard log file name represents the last logging output. By default, this is enabled, which means, that this is set to *true*.
@@ -86,8 +91,8 @@ The `node['pyload']['permission']` namespace defines permissive settings for Pyl
 
 * `node['pyload']['permission']['user']` - Specifies the username which will be set for all downloads. By default, this is set to *user*, which represents just a dummy. Its recommended to set this to another value.
 * `node['pyload']['permission']['group']` - Specifies the groupname which will be set for all downloads. By default, this is set to *users*, which represents just a dummy. Its recommended to set this to another value.
-* `node['pyload']['permission']['dir_mode']` - Specifies the directory mode which will be set for all downloads. By defalt, this is set to *0755*.
-* `node['pyload']['permission']['file_mode']` - Specifies the file mode which will be set for all downloads. By defalt, this is set to *0644*.
+* `node['pyload']['permission']['dir_mode']` - Specifies the directory mode which will be set for all downloads. By default, this is set to *0755*.
+* `node['pyload']['permission']['file_mode']` - Specifies the file mode which will be set for all downloads. By default, this is set to *0644*.
 * `node['pyload']['permission']['change_downloads']` - Specifies if the user and group of a downloaded package should be changed. By default, this is set to *false*.
 * `node['pyload']['permission']['change_file']` - Specifies if the file mode of a downloaded package should changed. By default, this is set to *false*.
 * `node['pyload']['permission']['change_user']` - Specifies if the user of the running process should be changed to the user specified in `node['pyload']['permission']['user']`. By default, this is set to *false*.
@@ -110,8 +115,8 @@ The `node['pyload']['reconnect']` namespace defines reconnect settings for Pyloa
 
 * `node['pyload']['reconnect']['activated']` - Enables or disables the use of reconnects. By default, this is disabled, which means that this is set to *false*.
 * `node['pyload']['reconnect']['method']` - Specifies the reconnect method. By default, this is set to *nil*.
-* `node['pyload']['reconnect']['start_time']` - Specifies the reconnect start time in <hour>:<min> format. By default, this is set to *nil*.
-* `node['pyload']['reconnect']['end_time']` - Specifies the reconnect end time in <hour>:<min> format. By default, this is set to *nil*.
+* `node['pyload']['reconnect']['start_time']` - Specifies the reconnect start time in &lt;hour&gt;:&lt;min&gt; format. By default, this is set to *nil*.
+* `node['pyload']['reconnect']['end_time']` - Specifies the reconnect end time in &lt;hour&gt;:&lt;min&gt; format. By default, this is set to *nil*.
 
 ### Remote Settings
 
@@ -152,6 +157,7 @@ This is the only recipe which should be included either in your nodes `run_list`
 
 This recipe creates the configuration directory for Pyload, as specified in `node['pyload']['conf_dir']`, creates all required folders and places all required configuration files in it.
 
+<!-- TODO: Check if that description applies -->
 ### install
 
 This recipe does a number of things to install Pyload. This includes, creating the install directory for Pyload, as specified in `node['pyload']['install_dir']` and the PID file directory, as specified in `node['pyload']['pid_dir']`. Moreover, it will clone Pyload source code from the [official Pyload Git repository](https://github.com/pyload/pyload) and checkout the *stable* branch. Next, it will perform a system check, to check if Pyload is able to run by using the [*systemCheck.py*](https://github.com/pyload/pyload/blob/stable/systemCheck.py) script. In the end it creates symbolic links to */usr/bin* for all Pyload executeables ([pyLoadCli](https://github.com/pyload/pyload/blob/stable/pyLoadCli.py), [pyLoadCore](https://github.com/pyload/pyload/blob/stable/pyLoadCore.py), [pyLoadGui](https://github.com/pyload/pyload/blob/stable/pyLoadGui.py)), to allow running Pyload directly from bash as command.
@@ -160,20 +166,22 @@ This recipe does a number of things to install Pyload. This includes, creating t
 
 This will install all packages regarding your systems platform type, as specified in `node['pyload']['packages']`.
 
+<!-- TODO: If moved to attributes -> reqrite -->
 ### service
 
 This will place an init system script, regarding your systems platform type by either including `init_service` or `systemd_service` recipes. The init system type for the target platform is determined in this recipe and can be overwritten by setting `node['pyload']['init_style']`.
 
 #### Notes for Ubuntu Platforms prior 16.04:
 
-Ubuntu uses Upstart which is backwards-compatible to Sys-V-Init prior to versio 16.04. As this cookbook currently does not support Upstart, it will install the Sys-V-Init script to start Pyload.
+Ubuntu uses Upstart which is backwards-compatible to Sys-V-Init prior to version 16.04. As this cookbook currently does not support Upstart, it will install the Sys-V-Init script to start Pyload.
 
 ## Tests
 
-This cookbook uses Kitchen and Inspec for testing.
+This cookbook uses Kitchen and Inspec for testing. For more information, see [TESTING.md](https://github.com/gridtec/cookbook-pyload/blob/master/TESTING.md).
 
 ## Frequently Asked Questions
 
+<!-- TODO: Write a list/table of dependencies -->
 ### What are the dependencies of Pyload installed by this cookbook?
 
 This cookbook installs every required and optional dependency of Pyload as described in the Pyloads project [README](https://github.com/pyload/pyload/blob/stable/README) using the systems package manager.
@@ -194,8 +202,13 @@ On RHEL and derivatives, it is required to install 3rd party repositories as bas
 
 No. You need to create your own SSL certificates either in your wrapper cookbook or manually and configure this cookbook where this certificates can be found on the system.
 
+<!-- TODO: Why does this cookbook not provide an Upstart Script -->
+<!-- TODO: I want to contribute. What do I need to do? look contributing md -->
+<!-- TODO: I want to test. What do I need to do? Look testingmd -->
+
 ## License & Authors
 
+<!-- TODO: Change to gridtec and set me as maintainer -->
 * Author: Dominik Jessich [jessichd@gridtec.at](mailto:jessichd@gridtec.at)
 
 ```
