@@ -26,8 +26,6 @@ default['pyload']['config_dir'] = if node['pyload']['user'] == 'root'
                                     "/home/#{node['pyload']['user']}/.pyload"
                                   end
 default['pyload']['download_dir'] = "#{node['pyload']['config_dir']}/downloads"
-default['pyload']['pid_dir'] = '/var/run/pyload'
-default['pyload']['log_dir'] = '/var/log/pyload'
 default['pyload']['dir_mode'] = '0755'
 default['pyload']['file_mode'] = '0644'
 
@@ -38,30 +36,19 @@ default['pyload']['folder_per_package'] = true
 default['pyload']['cpu_priority'] = 0
 default['pyload']['use_checksum'] = false
 
-default['pyload']['init_style'] = value_for_platform(
-  :debian => {
-    '< 8' => 'init',
-    '>= 8' => 'systemd'
-  },
-  :ubuntu => {
-    '< 15.04' => 'init',
-    '>= 15.04' => 'systemd'
-  },
-  [:centos, :redhat] => {
-    '< 7' => 'init',
-    '>= 7' => 'systemd'
-  }
-)
-
 default['pyload']['packages'] = %w(
-  git curl python openssl rhino python-pycurl python-jinja2 python-beaker python-simplejson python-feedparser python-html5lib
-  p7zip zip unzip
+  git curl python openssl rhino python-pycurl python-jinja2 python-beaker python-simplejson
+  python-feedparser python-html5lib p7zip zip unzip
 )
 
 case node['platform_family']
 when 'debian'
+  default['pyload']['init_style'] = node['init_package']
+  default['pyload']['pid_dir'] = '/var/run/pyload'
+  default['pyload']['log_dir'] = '/var/log/pyload'
   default['pyload']['packages'] += %w(
-    python-crypto python-imaging python-bs4 tesseract-ocr tesseract-ocr-eng unrar-free p7zip-full python-qt4 python-openssl
+    python-crypto python-imaging python-bs4 tesseract-ocr tesseract-ocr-eng
+    unrar-free p7zip-full python-qt4 python-openssl
   )
   case node['platform']
   when 'ubuntu'
@@ -74,11 +61,19 @@ when 'debian'
     end
   end
 when 'rhel'
-  default['pyload']['packages'] += %w(python-beautifulsoup4 tesseract PyQt4 p7zip-plugins pyOpenSSL js)
-  # default['pyload']['packages'] += %w(unrar)
+  default['pyload']['init_style'] = node['init_package']
+  default['pyload']['pid_dir'] = '/var/run/pyload'
+  default['pyload']['log_dir'] = '/var/log/pyload'
+  default['pyload']['packages'] += %w(
+    python-beautifulsoup4 tesseract unrar PyQt4 p7zip-plugins pyOpenSSL js
+  )
   default['pyload']['packages'] += if node['platform_version'].to_f < 7
                                      %w(python-crypto python-imaging)
                                    else
                                      %w(python2-crypto python-pillow)
                                    end
+else
+  default['pyload']['init_style'] = 'none'
+  default['pyload']['pid_dir'] = '/var/run'
+  default['pyload']['log_dir'] = '/var/log/pyload'
 end

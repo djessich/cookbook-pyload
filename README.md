@@ -164,11 +164,13 @@ This will install all packages regarding your systems platform type, as specifie
 
 ### service
 
-This will place an init system script, regarding your systems platform type by either including `init_service` or `systemd_service` recipes. The init system type for the target platform is determined by this cookbook and set to `node['pyload']['init_style']` attribute.
+This recipe includes one of the `pyload::INIT_STYLE_service` recipes based on the attribute `node['pyload']['init_style']`, which is set regarding your target platform. The individual service recipes can be included directly too, if required. The supported init systems are
 
-#### Notes for Ubuntu Platforms prior 16.04:
+* `init` - uses the Sys-V-Init script included in this cookbook, supported on Debian and Red Hat Enterprise Linux (RHEL) family distributions.
+* `upstart` - uses the Upstart job included in this cookbook, supported on Ubuntu. *Currently this delegates to use the Sys-V-Init script!*
+* `systemd` - sets up the service under SystemD. Supported on SystemD based distros.
 
-Ubuntu uses Upstart which is backwards-compatible to Sys-V-Init prior to version 16.04. As this cookbook currently does not support Upstart, it will install the Sys-V-Init script to start Pyload.
+If the init system cannot be determined by this cookbook (f.e. unsupported plattform) or any other desriptor is specified, there will be no init system script created from this cookbook.
 
 ## Tests
 

@@ -1,6 +1,6 @@
 #
 # Cookbook Name:: pyload
-# Recipe:: service
+# Recipe:: upstart_service
 #
 # Copyright 2016, Gridtec
 #
@@ -17,16 +17,4 @@
 # limitations under the License.
 #
 
-init_styles = %w(
-  init
-  upstart
-  systemd
-)
-
-init_style = node['pyload']['init_style']
-
-if init_styles.include?(init_style)
-  include_recipe "pyload::#{init_style}_service"
-else
-  log "Could not determine service init style #{init_style}, manual intervention required to start up pyload service."
-end
+include_recipe 'pyload::init_service'

@@ -82,6 +82,7 @@ suites:
   - name: debian-packages
     run_list:
       - recipe[pyload::packages]
+    attributes:
     includes: [
       'ubuntu-12.04',
       'ubuntu-14.04',
@@ -92,6 +93,7 @@ suites:
   - name: debian-specific-packages
     run_list:
       - recipe[pyload::packages]
+    attributes:
     includes: [
       'ubuntu-14.04',
       'ubuntu-16.04',
@@ -100,6 +102,7 @@ suites:
   - name: rhel-packages
     run_list:
       - recipe[pyload::packages]
+    attributes:
     includes: [
       'centos-6',
       'centos-7'
@@ -107,18 +110,21 @@ suites:
   - name: rhel-specific-packages-6
     run_list:
       - recipe[pyload::packages]
+    attributes:
     includes: [
       'centos-6'
     ]
   - name: rhel-specific-packages-7
     run_list:
       - recipe[pyload::packages]
+    attributes:
     includes: [
       'centos-7'
     ]
   - name: service-init
     run_list:
       - recipe[pyload::default]
+    attributes:
     includes: [
       'ubuntu-12.04',
       'ubuntu-14.04',
@@ -128,6 +134,7 @@ suites:
   - name: service-systemd
     run_list:
       - recipe[pyload::default]
+    attributes:
     includes: [
       'ubuntu-16.04',
       'debian-8',
