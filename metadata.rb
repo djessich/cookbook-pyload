@@ -6,9 +6,9 @@ description 'Installs/Configures Pyload'
 long_description IO.read(File.join(File.dirname(__FILE__), 'README.md'))
 version IO.read(File.join(File.dirname(__FILE__), 'VERSION'))
 
-%w(debian ubuntu redhat centos).each do |os|
+%w(debian ubuntu centos redhat fedora).each do |os|
   supports os
 end
 
-source_url 'https://github.com/djessich/pyload' if respond_to?(:source_url)
-issues_url 'https://github.com/djessich/pyload/issues' if respond_to?(:issues_url)
+source_url 'https://github.com/gridtec/cookbook-pyload' if respond_to?(:source_url)
+issues_url 'https://github.com/gridtec/cookbook-pyload/issues' if respond_to?(:issues_url)

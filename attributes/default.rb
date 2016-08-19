@@ -64,14 +64,17 @@ when 'rhel'
   default['pyload']['init_style'] = node['init_package']
   default['pyload']['pid_dir'] = '/var/run/pyload'
   default['pyload']['log_dir'] = '/var/log/pyload'
-  default['pyload']['packages'] += %w(
-    python-beautifulsoup4 tesseract PyQt4 unrar p7zip-plugins pyOpenSSL js
-  )
+  default['pyload']['packages'] += %w(python-beautifulsoup4 tesseract PyQt4 unrar p7zip-plugins pyOpenSSL js)
   default['pyload']['packages'] += if node['platform_version'].to_f < 7
                                      %w(python-crypto python-imaging)
                                    else
                                      %w(python2-crypto python-pillow)
                                    end
+when 'fedora'
+  default['pyload']['init_style'] = 'systemd'
+  default['pyload']['pid_dir'] = '/var/run/pyload'
+  default['pyload']['log_dir'] = '/var/log/pyload'
+  default['pyload']['packages'] += %w(python-beautifulsoup4 tesseract PyQt4 unrar p7zip-plugins pyOpenSSL js python-crypto python-pillow)
 else
   default['pyload']['init_style'] = 'none'
   default['pyload']['pid_dir'] = '/var/run'
