@@ -23,6 +23,11 @@ describe yum.repo('epel') do
   it { should be_enabled }
 end
 
+describe yum.repo('rpmforge') do
+  it { should exist }
+  it { should be_enabled }
+end
+
 describe package('git') do
   it { should be_installed }
 end
@@ -88,6 +93,10 @@ describe package('tesseract') do
 end
 
 describe package('PyQt4') do
+  it { should be_installed }
+end
+
+describe package('unrar') do
   it { should be_installed }
 end
 

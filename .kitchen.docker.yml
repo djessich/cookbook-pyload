@@ -62,6 +62,15 @@ platforms:
     run_list:
       - recipe[yum]
       - recipe[yum-epel]
+      - recipe[yum-repoforge]
+    attributes:
+      yum:
+        rpmforge:
+          gpgcheck: false
+        rpmforge-testing:
+          gpgcheck: false
+        rpmforge-extras:
+          gpgcheck: false
 
   - name: centos-7
     driver:
@@ -73,6 +82,15 @@ platforms:
     run_list:
       - recipe[yum]
       - recipe[yum-epel]
+      - recipe[yum-repoforge]
+    attributes:
+      yum:
+        rpmforge:
+          gpgcheck: false
+        rpmforge-testing:
+          gpgcheck: false
+        rpmforge-extras:
+          gpgcheck: false
 
 suites:
   - name: default

@@ -65,7 +65,7 @@ when 'rhel'
   default['pyload']['pid_dir'] = '/var/run/pyload'
   default['pyload']['log_dir'] = '/var/log/pyload'
   default['pyload']['packages'] += %w(
-    python-beautifulsoup4 tesseract unrar PyQt4 p7zip-plugins pyOpenSSL js
+    python-beautifulsoup4 tesseract PyQt4 unrar p7zip-plugins pyOpenSSL js
   )
   default['pyload']['packages'] += if node['platform_version'].to_f < 7
                                      %w(python-crypto python-imaging)
