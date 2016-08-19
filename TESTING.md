@@ -1,4 +1,4 @@
-# Cookbook TESTING doc
+# Testing the Pyload Cookbook
 
 This document describes the process for testing the Pyload cookbook using the ChefDK. Cookbooks can be tested using the test dependencies defined in the cookbooks Gemfile alone, but that process will not be covered in this document in order to maintain simplicity.
 
@@ -28,7 +28,7 @@ chef exec bundle update
 
 The cookbook contains a Rakefile which includes a number of tasks, each of which can be ran individually, or in groups. Typing *rake* by itself will perform the default checks: style checks (Rubocop/Cookstyle and Foodcritic), unit tests (Chefspec) and integration tests (Kitchen). To see a complete list of available tasks run `rake -T`
 
-```
+```bash
 $ chef exec rake -T
 rake integration:kitchen:all
 rake spec
