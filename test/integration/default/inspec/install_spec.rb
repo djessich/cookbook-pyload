@@ -26,7 +26,39 @@ describe file('/usr/share/pyload') do
   its('mode') { should eq 0755 }
 end
 
+describe file('/home/pyload/.pyload') do
+  it { should exist }
+  it { should be_directory }
+  its('owner') { should eq 'pyload' }
+  its('group') { should eq 'pyload' }
+  its('mode') { should eq 0755 }
+end
+
+describe file('/home/pyload/.pyload/downloads') do
+  it { should exist }
+  it { should be_directory }
+  its('owner') { should eq 'pyload' }
+  its('group') { should eq 'pyload' }
+  its('mode') { should eq 0755 }
+end
+
 describe file('/var/run/pyload') do
+  it { should exist }
+  it { should be_directory }
+  its('owner') { should eq 'pyload' }
+  its('group') { should eq 'pyload' }
+  its('mode') { should eq 0755 }
+end
+
+describe file('/var/log/pyload') do
+  it { should exist }
+  it { should be_directory }
+  its('owner') { should eq 'pyload' }
+  its('group') { should eq 'pyload' }
+  its('mode') { should eq 0755 }
+end
+
+describe file('/usr/share/pyload/.git') do
   it { should exist }
   it { should be_directory }
   its('owner') { should eq 'pyload' }

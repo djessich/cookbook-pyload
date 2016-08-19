@@ -38,15 +38,12 @@ The `node['pyload']` global namespace defines general settings for this cookbook
 * `node['pyload']['install_dir']` - Specifies the location for Pyload package itself. By default, this is set to */usr/share/pyload*.
 * `node['pyload']['config_dir']` - Specifies the location for Pyload configuration folders and files. By default, this is set to */home/&lt;user&gt;/.pyload* (interpolates to */home/pyload/.pyload* if defaults are used).
 * `node['pyload']['download_dir']` - Specifies the location for all Pyload downloaded files. By default, this is set to *node['pyload']['config_dir']/downloads* (interpolates to */home/pyload/.pyload/downloads* if defaults are used).
-<!-- TODO: should be changed to /var/log/pyload -->
-TODO* `node['pyload']['log_dir']` - Specifies the location where log files will be placed. By default, this is set to *node['pyload']['config_dir']/logs* (interpolates to */home/pyload/.pyload/logs* if defaults are used).
 * `node['pyload']['pid_dir']` - Specifies the location of the PID file for Pyload. By default, this is set to */var/run/pyload*.
+* `node['pyload']['log_dir']` - Specifies the location where log files will be placed. By default, this is set to */var/log/pyload*.
 * `node['pyload']['user']` - Specifies the user which is used to run Pyload. By default, this is set to *pyload*.
 * `node['pyload']['group']` - Specifies the group which is used to run Pyload. By default, this is set to *pyload*.
-<!-- TODO: Remove the 'all' here -->
-* `node['pyload']['dir_mode']` - Specifies the mode for all folders created by this cookbook. By default, this is set to *0755*.
-<!-- TODO: Remove the 'all' here -->
-* `node['pyload']['file_mode']` - Specifies the mode for all files created by this cookbook. By default, this is set to *0644*.
+* `node['pyload']['dir_mode']` - Specifies the mode for folders created by this cookbook. By default, this is set to *0755*.
+* `node['pyload']['file_mode']` - Specifies the mode for files created by this cookbook. By default, this is set to *0644*.
 * `node['pyload']['init_style']` - Specifies the platforms init system type which can be either set to `init` or `systemd`. If something else is specified, no install script will be created. By default, the correct init system type is determined by this cookbook itself, which means that this attribute should not be required to be set manually.
 <!-- TODO: Only for platform, no use of plattform family at all -->
 * `node['pyload']['packages']` - Specifies a list of dependencies of Pyload which are required to successfully start Pyload. The correct package names are determined by this cookbook, regarding platform and platfom version. By default, this is set to all required dependencies for Pyload, including optional ones, which can be examined at Pyload repository or in the corresponding attribute file of this cookbook.

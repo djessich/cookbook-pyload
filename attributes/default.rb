@@ -25,12 +25,12 @@ default['pyload']['config_dir'] = if node['pyload']['user'] == 'root'
                                   else
                                     "/home/#{node['pyload']['user']}/.pyload"
                                   end
-
 default['pyload']['download_dir'] = "#{node['pyload']['config_dir']}/downloads"
-default['pyload']['log_dir'] = "#{node['pyload']['config_dir']}/logs"
 default['pyload']['pid_dir'] = '/var/run/pyload'
+default['pyload']['log_dir'] = '/var/log/pyload'
 default['pyload']['dir_mode'] = '0755'
 default['pyload']['file_mode'] = '0644'
+
 default['pyload']['language'] = 'en'
 default['pyload']['debug_mode'] = false
 default['pyload']['min_free_space'] = 200

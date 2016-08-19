@@ -17,6 +17,27 @@
 # limitations under the License.
 #
 
+directory node['pyload']['install_dir'] do
+  user node['pyload']['user']
+  group node['pyload']['group']
+  mode node['pyload']['dir_mode']
+  recursive true
+end
+
+directory node['pyload']['config_dir'] do
+  user node['pyload']['user']
+  group node['pyload']['group']
+  mode node['pyload']['dir_mode']
+  recursive true
+end
+
+directory node['pyload']['download_dir'] do
+  user node['pyload']['user']
+  group node['pyload']['group']
+  mode node['pyload']['dir_mode']
+  recursive true
+end
+
 directory node['pyload']['pid_dir'] do
   user node['pyload']['user']
   group node['pyload']['group']
@@ -24,7 +45,7 @@ directory node['pyload']['pid_dir'] do
   recursive true
 end
 
-directory node['pyload']['install_dir'] do
+directory node['pyload']['log_dir'] do
   user node['pyload']['user']
   group node['pyload']['group']
   mode node['pyload']['dir_mode']

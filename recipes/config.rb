@@ -17,27 +17,6 @@
 # limitations under the License.
 #
 
-directory node['pyload']['config_dir'] do
-  user node['pyload']['user']
-  group node['pyload']['group']
-  mode node['pyload']['dir_mode']
-  recursive true
-end
-
-directory node['pyload']['download_dir'] do
-  user node['pyload']['user']
-  group node['pyload']['group']
-  mode 0777
-  recursive true
-end
-
-directory node['pyload']['log_dir'] do
-  user node['pyload']['user']
-  group node['pyload']['group']
-  mode 0777
-  recursive true
-end
-
 template "#{node['pyload']['config_dir']}/pyload.conf" do
   source 'pyload.conf.erb'
   owner node['pyload']['user']
