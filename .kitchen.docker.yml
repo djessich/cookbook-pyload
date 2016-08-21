@@ -95,6 +95,20 @@ platforms:
       intermediate_instructions:
         - RUN dnf -y install yum which systemd-sysv initscripts
 
+  - name: opensuse-13.2
+    driver:
+      image: opensuse:13.2
+      pid_one_command: /bin/systemd
+      intermediate_instructions:
+        - RUN zypper --non-interactive install aaa_base perl-Getopt-Long-Descriptive which
+
+  - name: opensuse-42.1
+    driver:
+      image: opensuse:42.1
+      pid_one_command: /bin/systemd
+      intermediate_instructions:
+        - RUN zypper --non-interactive install aaa_base perl-Getopt-Long-Descriptive which
+
 suites:
   - name: default
     run_list:
@@ -128,6 +142,13 @@ suites:
       'centos-6',
       'centos-7'
     ]
+  - name: suse-packages
+    run_list:
+      - recipe[pyload::packages]
+    attributes:
+    includes: [
+      'opensuse-13.2'
+    ]
   - name: service-init
     run_list:
       - recipe[pyload::default]
@@ -148,5 +169,7 @@ suites:
       'centos-7',
       'fedora-22',
       'fedora-23',
-      'fedora-24'
+      'fedora-24',
+      'opensuse-13.2',
+      'opensuse-42.1'
     ]

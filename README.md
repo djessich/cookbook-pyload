@@ -13,6 +13,7 @@ This cookbook is used to install and configure [Pyload](https://github.com/pyloa
 * CentOS 6+
 * Debian 7+
 * Fedora 22+
+* openSUSE 13+
 * RHEL 6+
 * Ubuntu 12.04+
 
@@ -189,28 +190,28 @@ This cookbook uses Kitchen and Inspec for testing. For more information, see [TE
 
 This cookbook installs every required and optional dependency of Pyload using the target platforms package manager. The following matrix shows all the required packages and their corresponding platform name.
 
-| Package               | Arch                   | Debian/Ubuntu              | Fedora                | RHEL/CentOS           |
-|-----------------------|------------------------|----------------------------|-----------------------|-----------------------|
-| git                   | git                    | git                        | git                   | git                   |
-| curl                  | curl                   | curl                       | curl                  | curl                  |
-| openssl               | openssl                | openssl                    | openssl               | openssl               |
-| python                | python2                | python                     | python                | python                |
-| python-beaker         | python2-beaker         | python-beaker              | python-beaker         | python-beaker         |
-| python-beautifulsoup4 | python2-beautifulsoup4 | python-bs4                 | python-beautifulsoup4 | python-beautifulsoup4 |
-| python-crypto         | python2-crypto         | python-crypto              | python-crypto (<= 23)<br/>python2-crypto (>= 24) | python-crypto (<= 6)<br/>python2-crypto (>= 7) |
-| python-feedparser     | python2-feedparser     | python-feedparser          | python-feedparser     | python-feedparser     |
-| python-flup           | python2-flup           | python-flup                | python-flup           | python-flup           |
-| python-html5lib       | python2-html5lib       | python-html5lib            | python-html5lib       | python-html5lib       |
-| python-imaging        | python2-pillow         | python-imaging             | python-pillow         | python-imaging (<= 6)<br/>python-pillow (>= 7) |
-| python-jinja2         | python2-jinja          | python-jinja2              | python-jinja2         | python-jinja2         |
-| python-pycurl         | python2-pycurl         | python-pycurl              | python-pycurl         | python-pycurl         |
-| python-pyopenssl      | python2-pyopenssl      | python-openssl             | pyOpenSSL             | pyOpenSSL             |
-| python-pyqt4          | python2-pyqt4          | python-qt4                 | PyQt4                 | PyQt4                 |
-| python-simplejson     | python2-simplejson     | python-simplejson          | python-simplejson     | python-simplejson     |
-| python-thrift         | python2-thrift         | python-thrift (>= 8/14.04) | python-thrift         | python-thrift (>=7)   |
-| spidermonkey/js       | js                     | libmozjs185-1.0 (<= 7/12.04)<br/>libmozjs-24-bin (>= 8/14.04) | js | js    |
-| rhino                 | rhino                  | rhino                      | rhino                 | rhino                 |
-| tesseract             | tesseract<br/>tesseract-git<br/>tesseract-ocr-git | tesseract-ocr<br/>tesseract-ocr-eng<br/>gocr | tesseract | tesseract |
+| Package               | Arch                   | Debian/Ubuntu              | Fedora                | RHEL/CentOS           | Suse/OpenSuse         |
+|-----------------------|------------------------|----------------------------|-----------------------|-----------------------|-----------------------|
+| git                   | git                    | git                        | git                   | git                   | git                   |
+| curl                  | curl                   | curl                       | curl                  | curl                  | curl                  |
+| openssl               | openssl                | openssl                    | openssl               | openssl               | openssl               |
+| python                | python2                | python                     | python                | python                | python                |
+| python-beaker         | python2-beaker         | python-beaker              | python-beaker         | python-beaker         | python-Beaker         |
+| python-beautifulsoup4 | python2-beautifulsoup4 | python-bs4                 | python-beautifulsoup4 | python-beautifulsoup4 | python-beautifulsoup4 |
+| python-crypto         | python2-crypto         | python-crypto              | python-crypto (<= 23)<br/>python2-crypto (>= 24) | python-crypto (<= 6)<br/>python2-crypto (>= 7) | python-pycrypto |
+| python-feedparser     | python2-feedparser     | python-feedparser          | python-feedparser     | python-feedparser     | python-feedparser     |
+| python-flup           | python2-flup           | python-flup                | python-flup           | python-flup           | python-flup           |
+| python-html5lib       | python2-html5lib       | python-html5lib            | python-html5lib       | python-html5lib       | python-html5lib       |
+| python-imaging        | python2-pillow         | python-imaging             | python-pillow         | python-imaging (<= 6)<br/>python-pillow (>= 7) | python-imaging (<= 13.1)<br/>python-Pillow (>= 13.2) |
+| python-jinja2         | python2-jinja          | python-jinja2              | python-jinja2         | python-jinja2         | python-Jinja2         |
+| python-pycurl         | python2-pycurl         | python-pycurl              | python-pycurl         | python-pycurl         | python-pycurl         |
+| python-pyopenssl      | python2-pyopenssl      | python-openssl             | pyOpenSSL             | pyOpenSSL             | python-pyOpenSSL      |
+| python-pyqt4          | python2-pyqt4          | python-qt4                 | PyQt4                 | PyQt4                 | python-qt4            |
+| python-simplejson     | python2-simplejson     | python-simplejson          | python-simplejson     | python-simplejson     | python-simplejson     |
+| python-thrift         | python2-thrift         | python-thrift (>= 8/14.04) | python-thrift         | python-thrift (>=7)   | python-thrift         |
+| ossp-js               | js                     | libmozjs185-1.0 (<= 7/12.04)<br/>libmozjs-24-bin (>= 8/14.04) | js | js    | js<br/>python-python-spidermonkey |
+| rhino                 | rhino                  | rhino                      | rhino                 | rhino                 | rhino                 |
+| tesseract             | tesseract<br/>tesseract-git<br/>tesseract-ocr-git | tesseract-ocr<br/>tesseract-ocr-eng<br/>gocr | tesseract | tesseract | tesseract |
 
 More information can be found in the Pyloads project [README](https://github.com/pyload/pyload/blob/stable/README).
 

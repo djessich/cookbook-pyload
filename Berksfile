@@ -7,4 +7,5 @@ group :integration do
   cookbook 'yum', '~> 3.11.0'
   cookbook 'yum-epel', '~> 0.7.0'
   # cookbook 'pacman', '~> 1.1.1'
+  cookbook 'zypper', '~> 0.3.0'
 end

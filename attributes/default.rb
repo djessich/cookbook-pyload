@@ -91,6 +91,20 @@ when 'rhel'
                                    else
                                      %w(python2-crypto python-pillow python-thrift)
                                    end
+when 'suse'
+  default['pyload']['init_style'] = 'systemd'
+  default['pyload']['pid_dir'] = '/var/run/pyload'
+  default['pyload']['log_dir'] = '/var/log/pyload'
+  default['pyload']['packages'] = %w(
+    git curl openssl python python-Beaker python-beautifulsoup4 python-pycrypto python-feedparser python-flup
+    python-html5lib python-Jinja2 python-pycurl python-pyOpenSSL python-qt4 python-simplejson python-thrift js
+    rhino tesseract
+  )
+  default['pyload']['packages'] += if node['platform_version'].to_f < 13.2
+                                     %w(python-imaging)
+                                   else
+                                     %w(python-Pillow)
+                                   end
 else
   default['pyload']['init_style'] = 'none'
   default['pyload']['pid_dir'] = '/var/run'

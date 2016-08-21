@@ -49,6 +49,9 @@ platforms:
   #    box_version: 1.0.0
   #  run_list:
   #    - recipe[pacman]
+  - name: opensuse-13.2
+    run_list:
+    - recipe[zypper]
 
 suites:
   - name: default
@@ -90,6 +93,13 @@ suites:
       'centos-6.8',
       'centos-7.2'
     ]
+  - name: suse-packages
+    run_list:
+      - recipe[pyload::packages]
+    attributes:
+    includes: [
+      'opensuse-13.2'
+    ]
   - name: service-init
     run_list:
       - recipe[pyload::default]
@@ -110,6 +120,7 @@ suites:
       'centos-7.2',
       'fedora-22',
       'fedora-23',
-      'fedora-24'
+      'fedora-24',
+      'opensuse-13.2'
       #'arch'
     ]
