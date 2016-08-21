@@ -42,12 +42,26 @@ platforms:
   - name: fedora-24
     run_list:
       - recipe[yum::dnf_yum_compat]
+  # Unsupported by omnibus-chef installation script
+  #- name: arch
+  #  driver:
+  #    box: terrywang/archlinux
+  #    box_version: 1.0.0
+  #  run_list:
+  #    - recipe[pacman]
 
 suites:
   - name: default
     run_list:
       - recipe[pyload::default]
     attributes:
+  #- name: arch-packages
+  #  run_list:
+  #    - recipe[pyload::packages]
+  #  attributes:
+  #  includes: [
+  #    'arch'
+  #  ]
   - name: debian-packages
     run_list:
       - recipe[pyload::packages]
@@ -97,4 +111,5 @@ suites:
       'fedora-22',
       'fedora-23',
       'fedora-24'
+      #'arch'
     ]
