@@ -1,7 +1,7 @@
 #
 # Cookbook Name:: pyload
 # Suite:: service-init
-# Test:: service-spec
+# Test:: service
 #
 # Copyright 2016, Gridtec
 #

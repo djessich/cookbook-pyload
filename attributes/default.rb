@@ -36,47 +36,67 @@ default['pyload']['folder_per_package'] = true
 default['pyload']['cpu_priority'] = 0
 default['pyload']['use_checksum'] = false
 
-default['pyload']['packages'] = %w(
-  git curl python openssl rhino python-pycurl python-jinja2 python-beaker python-simplejson
-  python-feedparser python-html5lib p7zip zip unzip
-)
-
 case node['platform_family']
+when 'arch'
+  default['pyload']['init_style'] = 'systemd'
+  default['pyload']['pid_dir']    = '/var/run/pyload'
+  default['pyload']['log_dir']    = '/var/log/pyload'
+  default['pyload']['packages']   = %w(
+    git curl openssl python2 python2-beaker python2-beautifulsoup4 python2-crypto python2-feedparser python2-flup
+    python2-html5lib python2-pillow python2-jinja python2-pycurl python2-pyopenssl python2-pyqt4 python2-simplejson
+    python2-thrift js rhino tesseract tesseract-git tesseract-ocr-git
+  )
 when 'debian'
   default['pyload']['init_style'] = node['init_package']
   default['pyload']['pid_dir'] = '/var/run/pyload'
   default['pyload']['log_dir'] = '/var/log/pyload'
-  default['pyload']['packages'] += %w(
-    python-crypto python-imaging python-bs4 tesseract-ocr tesseract-ocr-eng
-    unrar-free p7zip-full python-qt4 python-openssl
+  default['pyload']['packages'] = %w(
+    git curl openssl python python-beaker python-bs4 python-crypto python-feedparser python-flup python-html5lib
+    python-imaging python-jinja2 python-pycurl python-openssl python-qt4 python-simplejson rhino tesseract-ocr
+    tesseract-ocr-eng gocr
   )
   case node['platform']
-  when 'ubuntu'
-    if node['platform_version'].to_f >= 14.04
-      default['pyload']['packages'] += %w(python-thrift libmozjs-24-bin)
-    end
   when 'debian'
-    if node['platform_version'].to_f >= 8
-      default['pyload']['packages'] += %w(python-thrift libmozjs-24-bin)
-    end
+    default['pyload']['packages'] += if node['platform_version'].to_f < 8
+                                       %w(libmozjs185-1.0)
+                                     else
+                                       %w(python-thrift libmozjs-24-bin)
+                                     end
+  when 'ubuntu'
+    default['pyload']['packages'] += if node['platform_version'].to_f < 14.04
+                                       %w(libmozjs185-1.0)
+                                     else
+                                       %w(python-thrift libmozjs-24-bin)
+                                     end
   end
-when 'rhel'
-  default['pyload']['init_style'] = node['init_package']
-  default['pyload']['pid_dir'] = '/var/run/pyload'
-  default['pyload']['log_dir'] = '/var/log/pyload'
-  default['pyload']['packages'] += %w(python-beautifulsoup4 tesseract PyQt4 unrar p7zip-plugins pyOpenSSL js)
-  default['pyload']['packages'] += if node['platform_version'].to_f < 7
-                                     %w(python-crypto python-imaging)
-                                   else
-                                     %w(python2-crypto python-pillow)
-                                   end
 when 'fedora'
   default['pyload']['init_style'] = 'systemd'
   default['pyload']['pid_dir'] = '/var/run/pyload'
   default['pyload']['log_dir'] = '/var/log/pyload'
-  default['pyload']['packages'] += %w(python-beautifulsoup4 tesseract PyQt4 unrar p7zip-plugins pyOpenSSL js python-crypto python-pillow)
+  default['pyload']['packages'] = %w(
+    git curl openssl python python-beaker python-beautifulsoup4 python-crypto python-feedparser python-flup
+    python-html5lib python-pillow python-jinja2 python-pycurl pyOpenSSL PyQt4 python-simplejson python-thrift
+    js rhino tesseract
+  )
+when 'rhel'
+  default['pyload']['init_style'] = node['init_package']
+  default['pyload']['pid_dir'] = '/var/run/pyload'
+  default['pyload']['log_dir'] = '/var/log/pyload'
+  default['pyload']['packages'] = %w(
+    git curl openssl python python-beaker python-beautifulsoup4 python-feedparser python-flup python-html5lib
+    python-jinja2 python-pycurl pyOpenSSL PyQt4 python-simplejson js rhino tesseract
+  )
+  default['pyload']['packages'] += if node['platform_version'].to_f < 7
+                                     %w(python-crypto python-imaging)
+                                   else
+                                     %w(python2-crypto python-pillow python-thrift)
+                                   end
 else
   default['pyload']['init_style'] = 'none'
   default['pyload']['pid_dir'] = '/var/run'
   default['pyload']['log_dir'] = '/var/log/pyload'
+  default['pyload']['packages'] = %w(
+    git curl openssl python python-beaker python-beautifulsoup4 python-crypto python-feedparser python-flup
+    python-html5lib python-imaging python-jinja2 python-pycurl python-openssl python-simplejson rhino tesseract
+  )
 end

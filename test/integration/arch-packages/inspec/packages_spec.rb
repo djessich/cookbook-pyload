@@ -1,7 +1,7 @@
 #
 # Cookbook Name:: pyload
-# Suite:: default
-# Test:: package
+# Suite:: arch-packages
+# Test:: packages
 #
 # Copyright 2016, Gridtec
 #
@@ -26,11 +26,67 @@ describe package('curl') do
   it { should be_installed }
 end
 
-describe package('python') do
+describe package('openssl') do
   it { should be_installed }
 end
 
-describe package('openssl') do
+describe package('python2') do
+  it { should be_installed }
+end
+
+describe package('python2-beaker') do
+  it { should be_installed }
+end
+
+describe package('python2-beautifulsoup4') do
+  it { should be_installed }
+end
+
+describe package('python2-crypto') do
+  it { should be_installed }
+end
+
+describe package('python2-feedparser') do
+  it { should be_installed }
+end
+
+describe package('python2-flup') do
+  it { should be_installed }
+end
+
+describe package('python2-html5lib') do
+  it { should be_installed }
+end
+
+describe package('python2-pillow') do
+  it { should be_installed }
+end
+
+describe package('python2-jinja2') do
+  it { should be_installed }
+end
+
+describe package('python2-pycurl') do
+  it { should be_installed }
+end
+
+describe package('python2-pyopenssl') do
+  it { should be_installed }
+end
+
+describe package('python2-pyqt4') do
+  it { should be_installed }
+end
+
+describe package('python2-simplejson') do
+  it { should be_installed }
+end
+
+describe package('python2-thrift') do
+  it { should be_installed }
+end
+
+describe package('js') do
   it { should be_installed }
 end
 
@@ -38,38 +94,14 @@ describe package('rhino') do
   it { should be_installed }
 end
 
-describe package('python-pycurl') do
+describe package('tesseract') do
   it { should be_installed }
 end
 
-describe package('python-jinja2') do
+describe package('tesseract-git') do
   it { should be_installed }
 end
 
-describe package('python-beaker') do
-  it { should be_installed }
-end
-
-describe package('python-simplejson') do
-  it { should be_installed }
-end
-
-describe package('python-feedparser') do
-  it { should be_installed }
-end
-
-describe package('python-html5lib') do
-  it { should be_installed }
-end
-
-describe package('p7zip') do
-  it { should be_installed }
-end
-
-describe package('zip') do
-  it { should be_installed }
-end
-
-describe package('unzip') do
+describe package('tesseract-ocr-git') do
   it { should be_installed }
 end

@@ -29,28 +29,19 @@ platforms:
     run_list:
       - recipe[yum]
       - recipe[yum-epel]
-      - recipe[yum-repoforge]
-    attributes:
-      yum:
-        rpmforge:
-          gpgcheck: false
-        rpmforge-testing:
-          gpgcheck: false
-        rpmforge-extras:
-          gpgcheck: false
   - name: centos-7.2
     run_list:
       - recipe[yum]
       - recipe[yum-epel]
-      - recipe[yum-repoforge]
-    attributes:
-      yum:
-        rpmforge:
-          gpgcheck: false
-        rpmforge-testing:
-          gpgcheck: false
-        rpmforge-extras:
-          gpgcheck: false
+  - name: fedora-22
+    run_list:
+      - recipe[yum::dnf_yum_compat]
+  - name: fedora-23
+    run_list:
+      - recipe[yum::dnf_yum_compat]
+  - name: fedora-24
+    run_list:
+      - recipe[yum::dnf_yum_compat]
 
 suites:
   - name: default
@@ -68,35 +59,21 @@ suites:
       'debian-7.11',
       'debian-8.5'
     ]
-  - name: debian-specific-packages
+  - name: fedora-packages
     run_list:
       - recipe[pyload::packages]
     attributes:
     includes: [
-      'ubuntu-14.04',
-      'ubuntu-16.04',
-      'debian-8.5'
+      'fedora-22',
+      'fedora-23',
+      'fedora-24'
     ]
   - name: rhel-packages
     run_list:
       - recipe[pyload::packages]
     attributes:
     includes: [
-      'centos-6.7',
-      'centos-7.2'
-    ]
-  - name: rhel-specific-packages-6
-    run_list:
-      - recipe[pyload::packages]
-    attributes:
-    includes: [
-      'centos-6.7'
-    ]
-  - name: rhel-specific-packages-7
-    run_list:
-      - recipe[pyload::packages]
-    attributes:
-    includes: [
+      'centos-6.8',
       'centos-7.2'
     ]
   - name: service-init
@@ -107,7 +84,7 @@ suites:
       'ubuntu-12.04',
       'ubuntu-14.04',
       'debian-7.11',
-      'centos-6.7'
+      'centos-6.8'
     ]
   - name: service-systemd
     run_list:
@@ -116,5 +93,8 @@ suites:
     includes: [
       'ubuntu-16.04',
       'debian-8.5',
-      'centos-7.2'
+      'centos-7.2',
+      'fedora-22',
+      'fedora-23',
+      'fedora-24'
     ]

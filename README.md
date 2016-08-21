@@ -9,11 +9,16 @@ This cookbook is used to install and configure [Pyload](https://github.com/pyloa
 
 ### Platforms
 
+* ArchLinux
 * CentOS 6+
 * Debian 7+
-* Fedora 23+
+* Fedora 22+
 * RHEL 6+
 * Ubuntu 12.04+
+
+#### Note on Fedora:
+
+As everything works on Red Hat Enterprise Linux (RHEL) and derivatives, it is assumed that this cookbook also works on Fedora 23+.
 
 ### Chef
 
@@ -182,7 +187,32 @@ This cookbook uses Kitchen and Inspec for testing. For more information, see [TE
 <!-- TODO: Write a list/table of dependencies -->
 ### What are the dependencies of Pyload installed by this cookbook?
 
-This cookbook installs every required and optional dependency of Pyload as described in the Pyloads project [README](https://github.com/pyload/pyload/blob/stable/README) using the systems package manager.
+This cookbook installs every required and optional dependency of Pyload using the target platforms package manager. The following matrix shows all the required packages and their corresponding platform name.
+
+| Package               | Arch                   | Debian/Ubuntu              | Fedora                | RHEL/CentOS           |
+|-----------------------|------------------------|----------------------------|-----------------------|-----------------------|
+| git                   | git                    | git                        | git                   | git                   |
+| curl                  | curl                   | curl                       | curl                  | curl                  |
+| openssl               | openssl                | openssl                    | openssl               | openssl               |
+| python                | python2                | python                     | python                | python                |
+| python-beaker         | python2-beaker         | python-beaker              | python-beaker         | python-beaker         |
+| python-beautifulsoup4 | python2-beautifulsoup4 | python-bs4                 | python-beautifulsoup4 | python-beautifulsoup4 |
+| python-crypto         | python2-crypto         | python-crypto              | python-crypto         | python-crypto (<=6)<br/>python2-crypto (>= 7) |
+| python-feedparser     | python2-feedparser     | python-feedparser          | python-feedparser     | python-feedparser     |
+| python-flup           | python2-flup           | python-flup                | python-flup           | python-flup           |
+| python-html5lib       | python2-html5lib       | python-html5lib            | python-html5lib       | python-html5lib       |
+| python-imaging        | python2-pillow         | python-imaging             | python-pillow         | python-imaging (<= 6)<br/>python-pillow (>= 7) |
+| python-jinja2         | python2-jinja          | python-jinja2              | python-jinja2         | python-jinja2         |
+| python-pycurl         | python2-pycurl         | python-pycurl              | python-pycurl         | python-pycurl         |
+| python-pyopenssl      | python2-pyopenssl      | python-openssl             | pyOpenSSL             | pyOpenSSL             |
+| python-pyqt4          | python2-pyqt4          | python-qt4                 | PyQt4                 | PyQt4                 |
+| python-simplejson     | python2-simplejson     | python-simplejson          | python-simplejson     | python-simplejson     |
+| python-thrift         | python2-thrift         | python-thrift (>= 8/14.04) | python-thrift         | python-thrift (>=7)   |
+| spidermonkey/js       | js                     | libmozjs185-1.0 (<= 7/12.04)<br/>libmozjs-24-bin (>= 8/14.04) | js | js    |
+| rhino                 | rhino                  | rhino                      | rhino                 | rhino                 |
+| tesseract             | tesseract<br/>tesseract-git<br/>tesseract-ocr-git | tesseract-ocr<br/>tesseract-ocr-eng<br/>gocr | tesseract | tesseract |
+
+More information can be found in the Pyloads project [README](https://github.com/pyload/pyload/blob/stable/README).
 
 ### Why does this cookbook doesn't use Python PIP to install all dependencies for Pyload?
 
@@ -198,7 +228,13 @@ On RHEL and derivatives, it is required to install 3rd party repositories as bas
 
 ### Does this cookbook generate a SSL certificates?
 
-No. You need to create your own SSL certificates either in your wrapper cookbook or manually and configure this cookbook where this certificates can be found on the system.
+No. You need to create your own SSL certificates either in your wrapper cookbook or manually on your node and configure this cookbook where this certificates can be found on the system.
+
+SSL certificate can be manually create by executing
+
+```bash
+  openssl genrsa 1024 > ssl.key openssl req -new -key ssl.key -out ssl.csr openssl req -days 36500 -x509 -key ssl.key -in ssl.csr > ssl.crt`
+  ```
 
 <!-- TODO: Why does this cookbook not provide an Upstart Script -->
 <!-- TODO: I want to contribute. What do I need to do? look contributing md -->

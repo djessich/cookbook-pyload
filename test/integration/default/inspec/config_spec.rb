@@ -1,7 +1,7 @@
 #
 # Cookbook Name:: pyload
 # Suite:: default
-# Test:: default
+# Test:: config
 #
 # Copyright 2016, Gridtec
 #

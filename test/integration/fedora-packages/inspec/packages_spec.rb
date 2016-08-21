@@ -1,6 +1,6 @@
 #
 # Cookbook Name:: pyload
-# Suite:: rhel-packages
+# Suite:: fedora-packages
 # Test:: packages
 #
 # Copyright 2016, Gridtec
@@ -42,6 +42,10 @@ describe package('python-beautifulsoup4') do
   it { should be_installed }
 end
 
+describe package('python-crypto') do
+  it { should be_installed }
+end
+
 describe package('python-feedparser') do
   it { should be_installed }
 end
@@ -51,6 +55,10 @@ describe package('python-flup') do
 end
 
 describe package('python-html5lib') do
+  it { should be_installed }
+end
+
+describe package('python-pillow') do
   it { should be_installed }
 end
 
@@ -74,6 +82,10 @@ describe package('python-simplejson') do
   it { should be_installed }
 end
 
+describe package('python-thrift') do
+  it { should be_installed }
+end
+
 describe package('js') do
   it { should be_installed }
 end
@@ -84,26 +96,4 @@ end
 
 describe package('tesseract') do
   it { should be_installed }
-end
-
-if os[:release].to_f < 7
-  describe package('python-crypto') do
-    it { should be_installed }
-  end
-
-  describe package('python-imaging') do
-    it { should be_installed }
-  end
-else
-  describe package('python2-crypto') do
-    it { should be_installed }
-  end
-
-  describe package('python-thrift') do
-    it { should be_installed }
-  end
-
-  describe package('python-pillow') do
-    it { should be_installed }
-  end
 end
