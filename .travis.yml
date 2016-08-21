@@ -27,6 +27,8 @@ env:
   - INSTANCE=default-fedora-22
   - INSTANCE=default-fedora-23
   - INSTANCE=default-fedora-24
+  - INSTANCE=default-opensuse-13.2
+  - INSTANCE=default-opensuse-42.1
   - INSTANCE=debian-packages-ubuntu-1204
   - INSTANCE=debian-packages-ubuntu-1404
   - INSTANCE=debian-packages-ubuntu-1604
@@ -48,6 +50,8 @@ env:
   - INSTANCE=service-systemd-fedora-22
   - INSTANCE=service-systemd-fedora-23
   - INSTANCE=service-systemd-fedora-24
+  - INSTANCE=service-systemd-opensuse-13.2
+  - INSTANCE=service-systemd-opensuse-42.1
 
 # Don't `bundle install`
 install: echo "skip bundle install"
