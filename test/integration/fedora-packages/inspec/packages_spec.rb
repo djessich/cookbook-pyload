@@ -42,10 +42,6 @@ describe package('python-beautifulsoup4') do
   it { should be_installed }
 end
 
-describe package('python-crypto') do
-  it { should be_installed }
-end
-
 describe package('python-feedparser') do
   it { should be_installed }
 end
@@ -96,4 +92,14 @@ end
 
 describe package('tesseract') do
   it { should be_installed }
+end
+
+if os[:release].to_f < 7
+  describe package('python-crypto') do
+    it { should be_installed }
+  end
+else
+  describe package('python2-crypto') do
+    it { should be_installed }
+  end
 end

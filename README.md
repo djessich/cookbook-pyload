@@ -197,7 +197,7 @@ This cookbook installs every required and optional dependency of Pyload using th
 | python                | python2                | python                     | python                | python                |
 | python-beaker         | python2-beaker         | python-beaker              | python-beaker         | python-beaker         |
 | python-beautifulsoup4 | python2-beautifulsoup4 | python-bs4                 | python-beautifulsoup4 | python-beautifulsoup4 |
-| python-crypto         | python2-crypto         | python-crypto              | python-crypto         | python-crypto (<=6)<br/>python2-crypto (>= 7) |
+| python-crypto         | python2-crypto         | python-crypto              | python-crypto (<= 23)<br/>python2-crypto (>= 24) | python-crypto (<= 6)<br/>python2-crypto (>= 7) |
 | python-feedparser     | python2-feedparser     | python-feedparser          | python-feedparser     | python-feedparser     |
 | python-flup           | python2-flup           | python-flup                | python-flup           | python-flup           |
 | python-html5lib       | python2-html5lib       | python-html5lib            | python-html5lib       | python-html5lib       |
