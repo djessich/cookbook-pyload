@@ -27,8 +27,6 @@ env:
   - INSTANCE=default-fedora-22
   - INSTANCE=default-fedora-23
   - INSTANCE=default-fedora-24
-  - INSTANCE=default-arch
-  - INSTANCE=arch-packages-arch
   - INSTANCE=debian-packages-ubuntu-1204
   - INSTANCE=debian-packages-ubuntu-1404
   - INSTANCE=debian-packages-ubuntu-1604
@@ -50,7 +48,6 @@ env:
   - INSTANCE=service-systemd-fedora-22
   - INSTANCE=service-systemd-fedora-23
   - INSTANCE=service-systemd-fedora-24
-  - INSTANCE=service-systemd-arch
 
 # Don't `bundle install`
 install: echo "skip bundle install"
