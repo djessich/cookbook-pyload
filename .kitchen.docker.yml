@@ -95,19 +95,20 @@ platforms:
       intermediate_instructions:
         - RUN dnf -y install yum which systemd-sysv initscripts
 
-  - name: opensuse-13.2
-    driver:
-      image: opensuse:13.2
-      pid_one_command: /bin/systemd
-      intermediate_instructions:
-        - RUN zypper --non-interactive install aaa_base perl-Getopt-Long-Descriptive which
-
-  - name: opensuse-42.1
-    driver:
-      image: opensuse:42.1
-      pid_one_command: /bin/systemd
-      intermediate_instructions:
-        - RUN zypper --non-interactive install aaa_base perl-Getopt-Long-Descriptive which
+  # Cannot start a pyload due to python error
+  #- name: opensuse-13.2
+  #  driver:
+  #    image: opensuse:13.2
+  #    pid_one_command: /bin/systemd
+  #    intermediate_instructions:
+  #      - RUN zypper --non-interactive install aaa_base perl-Getopt-Long-Descriptive which
+  #
+  #- name: opensuse-42.1
+  #  driver:
+  #    image: opensuse:42.1
+  #    pid_one_command: /bin/systemd
+  #    intermediate_instructions:
+  #      - RUN zypper --non-interactive install aaa_base perl-Getopt-Long-Descriptive which
 
 suites:
   - name: default
@@ -169,7 +170,5 @@ suites:
       'centos-7',
       'fedora-22',
       'fedora-23',
-      'fedora-24',
-      'opensuse-13.2',
-      'opensuse-42.1'
+      'fedora-24'
     ]
