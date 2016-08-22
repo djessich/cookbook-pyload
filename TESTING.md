@@ -35,7 +35,6 @@ rake spec
 rake style
 rake style:chef
 rake style:ruby
-rake style:ruby:auto_correct
 ```
 
 ## Style Testing

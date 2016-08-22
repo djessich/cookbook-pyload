@@ -220,7 +220,7 @@ This cookbook will install various packages during its execution by using the ta
 | rhino             | rhino                  | rhino                      | rhino                 | rhino                 | rhino                 |
 | tesseract         | tesseract<br/>tesseract-git<br/>tesseract-ocr-git | tesseract-ocr<br/>tesseract-ocr-eng<br/>gocr | tesseract | tesseract | tesseract |
 
-More information of required and optional dependencies of Pyload can be found in the official Pyloads project [README](https://github.com/pyload/pyload/blob/stable/README).
+More information on required and optional dependencies of Pyload can be found in the official Pyloads project [README](https://github.com/pyload/pyload/blob/stable/README).
 
 ### Why does this cookbook doesn't use Python PIP to install all dependencies for Pyload?
 
@@ -230,25 +230,25 @@ If you already have Python PIP installed on your system and you really depend on
 
 However, in future time it might be necessary to use Python PIP to get the transparency for each platform, if we are not able to determine dependency package names for each platform anymore. Moreover, if the community wants us to install dependencies using Python PIP and that this is seen as an improvement of this cookbook, feel free to create an issue for that to let us know.
 
-### Why is a package required for Pyload not found on RHEL and its derivatives?
+### Why is a package installed by this cookbook not found on RHEL and its derivatives?
 
 On RHEL and derivatives, it is required to install 3rd party repositories as base repositories do no include every required package. Either put [yum](https://github.com/chef-cookbooks/yum) and [yum-epel](https://github.com/chef-cookbooks/yum-epel) cookbooks in your `run_list` or include them by using `include_recipe` in your wrapper cookbook.
 
 ### Why does this cookbook does not provide an Upstart config on Upstart enabled platforms?
 
-We are currently working on that, to provide an Upstart configuration file. As this was not working well in the first place, we decided to just use the well-developed and working Sys-V-Init script on Upstart enabled platforms. In future releases, we may be able to provide an Upstart configuration file.
+We are currently working on an Upstart configuration file for Pyload. As this was not working well in the first place, we decided to just use the well-developed and working Sys-V-Init script on Upstart enabled platforms. In future releases, we may be able to include an Upstart configuration file in this cookbook.
 
 ### Does this cookbook generate a SSL certificates for me?
 
 No. This is not the intend of this cookbook. You need to create your own SSL certificates either in your wrapper cookbook or manually on your node and configure this cookbook where this certificates can be found on the system.
 
-SSL certificate can be manually created by for example executing
+SSL certificate can be manually created for example by executing
 
 ```bash
   openssl genrsa 1024 > ssl.key openssl req -new -key ssl.key -out ssl.csr openssl req -days 36500 -x509 -key ssl.key -in ssl.csr > ssl.crt
 ```
 
-### I want to execute tests. What do I need to do?
+### I want to execute this cookbooks tests. What do I need to do?
 
 We have provided a file called [TESTING.md](https://github.com/gridtec/cookbook-pyload/blob/master/TESTING.md) where you can find information on how to test this cookbook. We also suggest, that you have a look at [Travis CI](https://travis-ci.org/gridtec/cookbook-pyload), to see all tests we are currently executing to test this cookbook.
 
