@@ -59,8 +59,8 @@ describe file('/home/pyload/.pyload/pyload.conf') do
   its('content') { should match(%r{log\s[a-zA-Z0-9\-\.\"\:\;\_\=/\n\s]*log_count.*5}) }
   its('content') { should match(%r{log\s[a-zA-Z0-9\-\.\"\:\;\_\=/\n\s]*log_size.*100}) }
   its('content') { should match(%r{log\s[a-zA-Z0-9\-\.\"\:\;\_\=/\n\s]*log_rotate.*True}) }
-  its('content') { should match(/permission\s[a-zA-Z0-9\-\.\"\:\;\_\=\n\s]*user.*user/) }
-  its('content') { should match(/permission\s[a-zA-Z0-9\-\.\"\:\;\_\=\n\s]*group.*users/) }
+  its('content') { should match(/permission\s[a-zA-Z0-9\-\.\"\:\;\_\=\n\s]*user.*pyload/) }
+  its('content') { should match(/permission\s[a-zA-Z0-9\-\.\"\:\;\_\=\n\s]*group.*pyload/) }
   its('content') { should match(/permission\s[a-zA-Z0-9\-\.\"\:\;\_\=\n\s]*folder.*0755/) }
   its('content') { should match(/permission\s[a-zA-Z0-9\-\.\"\:\;\_\=\n\s]*file.*0644/) }
   its('content') { should match(/permission\s[a-zA-Z0-9\-\.\"\:\;\_\=\n\s]*change_dl.*False/) }

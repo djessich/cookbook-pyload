@@ -17,10 +17,6 @@ This cookbook is used to install and configure [Pyload](https://github.com/pyloa
 * RHEL 6+
 * Ubuntu 12.04+
 
-#### Note on Fedora:
-
-As everything works on Red Hat Enterprise Linux (RHEL) and derivatives, it is assumed that this cookbook also works on Fedora 23+.
-
 ### Chef
 
 Chef 12.5+
@@ -52,7 +48,6 @@ The `node['pyload']` global namespace defines general settings for this cookbook
 * `node['pyload']['dir_mode']` - Specifies the mode for folders created by this cookbook. By default, this is set to *0755*.
 * `node['pyload']['file_mode']` - Specifies the mode for files created by this cookbook. By default, this is set to *0644*.
 * `node['pyload']['init_style']` - Specifies the platforms init system type which can be either set to `init` or `systemd`. If something else is specified, no install script will be created. By default, the correct init system type is determined by this cookbook itself, which means that this attribute should not be required to be set manually.
-<!-- TODO: Only for platform, no use of plattform family at all -->
 * `node['pyload']['packages']` - Specifies a list of dependencies of Pyload which are required to successfully start Pyload. The correct package names are determined by this cookbook, regarding platform and platfom version. By default, this is set to all required dependencies for Pyload, including optional ones, which can be examined at Pyload repository or in the corresponding attribute file of this cookbook.
 
 <!-- TODO: Move these to global attributes file -->
@@ -92,8 +87,8 @@ The `node['pyload']['database']` namespace defines logging settings for Pyload, 
 
 The `node['pyload']['permission']` namespace defines permissive settings for Pyload, which will be set in *pyload.conf* configuration file.
 
-* `node['pyload']['permission']['user']` - Specifies the username which will be set for all downloads. By default, this is set to *user*, which represents just a dummy. Its recommended to set this to another value.
-* `node['pyload']['permission']['group']` - Specifies the groupname which will be set for all downloads. By default, this is set to *users*, which represents just a dummy. Its recommended to set this to another value.
+* `node['pyload']['permission']['user']` - Specifies the username which will be used by Pyload. If set to *nil*, the value specified in `node['pyload']['user']` will be used. By default, this is set to *nil*.
+* `node['pyload']['permission']['group']` - Specifies the groupname which will be used by Pyload. If set to *nil*, the value specified in `node['pyload']['group']` will be used. By default, this is set to *nil*.
 * `node['pyload']['permission']['dir_mode']` - Specifies the directory mode which will be set for all downloads. By default, this is set to *0755*.
 * `node['pyload']['permission']['file_mode']` - Specifies the file mode which will be set for all downloads. By default, this is set to *0644*.
 * `node['pyload']['permission']['change_downloads']` - Specifies if the user and group of a downloaded package should be changed. By default, this is set to *false*.
@@ -154,16 +149,25 @@ The `node['pyload']['webinterface']` namespace defines webinterface settings for
 
 ### default
 
-This is the only recipe which should be included either in your nodes `run_list` or by using `include_recipe` in your wrapper cookbook. The recipe will create the specified user and group for pyload and includes all other recipes of this cookbook.
+This is the only recipe which should be included either in your nodes `run_list` or by using `include_recipe` in your wrapper cookbook. The recipe will create the specified user and group for pyload and includes all other recipes of this cookbook (see below).
 
 ### config
 
-This recipe creates the configuration directory for Pyload, as specified in `node['pyload']['conf_dir']`, creates all required folders and places all required configuration files in it.
+This recipe sets up the config directory as specified in `node['pyload']['conf_dir']` which includes creating the required folders and placing necessary configuration files.
 
 <!-- TODO: Check if that description applies -->
 ### install
 
-This recipe does a number of things to install Pyload. This includes, creating the install directory for Pyload, as specified in `node['pyload']['install_dir']` and the PID file directory, as specified in `node['pyload']['pid_dir']`. Moreover, it will clone Pyload source code from the [official Pyload Git repository](https://github.com/pyload/pyload) and checkout the *stable* branch. Next, it will perform a system check, to check if Pyload is able to run by using the [*systemCheck.py*](https://github.com/pyload/pyload/blob/stable/systemCheck.py) script. In the end it creates symbolic links to */usr/bin* for all Pyload executeables ([pyLoadCli](https://github.com/pyload/pyload/blob/stable/pyLoadCli.py), [pyLoadCore](https://github.com/pyload/pyload/blob/stable/pyLoadCore.py), [pyLoadGui](https://github.com/pyload/pyload/blob/stable/pyLoadGui.py)), to allow running Pyload directly from bash as command.
+This recipe does a number of things to install Pyload. This includes the following
+
+* create the install directory as specified in `node['pyload']['install_dir']`
+* create the configuration directory as specified in `node['pyload']['conf_dir']`
+* create the download directory as specified in `node['pyload']['download_dir']`
+* create the pid file directory (run directory) as specified in `node['pyload']['pid_dir']`
+* create the logging directory as specified in `node['pyload']['log_dir']`
+* clone Pyload source code from the [official Pyload Git repository](https://github.com/pyload/pyload) and checkout the *stable* branch
+* perform a system check, to check if Pyload is able to run by using the [*systemCheck.py*](https://github.com/pyload/pyload/blob/stable/systemCheck.py) script in the source code
+* create symbolic links to */usr/bin* for all Pyload executeables ([pyLoadCli](https://github.com/pyload/pyload/blob/stable/pyLoadCli.py), [pyLoadCore](https://github.com/pyload/pyload/blob/stable/pyLoadCore.py), [pyLoadGui](https://github.com/pyload/pyload/blob/stable/pyLoadGui.py)), to allow running Pyload directly from bash as command
 
 ### packages
 
@@ -179,41 +183,44 @@ This recipe includes one of the `pyload::INIT_STYLE_service` recipes based on th
 
 If the init system cannot be determined by this cookbook (f.e. unsupported plattform) or any other desriptor is specified, there will be no init system script created from this cookbook.
 
-## Tests
+## Usage
 
-This cookbook uses Kitchen and Inspec for testing. For more information, see [TESTING.md](https://github.com/gridtec/cookbook-pyload/blob/master/TESTING.md).
+Using this cookbook is relatively straight forward. Either put the default recipe (`pyload::default`) in a nodes `run_list` or include it in a your wrapper cookbook using `include_recipe`. Change the attributes as you need them, but in most cases no change will be required.
+
+## Development
+
+Please see the [Contributing](https://github.com/gridtec/cookbook-pyload/blob/master/CONTRIBUTING.md) and [Testing](https://github.com/gridtec/cookbook-pyload/blob/master/TESTING.md) Guidelines.
 
 ## Frequently Asked Questions
 
-<!-- TODO: Write a list/table of dependencies -->
-### What are the dependencies of Pyload installed by this cookbook?
+### What are the packages installed by this cookbook?
 
-This cookbook installs every required and optional dependency of Pyload using the target platforms package manager. The following matrix shows all the required packages and their corresponding platform name.
+This cookbook will install various packages during its execution by using the target platforms package manager. Thereby lots of these packages represent required and optional dependencies of Pyload. They are defined in `node['pyload']['packages']` attribute and will be determined by this cookbook on its own as there may be differences in package names on various target platforms. To illustrate this differences, we provide the following matrix to give a short overview of these different package names.
 
-| Package               | Arch                   | Debian/Ubuntu              | Fedora                | RHEL/CentOS           | Suse/OpenSuse         |
-|-----------------------|------------------------|----------------------------|-----------------------|-----------------------|-----------------------|
-| git                   | git                    | git                        | git                   | git                   | git                   |
-| curl                  | curl                   | curl                       | curl                  | curl                  | curl                  |
-| openssl               | openssl                | openssl                    | openssl               | openssl               | openssl               |
-| python                | python2                | python                     | python                | python                | python                |
-| python-beaker         | python2-beaker         | python-beaker              | python-beaker         | python-beaker         | python-Beaker         |
-| python-beautifulsoup4 | python2-beautifulsoup4 | python-bs4                 | python-beautifulsoup4 | python-beautifulsoup4 | python-beautifulsoup4 |
-| python-crypto         | python2-crypto         | python-crypto              | python-crypto (<= 23)<br/>python2-crypto (>= 24) | python-crypto (<= 6)<br/>python2-crypto (>= 7) | python-pycrypto |
-| python-feedparser     | python2-feedparser     | python-feedparser          | python-feedparser     | python-feedparser     | python-feedparser     |
-| python-flup           | python2-flup           | python-flup                | python-flup           | python-flup           | python-flup           |
-| python-html5lib       | python2-html5lib       | python-html5lib            | python-html5lib       | python-html5lib       | python-html5lib       |
-| python-imaging        | python2-pillow         | python-imaging             | python-pillow         | python-imaging (<= 6)<br/>python-pillow (>= 7) | python-imaging (<= 13.1)<br/>python-Pillow (>= 13.2) |
-| python-jinja2         | python2-jinja          | python-jinja2              | python-jinja2         | python-jinja2         | python-Jinja2         |
-| python-pycurl         | python2-pycurl         | python-pycurl              | python-pycurl         | python-pycurl         | python-pycurl         |
-| python-pyopenssl      | python2-pyopenssl      | python-openssl             | pyOpenSSL             | pyOpenSSL             | python-pyOpenSSL      |
-| python-pyqt4          | python2-pyqt4          | python-qt4                 | PyQt4                 | PyQt4                 | python-qt4            |
-| python-simplejson     | python2-simplejson     | python-simplejson          | python-simplejson     | python-simplejson     | python-simplejson     |
-| python-thrift         | python2-thrift         | python-thrift (>= 8/14.04) | python-thrift         | python-thrift (>=7)   | python-thrift         |
-| ossp-js               | js                     | libmozjs185-1.0 (<= 7/12.04)<br/>libmozjs-24-bin (>= 8/14.04) | js | js    | js<br/>python-python-spidermonkey |
-| rhino                 | rhino                  | rhino                      | rhino                 | rhino                 | rhino                 |
-| tesseract             | tesseract<br/>tesseract-git<br/>tesseract-ocr-git | tesseract-ocr<br/>tesseract-ocr-eng<br/>gocr | tesseract | tesseract | tesseract |
+| Package           | Arch                   | Debian/Ubuntu              | Fedora                | RHEL/CentOS           | Suse/OpenSuse         |
+|-------------------|------------------------|----------------------------|-----------------------|-----------------------|-----------------------|
+| git               | git                    | git                        | git                   | git                   | git                   |
+| curl              | curl                   | curl                       | curl                  | curl                  | curl                  |
+| openssl           | openssl                | openssl                    | openssl               | openssl               | openssl               |
+| python            | python2                | python                     | python                | python                | python                |
+| beaker            | python2-beaker         | python-beaker              | python-beaker         | python-beaker         | python-Beaker         |
+| BeautifulSoup4    | python2-beautifulsoup4 | python-bs4                 | python-beautifulsoup4 | python-beautifulsoup4 | python-beautifulsoup4 |
+| pycrypto          | python2-crypto         | python-crypto              | python-crypto (<= 23)<br/>python2-crypto (>= 24) | python-crypto (<= 6)<br/>python2-crypto (>= 7) | python-pycrypto |
+| python-feedparser | python2-feedparser     | python-feedparser          | python-feedparser     | python-feedparser     | python-feedparser     |
+| python-flup       | python2-flup           | python-flup                | python-flup           | python-flup           | python-flup           |
+| python-html5lib   | python2-html5lib       | python-html5lib            | python-html5lib       | python-html5lib       | python-html5lib       |
+| python-imaging    | python2-pillow         | python-imaging             | python-pillow         | python-imaging (<= 6)<br/>python-pillow (>= 7) | python-imaging (<= 13.1)<br/>python-Pillow (>= 13.2) |
+| jinja2            | python2-jinja          | python-jinja2              | python-jinja2         | python-jinja2         | python-Jinja2         |
+| pycurl            | python2-pycurl         | python-pycurl              | python-pycurl         | python-pycurl         | python-pycurl         |
+| pyOpenSSL         | python2-pyopenssl      | python-openssl             | pyOpenSSL             | pyOpenSSL             | python-pyOpenSSL      |
+| pyqt4             | python2-pyqt4          | python-qt4                 | PyQt4                 | PyQt4                 | python-qt4            |
+| simplejson        | python2-simplejson     | python-simplejson          | python-simplejson     | python-simplejson     | python-simplejson     |
+| thrift            | python2-thrift         | python-thrift (>= 8/14.04) | python-thrift         | python-thrift (>=7)   | python-thrift         |
+| ossp-js           | js                     | libmozjs185-1.0 (<= 7/12.04)<br/>libmozjs-24-bin (>= 8/14.04) | js | js    | js<br/>python-python-spidermonkey |
+| rhino             | rhino                  | rhino                      | rhino                 | rhino                 | rhino                 |
+| tesseract         | tesseract<br/>tesseract-git<br/>tesseract-ocr-git | tesseract-ocr<br/>tesseract-ocr-eng<br/>gocr | tesseract | tesseract | tesseract |
 
-More information can be found in the Pyloads project [README](https://github.com/pyload/pyload/blob/stable/README).
+More information of required and optional dependencies of Pyload can be found in the official Pyloads project [README](https://github.com/pyload/pyload/blob/stable/README).
 
 ### Why does this cookbook doesn't use Python PIP to install all dependencies for Pyload?
 
@@ -227,23 +234,30 @@ However, in future time it might be necessary to use Python PIP to get the trans
 
 On RHEL and derivatives, it is required to install 3rd party repositories as base repositories do no include every required package. Either put [yum](https://github.com/chef-cookbooks/yum) and [yum-epel](https://github.com/chef-cookbooks/yum-epel) cookbooks in your `run_list` or include them by using `include_recipe` in your wrapper cookbook.
 
-### Does this cookbook generate a SSL certificates?
+### Why does this cookbook does not provide an Upstart config on Upstart enabled platforms?
 
-No. You need to create your own SSL certificates either in your wrapper cookbook or manually on your node and configure this cookbook where this certificates can be found on the system.
+We are currently working on that, to provide an Upstart configuration file. As this was not working well in the first place, we decided to just use the well-developed and working Sys-V-Init script on Upstart enabled platforms. In future releases, we may be able to provide an Upstart configuration file.
 
-SSL certificate can be manually create by executing
+### Does this cookbook generate a SSL certificates for me?
+
+No. This is not the intend of this cookbook. You need to create your own SSL certificates either in your wrapper cookbook or manually on your node and configure this cookbook where this certificates can be found on the system.
+
+SSL certificate can be manually created by for example executing
 
 ```bash
-  openssl genrsa 1024 > ssl.key openssl req -new -key ssl.key -out ssl.csr openssl req -days 36500 -x509 -key ssl.key -in ssl.csr > ssl.crt`
-  ```
+  openssl genrsa 1024 > ssl.key openssl req -new -key ssl.key -out ssl.csr openssl req -days 36500 -x509 -key ssl.key -in ssl.csr > ssl.crt
+```
 
-<!-- TODO: Why does this cookbook not provide an Upstart Script -->
-<!-- TODO: I want to contribute. What do I need to do? look contributing md -->
-<!-- TODO: I want to test. What do I need to do? Look testingmd -->
+### I want to execute tests. What do I need to do?
+
+We have provided a file called [TESTING.md](https://github.com/gridtec/cookbook-pyload/blob/master/TESTING.md) where you can find information on how to test this cookbook. We also suggest, that you have a look at [Travis CI](https://travis-ci.org/gridtec/cookbook-pyload), to see all tests we are currently executing to test this cookbook.
+
+### I want to contribute. What do I need to do?
+
+Thank you, that you want to help us out. Please see [CONTRIBUTING.md](https://github.com/gridtec/cookbook-pyload/blob/master/CONTRIBUTING.md) for more information on contributing to this project.
 
 ## License & Authors
 
-<!-- TODO: Change to gridtec and set me as maintainer -->
 * Author: Dominik Jessich [jessichd@gridtec.at](mailto:jessichd@gridtec.at)
 
 ```

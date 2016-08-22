@@ -17,8 +17,8 @@
 # limitations under the License.
 #
 
-default['pyload']['permission']['user'] = 'user'
-default['pyload']['permission']['group'] = 'users'
+default['pyload']['permission']['user'] = nil
+default['pyload']['permission']['group'] = nil
 default['pyload']['permission']['dir_mode'] = '0755'
 default['pyload']['permission']['file_mode'] = '0644'
 default['pyload']['permission']['change_downloads'] = false
