@@ -29,6 +29,8 @@ default['pyload']['download_dir'] = "#{node['pyload']['config_dir']}/downloads"
 default['pyload']['dir_mode'] = '0755'
 default['pyload']['file_mode'] = '0644'
 
+default['pyload']['accounts'] = {}
+
 default['pyload']['language'] = 'en'
 default['pyload']['debug_mode'] = false
 default['pyload']['min_free_space'] = 200

@@ -49,6 +49,21 @@ The `node['pyload']` global namespace defines general settings for this cookbook
 * `node['pyload']['file_mode']` - Specifies the mode for files created by this cookbook. By default, this is set to *0644*.
 * `node['pyload']['init_style']` - Specifies the platforms init system type which can be either set to `init` or `systemd`. If something else is specified, no install script will be created. By default, the correct init system type is determined by this cookbook itself, which means that this attribute should not be required to be set manually.
 * `node['pyload']['packages']` - Specifies a list of dependencies of Pyload which are required to successfully start Pyload. The correct package names are determined by this cookbook, regarding platform and platfom version. By default, this is set to all required dependencies for Pyload, including optional ones, which can be examined at Pyload repository or in the corresponding attribute file of this cookbook.
+* `node['pyload']['accounts']` - Specifies all accounts to be configured for Pyload. The value is expected to be a hash which includes one or multiple ids representing an account whereas each id has a subhash as value representing the account data. The subhash should have the following content:
+  * `user` - The name of the user which identifies the account. Required.
+  * `password` - The password of the user which identifies the account. Required.
+  * `name` - The name for the account. If unset, the account id will be used, so this is optional.
+
+  The following example demonstrates the use of this attribute:
+  ```ruby
+    accounts = {
+      ftp: {
+        user: 'root',
+        password: 'changeme',
+        name: 'Ftp'
+      }
+    }
+  ```
 
 <!-- TODO: Move these to global attributes file -->
 The `node['pyload']` global namespace also defines the following general settings for Pyload, which will be set in *pyload.conf* configuration file.

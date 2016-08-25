@@ -17,6 +17,17 @@
 # limitations under the License.
 #
 
+template "#{node['pyload']['config_dir']}/accounts.conf" do
+  source 'accounts.conf.erb'
+  owner node['pyload']['user']
+  group node['pyload']['group']
+  mode 0600
+  variables(
+    accounts: node['pyload']['accounts']
+  )
+  action :create_if_missing
+end unless node['pyload']['accounts'].empty?
+
 template "#{node['pyload']['config_dir']}/pyload.conf" do
   source 'pyload.conf.erb'
   owner node['pyload']['user']

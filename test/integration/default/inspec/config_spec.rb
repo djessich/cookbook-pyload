@@ -18,6 +18,15 @@
 # limitations under the License.
 #
 
+describe file('/home/pyload/.pyload/accounts.conf') do
+  it { should exist }
+  it { should be_file }
+  its('owner') { should eq 'pyload' }
+  its('group') { should eq 'pyload' }
+  its('mode') { should eq 0600 }
+  its('content') { should match(/Test:\n\n\ttest:test/) }
+end
+
 describe file('/home/pyload/.pyload/pyload.conf') do
   it { should exist }
   it { should be_file }

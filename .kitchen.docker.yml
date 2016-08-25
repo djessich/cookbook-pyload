@@ -115,6 +115,11 @@ suites:
     run_list:
       - recipe[pyload::default]
     attributes:
+      pyload:
+        accounts:
+          test:
+            user: test
+            password: test
   - name: debian-packages
     run_list:
       - recipe[pyload::packages]
