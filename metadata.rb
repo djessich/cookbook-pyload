@@ -6,7 +6,7 @@ description 'Installs/Configures Pyload'
 long_description IO.read(File.join(File.dirname(__FILE__), 'README.md'))
 version IO.read(File.join(File.dirname(__FILE__), 'VERSION'))
 
-%w(debian ubuntu centos redhat fedora scientific arch suse opensuse).each do |os|
+%w(debian ubuntu centos redhat fedora suse opensuse arch).each do |os|
   supports os
 end
 

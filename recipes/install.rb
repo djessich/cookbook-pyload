@@ -56,7 +56,7 @@ execute 'system_check_pyload' do
   command 'echo \n | python systemCheck.py'
   cwd node['pyload']['install_dir']
   action :nothing
-  not_if node['platform'].eql?('rhel') && node['platform_version'].to_f == 7
+  # not_if node['platform'].eql?('rhel') && node['platform_version'].to_f == 7
 end
 
 git node['pyload']['install_dir'] do
@@ -69,6 +69,13 @@ git node['pyload']['install_dir'] do
   action :sync
   notifies :run, 'execute[system_check_pyload]', :immediately
 end
+
+# this fix only applies to suse platform family as Pyload fails to start due to an error of file function
+# we will comment out the following line 'translation.func_globals['find'] = find' of file <pyload_install_dir>/module/common/pylgettext.py
+execute 'opensuse_fix' do
+  command "sed -i s/translation.func_globals/#translation.func_globals/g #{node['pyload']['install_dir']}/module/commonpylgettext.py"
+  only_if "grep -q ^translation.func_globals.* #{node['pyload']['install_dir']}/module/common/pylgettext.py"
+end if node['platform_family'].eql?('suse')
 
 %w(pyLoadCli pyLoadCore pyLoadGui).each do |bin|
   link "/usr/bin/#{bin}" do
