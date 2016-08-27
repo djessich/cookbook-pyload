@@ -53,7 +53,7 @@ namespace :integration do
   end
 end
 
-# Releasee to supermarket
+# Release to supermarket
 namespace :supermarket do
   begin
     require 'stove/rake_task'
