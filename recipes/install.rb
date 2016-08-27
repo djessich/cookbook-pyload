@@ -73,9 +73,9 @@ end
 # this fix only applies to suse platform family as Pyload fails to start due to an error of file function
 # we will comment out the following line 'translation.func_globals['find'] = find' of file <pyload_install_dir>/module/common/pylgettext.py
 execute 'opensuse_fix' do
-  command "sed -i s/translation.func_globals/#translation.func_globals/g #{node['pyload']['install_dir']}/module/commonpylgettext.py"
+  command "sed -i s/translation.func_globals/#translation.func_globals/g #{node['pyload']['install_dir']}/module/common/pylgettext.py"
   only_if "grep -q ^translation.func_globals.* #{node['pyload']['install_dir']}/module/common/pylgettext.py"
-end if node['platform_family'].eql?('suse')
+end if node['platform_family'].eql?('suse') && node['pyload']['use_fix']
 
 %w(pyLoadCli pyLoadCore pyLoadGui).each do |bin|
   link "/usr/bin/#{bin}" do

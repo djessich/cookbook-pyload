@@ -97,6 +97,7 @@ when 'suse'
   default['pyload']['init_style'] = 'systemd'
   default['pyload']['pid_dir']    = '/var/run/pyload'
   default['pyload']['log_dir']    = '/var/log/pyload'
+  default['pyload']['use_fix']    = true
   default['pyload']['packages']   = %w(
     git curl openssl python python-Beaker python-beautifulsoup4 python-pycrypto python-feedparser python-flup
     python-html5lib python-Jinja2 python-pycurl python-pyOpenSSL python-qt4 python-simplejson python-thrift js

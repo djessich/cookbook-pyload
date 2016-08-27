@@ -170,7 +170,6 @@ This is the only recipe which should be included either in your nodes `run_list`
 
 This recipe sets up the config directory as specified in `node['pyload']['conf_dir']` which includes creating the required folders and placing necessary configuration files.
 
-<!-- TODO: Check if that description applies -->
 ### install
 
 This recipe does a number of things to install Pyload. This includes the following
@@ -183,6 +182,12 @@ This recipe does a number of things to install Pyload. This includes the followi
 * clone Pyload source code from the [official Pyload Git repository](https://github.com/pyload/pyload) and checkout the *stable* branch
 * perform a system check, to check if Pyload is able to run by using the [*systemCheck.py*](https://github.com/pyload/pyload/blob/stable/systemCheck.py) script in the source code
 * create symbolic links to */usr/bin* for all Pyload executeables ([pyLoadCli](https://github.com/pyload/pyload/blob/stable/pyLoadCli.py), [pyLoadCore](https://github.com/pyload/pyload/blob/stable/pyLoadCore.py), [pyLoadGui](https://github.com/pyload/pyload/blob/stable/pyLoadGui.py)), to allow running Pyload directly from bash as command
+
+#### Note for OpenSUSE and derivatives:
+
+On OpenSUSE and derivatives, the install recipe will need to execute a fix for starting Pyload as it fails to start due to overwritten `find` function. This fix will remove the line `translation.func_globals['find'] = find` from file `node['pyload']['install_dir']/module/common/pylgettext.py` by commenting it out. See issue [#2755](https://github.com/pyload/pyload/issues/2577) of Pyload repository.
+
+If you encounter issues in Pyload functionality because of this fix, you can uncomment the commented line `translation.func_globals['find'] = find` from file `node['pyload']['install_dir']/module/common/pylgettext.py` and disable the execution of the fix in this cookbook. This can be done by overwriting the attribute `node['pyload']['use_fix']` with value *false* (by default *true*).
 
 ### packages
 
@@ -208,7 +213,7 @@ Please see the [Contributing](https://github.com/gridtec/cookbook-pyload/blob/ma
 
 ## Frequently Asked Questions
 
-### What are the packages installed by this cookbook?
+### What packages are installed by this cookbook?
 
 This cookbook will install various packages during its execution by using the target platforms package manager. Thereby lots of these packages represent required and optional dependencies of Pyload. They are defined in `node['pyload']['packages']` attribute and will be determined by this cookbook on its own as there may be differences in package names on various target platforms. To illustrate this differences, we provide the following matrix to give a short overview of these different package names.
 
