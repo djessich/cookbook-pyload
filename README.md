@@ -217,7 +217,7 @@ Please see the [Contributing](https://github.com/gridtec/cookbook-pyload/blob/ma
 
 This cookbook will install various packages during its execution by using the target platforms package manager. Thereby lots of these packages represent required and optional dependencies of Pyload. They are defined in `node['pyload']['packages']` attribute and will be determined by this cookbook on its own as there may be differences in package names on various target platforms. To illustrate this differences, we provide the following matrix to give a short overview of these different package names.
 
-| Package           | Arch                   | Debian/Ubuntu              | Fedora                | RHEL/CentOS           | Suse/OpenSuse         |
+| Package           | Arch                   | Debian/Ubuntu              | Fedora                | RHEL/CentOS           | SUSE/openSUSE         |
 |-------------------|------------------------|----------------------------|-----------------------|-----------------------|-----------------------|
 | git               | git                    | git                        | git                   | git                   | git                   |
 | curl              | curl                   | curl                       | curl                  | curl                  | curl                  |
@@ -278,7 +278,7 @@ Thank you, that you want to help us out. Please see [CONTRIBUTING.md](https://gi
 
 ## License & Authors
 
-* Author: Dominik Jessich [jessichd@gridtec.at](mailto:jessichd@gridtec.at)
+* Author:: Gridtec ([projects@gridtec.at](mailto:projects@gridtec.at))
 
 ```
 Copyright 2016, Gridtec

@@ -1,17 +1,18 @@
 sudo: required
 dist: trusty
+language: ruby
 
-# install the pre-release chef-dk.  Use chef-stable-precise to install the stable release
+# We will install the release of chefdk. Use chef-current-precise to install the pre-release.
 addons:
   apt:
     sources:
-      - chef-current-precise
+      - chef-stable-precise
     packages:
       - chefdk
 
 branches:
   only:
-  - master
+    - master
 
 services: docker
 
@@ -68,4 +69,4 @@ script:
   - /opt/chefdk/embedded/bin/foodcritic . --exclude spec -f any -P
   - /opt/chefdk/embedded/bin/cookstyle --version
   - /opt/chefdk/embedded/bin/cookstyle
-  - KITCHEN_LOCAL_YAML=.kitchen.docker.yml /opt/chefdk/embedded/bin/kitchen verify ${INSTANCE}
+  - KITCHEN_YAML=.kitchen.docker.yml /opt/chefdk/embedded/bin/kitchen verify ${INSTANCE}

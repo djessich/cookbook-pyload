@@ -101,7 +101,7 @@ when 'suse'
   default['pyload']['packages']   = %w(
     git curl openssl python python-Beaker python-beautifulsoup4 python-pycrypto python-feedparser python-flup
     python-html5lib python-Jinja2 python-pycurl python-pyOpenSSL python-qt4 python-simplejson python-thrift js
-    rhino tesseract
+    python-python-spidermonkey rhino tesseract
   )
   default['pyload']['packages'] += if node['platform_version'].to_f < 13.2
                                      %w(python-imaging)
