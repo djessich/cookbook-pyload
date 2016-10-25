@@ -66,7 +66,6 @@ The `node['pyload']` global namespace defines general settings for this cookbook
     }
   ```
 
-<!-- TODO: Move these to global attributes file -->
 The `node['pyload']` global namespace also defines the following general settings for Pyload, which will be set in *pyload.conf* configuration file.
 
 * `node['pyload']['language']` - Specifies Pyload language. Allowed values are `en`, `de`, `fr`, `it`, `es`, `nl`, `sv`, `ru`, `pl`, `cs`, `sr`, `pt_BR`. If something else is specified, Pyload may not start. By default, this is set to *en*.
@@ -92,7 +91,7 @@ The `node['pyload']['download']` namespace defines download settings for Pyload,
 
 ### Logging Settings
 
-The `node['pyload']['database']` namespace defines logging settings for Pyload, which will be set in *pyload.conf* configuration file.
+The `node['pyload']['log']` namespace defines logging settings for Pyload, which will be set in *pyload.conf* configuration file.
 
 * `node['pyload']['log']['activated']` - Enables or disables logging. By default, this is enabled, which means that this is set to *true*.
 * `node['pyload']['log']['count']` - Specifies the maximum allowed logging files to keep, until they get deleted. By default, this is set to *5*.
@@ -296,3 +295,12 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 ```
+
+<!---
+## TODO
+* move the global namespace (not cookbook specific) to an own namespace
+* possibily to configure each plugin
+* extensions from git should be automatically added
+* add ssl_certificate cookbook to manage certificates
+* attribute cert_path is not required; remove and only specify absolute paths to cert_crt and cert_key
+--->
