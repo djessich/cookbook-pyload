@@ -57,6 +57,7 @@ execute 'system_check_pyload' do
   cwd node['pyload']['install_dir']
   action :nothing
   # not_if node['platform'].eql?('rhel') && node['platform_version'].to_f == 7
+  not_if { node['platform_family'].eql?('freebsd') }
 end
 
 git node['pyload']['install_dir'] do

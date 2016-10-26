@@ -80,6 +80,15 @@ when 'fedora'
     python-html5lib python-pillow python-jinja2 python-pycurl pyOpenSSL PyQt4 python-simplejson python-thrift
     js rhino tesseract
   )
+when 'freebsd'
+  default['pyload']['init_style'] = 'bsd'
+  default['pyload']['pid_dir']    = '/var/run'
+  default['pyload']['log_dir']    = '/var/log/pyload'
+  default['pyload']['packages']   = %w(
+    git curl openssl python27 py27-beaker py27-beautifulsoup py27-pycrypto py27-feedparser py27-flup py27-html5lib
+    py27-pillow py27-Jinja2 py27-pycurl py27-openssl py27-qt4 py27-simplejson py27-thrift spidermonkey24 rhino
+    tesseract
+  )
 when 'rhel'
   default['pyload']['init_style'] = node['init_package']
   default['pyload']['pid_dir']    = '/var/run/pyload'

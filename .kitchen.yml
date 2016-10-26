@@ -52,6 +52,7 @@ platforms:
   #    box_version: 1.0.0
   #  run_list:
   #    - recipe[pacman]
+  - name: freebsd-10.3
 
 suites:
   - name: default
@@ -89,6 +90,13 @@ suites:
       'fedora-22',
       'fedora-23',
       'fedora-24'
+    ]
+  - name: freebsd-packages
+    run_list:
+      - recipe[pyload::packages]
+    attributes:
+    includes: [
+      'freebsd-10.3'
     ]
   - name: rhel-packages
     run_list:
