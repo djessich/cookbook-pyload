@@ -1,6 +1,7 @@
 #
 # Cookbook Name:: pyload
-# Recipe:: packages
+# Suite:: service-bsd
+# Test:: service
 #
 # Copyright 2016, Gridtec
 #
@@ -17,10 +18,7 @@
 # limitations under the License.
 #
 
-package 'curl' do
-  action :remove
-end
-
-node['pyload']['packages'].each do |pkg|
-  package pkg
+describe bsd_service('pyload') do
+  it { should be_enabled }
+  it { should be_running }
 end

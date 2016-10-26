@@ -29,6 +29,7 @@ unless node['pyload']['user'].eql?('root')
 end
 
 include_recipe 'pyload::packages'
+include_recipe 'pyload::system'
 include_recipe 'pyload::install'
 include_recipe 'pyload::config'
 include_recipe 'pyload::service'

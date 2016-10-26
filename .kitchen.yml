@@ -60,6 +60,7 @@ suites:
       - recipe[pyload::default]
     attributes:
       pyload:
+        pid_dir: /var/run/pyload
         accounts:
           test:
             user: test
@@ -112,6 +113,13 @@ suites:
     attributes:
     includes: [
       'opensuse-13.2'
+    ]
+  - name: service-bsd
+    run_list:
+      - recipe[pyload::default]
+    attributes:
+    includes: [
+      'freebsd-10.3'
     ]
   - name: service-init
     run_list:

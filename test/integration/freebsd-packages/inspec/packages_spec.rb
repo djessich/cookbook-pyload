@@ -97,3 +97,15 @@ end
 describe package('tesseract') do
   it { should be_installed }
 end
+
+describe package('tesseract-data') do
+  it { should be_installed }
+end
+
+describe package('gocr') do
+  it { should be_installed }
+end
+
+describe package('py27-sqlite3') do
+  it { should be_installed }
+end

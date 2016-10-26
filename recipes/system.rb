@@ -1,6 +1,6 @@
 #
 # Cookbook Name:: pyload
-# Recipe:: packages
+# Recipe:: system
 #
 # Copyright 2016, Gridtec
 #
@@ -17,10 +17,10 @@
 # limitations under the License.
 #
 
-package 'curl' do
-  action :remove
-end
-
-node['pyload']['packages'].each do |pkg|
-  package pkg
+case node['platform_family']
+when 'freebsd'
+  link '/usr/local/bin/python' do
+    to '/usr/local/bin/python2'
+    link_type :symbolic
+  end
 end

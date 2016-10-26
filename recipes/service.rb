@@ -18,6 +18,7 @@
 #
 
 init_styles = %w(
+  bsd
   init
   upstart
   systemd
