@@ -25,6 +25,7 @@ directory '/etc/rc.conf.d' do
 end
 
 template '/usr/local/etc/rc.d/pyload' do
+  source 'rc.d/pyload.erb'
   owner 'root'
   group 'wheel'
   mode '0755'
@@ -38,7 +39,7 @@ template '/usr/local/etc/rc.d/pyload' do
 end
 
 template '/etc/rc.conf.d/pyload' do
-  source 'pyload_config.erb'
+  source 'rc.conf.d/pyload.erb'
   owner 'root'
   group 'wheel'
   mode '0644'
