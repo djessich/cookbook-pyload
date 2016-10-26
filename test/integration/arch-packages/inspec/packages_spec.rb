@@ -105,3 +105,7 @@ end
 describe package('tesseract-ocr-git') do
   it { should be_installed }
 end
+
+describe package('gocr') do
+  it { should be_installed }
+end

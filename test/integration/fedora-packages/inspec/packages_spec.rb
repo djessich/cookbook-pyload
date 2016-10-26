@@ -94,6 +94,10 @@ describe package('tesseract') do
   it { should be_installed }
 end
 
+describe package('gocr') do
+  it { should be_installed }
+end
+
 if os[:release].to_f < 24
   describe package('python-crypto') do
     it { should be_installed }

@@ -98,6 +98,10 @@ describe package('tesseract') do
   it { should be_installed }
 end
 
+describe package('gocr') do
+  it { should be_installed }
+end
+
 if os[:release].to_f < 13.2
   describe package('python-imaging') do
     it { should be_installed }

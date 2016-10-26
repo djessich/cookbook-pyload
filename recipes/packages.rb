@@ -17,10 +17,18 @@
 # limitations under the License.
 #
 
+# on FreeBSD we need to remove curl package first if it is set to be installed
 package 'curl' do
   action :remove
-end
+end if node['platform_family'].eql?('freebsd') && node['pyload']['packages'].include?('curl')
 
 node['pyload']['packages'].each do |pkg|
   package pkg
 end
+
+# on FreeBSD we need to manually create python executeable in /usr/local/bin
+# after python package is installed
+link '/usr/local/bin/python' do
+  to '/usr/local/bin/python2'
+  link_type :symbolic
+end if node['platform_family'].eql?('freebsd')

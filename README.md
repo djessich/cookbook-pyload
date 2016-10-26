@@ -201,7 +201,7 @@ This recipe includes one of the `pyload::INIT_STYLE_service` recipes based on th
 * `upstart` - uses the Upstart job included in this cookbook, supported on Ubuntu. *Currently this delegates to use the Sys-V-Init script!*
 * `systemd` - sets up the service under SystemD. Supported on SystemD based distros.
 
-If the init system cannot be determined by this cookbook (f.e. unsupported plattform) or any other desriptor is specified, there will be no init system script created from this cookbook.
+If the init system cannot be determined by this cookbook (f.e. unsupported platform) or any other desriptor is specified, there will be no init system script created from this cookbook.
 
 ## Usage
 
@@ -238,7 +238,7 @@ This cookbook will install various packages during its execution by using the ta
 | thrift            | python2-thrift         | python-thrift (>= 8/14.04) | python-thrift         | python-thrift (>=7)   | python-thrift         | py27-thrift        |
 | ossp-js           | js                     | libmozjs185-1.0 (<= 7/12.04)<br/>libmozjs-24-bin (>= 8/14.04) | js | js    | js<br/>python-python-spidermonkey | spidermonkey24 |
 | rhino             | rhino                  | rhino                      | rhino                 | rhino                 | rhino                 | rhino              |
-| tesseract         | tesseract<br/>tesseract-git<br/>tesseract-ocr-git | tesseract-ocr<br/>tesseract-ocr-eng<br/>gocr | tesseract | tesseract | tesseract | tesseract<br/>tesseract-data<br/>gocr |
+| tesseract         | tesseract<br/>tesseract-git<br/>tesseract-ocr-git<br/>gocr | tesseract-ocr<br/>tesseract-ocr-eng<br/>gocr | tesseract<br/>gocr | tesseract | tesseract<br/>gocr | tesseract<br/>tesseract-data<br/>gocr |
 | sqlite3           |                        |                            |                       |                       |                       | py27-sqlite3       |
 
 More information on required and optional dependencies of Pyload can be found in the official Pyloads project [README](https://github.com/pyload/pyload/blob/stable/README).
@@ -258,6 +258,10 @@ On RHEL and derivatives, it is required to install 3rd party repositories as bas
 ### Why does this cookbook does not provide an Upstart config on Upstart enabled platforms?
 
 We are currently working on an Upstart configuration file for Pyload. As this was not working well in the first place, we decided to just use the well-developed and working Sys-V-Init script on Upstart enabled platforms. In future releases, we may be able to include an Upstart configuration file in this cookbook.
+
+### Why are there no unpacking software installed by the cookbook, such as `unzip` or `unrar`?
+
+We do not install unpacking software such as `unzip` or `unrar`, because on many platforms these are non-free. If you depend on using ist, please install it manually using your platforms package manager. On some platforms, such as RHEL and derivatives, it may be required to add extra repositories to allow the platforms package manager to find it.
 
 ### Does this cookbook generate a SSL certificates for me?
 
