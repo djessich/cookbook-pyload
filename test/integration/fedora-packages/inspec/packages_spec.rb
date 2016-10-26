@@ -58,10 +58,6 @@ describe package('python-pillow') do
   it { should be_installed }
 end
 
-describe package('python-jinja2') do
-  it { should be_installed }
-end
-
 describe package('python-pycurl') do
   it { should be_installed }
 end
@@ -102,8 +98,16 @@ if os[:release].to_f < 24
   describe package('python-crypto') do
     it { should be_installed }
   end
+
+  describe package('python-jinja2') do
+    it { should be_installed }
+  end
 else
   describe package('python2-crypto') do
+    it { should be_installed }
+  end
+
+  describe package('python2-jinja2') do
     it { should be_installed }
   end
 end
