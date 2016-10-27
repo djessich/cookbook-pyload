@@ -36,6 +36,7 @@ template '/usr/local/etc/rc.d/pyload' do
     group: node['pyload']['group'],
     pid_file: "#{node['pyload']['pid_dir']}/pyload.pid"
   )
+  notifies :restart, 'service[pyload]', :delayed
 end
 
 template '/etc/rc.conf.d/pyload' do
