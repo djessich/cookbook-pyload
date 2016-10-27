@@ -1,0 +1,5 @@
+DAEMON=<%= @install_dir %>/pyLoadCore.py
+USER=<%= @user %>
+GROUP=<%= @group %>
+PIDFILE=<%= @pid_file %>
+OPTIONS="--daemon --configdir=<%= @config_dir %> --pidfile=<%= @pid_file %>"

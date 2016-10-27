@@ -14,6 +14,7 @@ This cookbook is used to install and configure [Pyload](https://github.com/pyloa
 * CentOS 6+
 * Debian 7+
 * Fedora 22+
+* FreeBSD 10+
 * openSUSE 13+
 * RHEL 6+
 * Ubuntu 12.04+

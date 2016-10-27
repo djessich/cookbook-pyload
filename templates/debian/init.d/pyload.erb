@@ -9,22 +9,16 @@
 # Description:       Downloadtool for One-Click-Hoster written in python.
 ### END INIT INFO
 
-NAME="pyload"
-DESC="downloadtool for One-Click-Hoster written in python"
-DAEMON="<%= @install_dir %>/pyLoadCore.py"
-USER="<%= @user %>"
-GROUP="<%= @group %>"
-PID_FILE="<%= @pid_file %>"
-OPTIONS="--daemon --configdir=<%= @config_dir %> --pidfile=<%= @pid_file %>"
+. /lib/lsb/init-functions
 
-START_TIMEOUT=2
-STOP_TIMEOUT=2
+[ -r /etc/default/pyload ] && . /etc/default/pyload
 
 [ -x $DAEMON ] || exit 1
 
-[ -e /etc/default/$NAME ] && . /etc/default/$NAME
-
-. /lib/lsb/init-functions
+NAME="pyload"
+DESC="downloadtool for One-Click-Hoster written in python"
+START_TIMEOUT=2
+STOP_TIMEOUT=2
 
 running_pid () {
   pid=$1
@@ -37,18 +31,18 @@ running_pid () {
 }
 
 running () {
-  [ ! -f "$PID_FILE" ] && return 1
-  pid=`cat $PID_FILE`
-  running_pid $pid $DAEMON || return 1
+  [ ! -f "$PIDFILE" ] && return 1
+  pid=`cat $PIDFILE`
+  running_pid $pid "$DAEMON" || return 1
   return 0
 }
 
 start () {
     if [ -z "$USER" ] ; then
-      start_daemon -p $PID_FILE $DAEMON $DAEMON_OPTS > /dev/null 2>&1
+      start_daemon -p "$PIDFILE" "$DAEMON" $OPTIONS > /dev/null 2>&1
       RETVAL=$?
     else
-      start-stop-daemon --start --pidfile "$PID_FILE" --user "$USER" --group "$GROUP" --chuid "$USER:$GROUP" --exec "$DAEMON" -- $OPTIONS > /dev/null 2>&1
+      start-stop-daemon --start --pidfile "$PIDFILE" --user "$USER" --group "$GROUP" --chuid "$USER:$GROUP" --exec "$DAEMON" -- $OPTIONS > /dev/null 2>&1
       RETVAL=$?
     fi
     return $RETVAL
@@ -56,13 +50,13 @@ start () {
 
 stop () {
     if [ -z "$USER" ] ; then
-      killproc -p $PID_FILE $DAEMON
+      killproc -p "$PIDFILE" "$DAEMON"
       RETVAL=$?
     else
-      start-stop-daemon --stop --retry="TERM/30/KILL/5" --pidfile "$PID_FILE" --user "$USER" --group "$GROUP" --chuid "$USER:$GROUP"
+      start-stop-daemon --stop --retry="TERM/30/KILL/5" --pidfile "$PIDFILE" --user "$USER" --group "$GROUP" --chuid "$USER:$GROUP"
       RETVAL=$?
     fi
-    rm -f $PID_FILE
+    rm -f "$PIDFILE"
     return $RETVAL
 }
 
@@ -75,7 +69,7 @@ case "$1" in
             exit 0
         fi
         if start ; then
-            [ -n "$START_TIMEOUT" ] && sleep $START_TIMEOUT
+            [ -n "$START_TIMEOUT" ] && sleep "$START_TIMEOUT"
             if  running ;  then
                 log_end_msg 0
             else
@@ -102,9 +96,9 @@ case "$1" in
         log_daemon_msg "Restarting $DESC" "$NAME"
         RETVAL=0
         stop || RETVAL=$?
-        [ -n "$STOP_TIMEOUT" ] && sleep $STOP_TIMEOUT
+        [ -n "$STOP_TIMEOUT" ] && sleep "$STOP_TIMEOUT"
         start || RETVAL=$?
-        [ -n "$START_TIMEOUT" ] && sleep $START_TIMEOUT
+        [ -n "$START_TIMEOUT" ] && sleep "$START_TIMEOUT"
         running || RETVAL=$?
         log_end_msg $RETVAL
         ;;

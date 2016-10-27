@@ -17,9 +17,10 @@
 # limitations under the License.
 #
 
-dist_dir = value_for_platform_family(
-  :debian => 'debian',
-  [:rhel, :fedora] => 'rhel'
+dist_dir, conf_dir = value_for_platform_family(
+  debian: %w(debian default),
+  fedora: %w(rhel sysconfig),
+  rhel:   %w(rhel sysconfig)
 )
 
 template '/etc/init.d/pyload' do
@@ -27,6 +28,14 @@ template '/etc/init.d/pyload' do
   user 'root'
   group 'root'
   mode '0755'
+  notifies :restart, 'service[pyload]', :delayed
+end
+
+template "/etc/#{conf_dir}/pyload" do
+  source "#{dist_dir}/#{conf_dir}/pyload.erb"
+  user 'root'
+  group 'root'
+  mode '0644'
   variables(
     install_dir: node['pyload']['install_dir'],
     config_dir: node['pyload']['config_dir'],

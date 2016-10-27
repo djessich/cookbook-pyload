@@ -9,42 +9,36 @@
 # Description:       Downloadtool for One-Click-Hoster written in python.
 ### END INIT INFO
 
-NAME="pyload"
-DAEMON="<%= @install_dir %>/pyLoadCore.py"
-USER="<%= @user %>"
-GROUP="<%= @group %>"
-PID_FILE="<%= @pid_file %>"
-LOCK_FILE="/var/lock/$NAME"
-OPTIONS="--daemon --configdir=<%= @config_dir %> --pidfile=<%= @pid_file %>"
+. /etc/init.d/functions
 
-START_TIMEOUT=2
-STOP_TIMEOUT=2
+[ -e /etc/sysconfig/pyload ] && . /etc/sysconfig/pyload
 
 [ -x $DAEMON ] || exit 1
 
-[ -e /etc/sysconfig/$NAME ] && . /etc/sysconfig/$NAME
-
-. /etc/init.d/functions
+NAME="pyload"
+LOCKFILE="/var/lock/$NAME"
+START_TIMEOUT=2
+STOP_TIMEOUT=2
 
 start () {
-    daemon --pidfile "$PID_FILE" --user "$USER" "$DAEMON $OPTIONS"
+    daemon --pidfile "$PIDFILE" --user "$USER" "$DAEMON $OPTIONS"
     RETVAL=$?
-    [ $RETVAL -eq 0 ] && touch $LOCK_FILE
+    [ $RETVAL -eq 0 ] && touch "$LOCKFILE"
     return $RETVAL
 }
 
 stop () {
-    killproc -p $PID_FILE $DAEMON
+    killproc -p "$PIDFILE" "$DAEMON"
     RETVAL=$?
-    [ $RETVAL -eq 0 ] && rm -f $PID_FILE && rm -f $LOCK_FILE
+    [ $RETVAL -eq 0 ] && rm -f "$PIDFILE" && rm -f "$LOCKFILE"
     return $RETVAL
 }
 
 restart () {
     stop || RETVAL=$?
-    [ -n "$STOP_TIMEOUT" ] && sleep $STOP_TIMEOUT
+    [ -n "$STOP_TIMEOUT" ] && sleep "$STOP_TIMEOUT"
     start || RETVAL=$?
-    [ -n "$START_TIMEOUT" ] && sleep $START_TIMEOUT
+    [ -n "$START_TIMEOUT" ] && sleep "$START_TIMEOUT"
     status || RETVAL=$?
     RETVAL=$?
     return $RETVAL
@@ -52,13 +46,13 @@ restart () {
 
 status () {
     # as /etc/init.d/functions#status is not working during testing phase ...
-    #status -p $PID_FILE -l $LOCK_FILE $DAEMON
+    #status -p "$PIDFILE" -l "$LOCKFILE" "$DAEMON"
     #RETVAL=$?
     #return $RETVAL
     # ... we need different approach of getting process status
 
-    [ ! -f "$PID_FILE" ] && return 1
-    pid=`cat $PID_FILE`
+    [ ! -f "$PIDFILE" ] && return 1
+    pid=`cat $PIDFILE`
     [ -z "$pid" ] && return 1
     [ ! -d /proc/$pid ] &&  return 1
     cmd=`cat /proc/$pid/cmdline | tr '\000' '\n' | awk 'NR==2'`

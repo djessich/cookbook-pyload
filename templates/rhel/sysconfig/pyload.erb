@@ -1,0 +1,13 @@
+# Configuration file for the pyload service
+
+# Specifies the pyload executeable for the daemon process
+DAEMON=<%= @install_dir %>/pyLoadCore.py
+# The user to start the pyload process with
+USER=<%= @user %>
+# The group to start the pyload process with
+GROUP=<%= @group %>
+# Location of the pid file for the pyload process and the script
+PIDFILE=<%= @pid_file %>
+# Any additional options for the pyload process. It is recommended, that the
+# --daemon flag is always set.
+OPTIONS="--daemon --configdir=<%= @config_dir %> --pidfile=<%= @pid_file %>"
