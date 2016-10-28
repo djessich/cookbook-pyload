@@ -57,13 +57,20 @@ execute 'system_check_pyload' do
   cwd node['pyload']['install_dir']
   action :nothing
   # not_if node['platform'].eql?('rhel') && node['platform_version'].to_f == 7
+  only_if { ::File.exist?("#{node['pyload']['install_dir']}/systemCheck.py") }
   not_if { node['platform_family'].eql?('freebsd') }
 end
 
+version = if node['pyload']['version'] =~ /^[0-9\.]*$/
+            "v#{node['pyload']['version']}"
+          else
+            node['pyload']['version']
+          end
+
 git node['pyload']['install_dir'] do
   repository 'https://github.com/pyload/pyload.git'
-  revision 'stable'
-  checkout_branch 'stable'
+  revision version
+  checkout_branch version
   enable_checkout false
   user node['pyload']['user']
   group node['pyload']['group']
@@ -71,8 +78,9 @@ git node['pyload']['install_dir'] do
   notifies :run, 'execute[system_check_pyload]', :immediately
 end
 
-# this fix only applies to suse platform family as Pyload fails to start due to an error of file function
-# we will comment out the following line 'translation.func_globals['find'] = find' of file <pyload_install_dir>/module/common/pylgettext.py
+# this fix only applies to suse platform family as Pyload fails to start due to
+# an error of file function we will comment out the following line
+# 'translation.func_globals['find'] = find' of file <pyload_install_dir>/module/common/pylgettext.py
 execute 'opensuse_fix' do
   command "sed -i s/translation.func_globals/#translation.func_globals/g #{node['pyload']['install_dir']}/module/common/pylgettext.py"
   only_if "grep -q ^translation.func_globals.* #{node['pyload']['install_dir']}/module/common/pylgettext.py"

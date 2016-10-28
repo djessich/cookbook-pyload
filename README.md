@@ -4,7 +4,7 @@
 [![License](https://img.shields.io/badge/license-Apache_2-blue.svg)](https://www.apache.org/licenses/LICENSE-2.0)
 [![Cookbook Version](https://img.shields.io/cookbook/v/pyload.svg)](https://supermarket.chef.io/cookbooks/pyload)
 
-This cookbook is used to install and configure [Pyload](https://github.com/pyload/pyload) on a system. Just put it in your nodes `run_list` or include the default recipe using `include_recipe`. This cookbook installs Pyload from Git repository (stable branch), installs all required dependencies for Pyload, prepares configuration folder and files and installs the appropriate configuration for your platform's init system.
+This cookbook is used to install and configure [Pyload](https://github.com/pyload/pyload) on a system. Just put it in your nodes `run_list` or include the default recipe using `include_recipe`. This cookbook installs Pyload from its Git repository regarding the version tag or branch you've configured, installs all required dependencies for Pyload, prepares configuration folder and files and installs the appropriate configuration for your platform's init system.
 
 ## Requirements
 
@@ -40,6 +40,7 @@ The attributes used by this cookbook are in the `node['pyload']` namespace which
 
 The `node['pyload']` global namespace defines general settings for this cookbook.
 
+* `node['pyload']['version']` - Specifies the version to install. By default, this is set to *stable*.
 * `node['pyload']['install_dir']` - Specifies the location for Pyload package itself. By default, this is set to */usr/share/pyload*.
 * `node['pyload']['config_dir']` - Specifies the location for Pyload configuration folders and files. By default, this is set to */home/&lt;user&gt;/.pyload* (interpolates to */home/pyload/.pyload* if defaults are used).
 * `node['pyload']['download_dir']` - Specifies the location for all Pyload downloaded files. By default, this is set to *node['pyload']['config_dir']/downloads* (interpolates to */home/pyload/.pyload/downloads* if defaults are used).
@@ -180,7 +181,7 @@ This recipe does a number of things to install Pyload. This includes the followi
 * create the download directory as specified in `node['pyload']['download_dir']`
 * create the pid file directory (run directory) as specified in `node['pyload']['pid_dir']`
 * create the logging directory as specified in `node['pyload']['log_dir']`
-* clone Pyload source code from the [official Pyload Git repository](https://github.com/pyload/pyload) and checkout the *stable* branch
+* clone Pyload source code from the [official Pyload Git repository](https://github.com/pyload/pyload) and checkout the version tag or branch (default will be the latest *stable* branch)
 * perform a system check, to check if Pyload is able to run by using the [*systemCheck.py*](https://github.com/pyload/pyload/blob/stable/systemCheck.py) script in the source code
 * create symbolic links to */usr/bin* for all Pyload executeables ([pyLoadCli](https://github.com/pyload/pyload/blob/stable/pyLoadCli.py), [pyLoadCore](https://github.com/pyload/pyload/blob/stable/pyLoadCore.py), [pyLoadGui](https://github.com/pyload/pyload/blob/stable/pyLoadGui.py)), to allow running Pyload directly from bash as command
 
@@ -213,6 +214,10 @@ Using this cookbook is relatively straight forward. Either put the default recip
 Please see the [Contributing](https://github.com/gridtec/cookbook-pyload/blob/master/CONTRIBUTING.md) and [Testing](https://github.com/gridtec/cookbook-pyload/blob/master/TESTING.md) Guidelines.
 
 ## Frequently Asked Questions
+
+### Which Pyload versions are able to be installed by this cookbook?
+
+You are able to install any Pyload version which is available in the [official Pyload Git repository](https://github.com/pyload/pyload). You will just need to specify the appropriate version in `node['pyload']['version']` attribute. You are also able to install latest *stable* branch version, using `stable` identifier, which is set as default.
 
 ### What packages are installed by this cookbook?
 

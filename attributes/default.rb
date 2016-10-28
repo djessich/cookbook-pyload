@@ -17,6 +17,7 @@
 # limitations under the License.
 #
 
+default['pyload']['version'] = 'stable'
 default['pyload']['user'] = 'pyload'
 default['pyload']['group'] = 'pyload'
 default['pyload']['install_dir'] = '/usr/share/pyload'
