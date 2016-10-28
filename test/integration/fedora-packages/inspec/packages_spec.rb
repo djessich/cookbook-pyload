@@ -42,10 +42,6 @@ describe package('python-beautifulsoup4') do
   it { should be_installed }
 end
 
-describe package('python-django') do
-  it { should be_installed }
-end
-
 describe package('python-feedparser') do
   it { should be_installed }
 end
@@ -103,11 +99,19 @@ if os[:release].to_f < 24
     it { should be_installed }
   end
 
+  describe package('python-django') do
+    it { should be_installed }
+  end
+
   describe package('python-jinja2') do
     it { should be_installed }
   end
 else
   describe package('python2-crypto') do
+    it { should be_installed }
+  end
+
+  describe package('python2-django') do
     it { should be_installed }
   end
 

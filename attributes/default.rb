@@ -77,10 +77,14 @@ when 'fedora'
   default['pyload']['pid_dir']    = '/var/run/pyload'
   default['pyload']['log_dir']    = '/var/log/pyload'
   default['pyload']['packages']   = %w(
-    git curl openssl python python-beaker python-beautifulsoup4 python-crypto python-django python-feedparser
-    python-flup python-html5lib python-pillow python-jinja2 python-pycurl pyOpenSSL PyQt4 python-simplejson
-    python-thrift js rhino tesseract gocr
+    git curl openssl python python-beaker python-beautifulsoup4 python-feedparser python-flup python-html5lib
+    python-pillow python-pycurl pyOpenSSL PyQt4 python-simplejson python-thrift js rhino tesseract gocr
   )
+  default['pyload']['packages'] += if node['platform_version'].to_f < 24
+                                     %w(python-crypto python-django python-jinja2)
+                                   else
+                                     %w(python2-crypto python2-django python2-jinja2)
+                                   end
 when 'freebsd'
   default['pyload']['init_style'] = 'bsd'
   default['pyload']['pid_dir']    = '/var/run'
@@ -95,13 +99,13 @@ when 'rhel'
   default['pyload']['pid_dir']    = '/var/run/pyload'
   default['pyload']['log_dir']    = '/var/log/pyload'
   default['pyload']['packages']   = %w(
-    git curl openssl python python-beaker python-beautifulsoup4 python-django python-feedparser python-flup
-    python-html5lib python-jinja2 python-pycurl pyOpenSSL PyQt4 python-simplejson js rhino tesseract
+    git curl openssl python python-beaker python-beautifulsoup4 python-feedparser python-flup python-html5lib
+    python-jinja2 python-pycurl pyOpenSSL PyQt4 python-simplejson js rhino tesseract
   )
   default['pyload']['packages'] += if node['platform_version'].to_f < 7
-                                     %w(python-crypto python-imaging)
+                                     %w(python-crypto Django python-imaging)
                                    else
-                                     %w(python2-crypto python-pillow python-thrift)
+                                     %w(python2-crypto python-django python-pillow python-thrift)
                                    end
 when 'suse'
   default['pyload']['init_style'] = 'systemd'
@@ -123,8 +127,8 @@ else
   default['pyload']['pid_dir']    = '/var/run'
   default['pyload']['log_dir']    = '/var/log/pyload'
   default['pyload']['packages']   = %w(
-    git curl openssl python python-beaker python-beautifulsoup4 python-crypto python-feedparser python-flup
-    python-html5lib python-imaging python-jinja2 python-pycurl python-openssl python-simplejson rhino
-    tesseract gocr
+    git curl openssl python python-beaker python-beautifulsoup4 python-crypto python-django python-feedparser
+    python-flup python-html5lib python-imaging python-jinja2 python-pycurl python-openssl python-simplejson
+    rhino tesseract gocr
   )
 end

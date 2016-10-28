@@ -199,6 +199,7 @@ This will install all packages regarding your systems platform type, as specifie
 
 This recipe includes one of the `pyload::INIT_STYLE_service` recipes based on the attribute `node['pyload']['init_style']`, which is set regarding your target platform. The individual service recipes can be included directly too, if required. The supported init systems are
 
+* `bsd` - uses the rc.d init script included in this cookbook, supported on FreeBSD only.
 * `init` - uses the Sys-V-Init script included in this cookbook, supported on Debian and Red Hat Enterprise Linux (RHEL) family distributions.
 * `upstart` - uses the Upstart job included in this cookbook, supported on Ubuntu. *Currently this delegates to use the Sys-V-Init script!*
 * `systemd` - sets up the service under SystemD. Supported on SystemD based distros.
@@ -232,12 +233,12 @@ This cookbook will install various packages during its execution by using the ta
 | beaker            | python2-beaker         | python-beaker              | python-beaker         | python-beaker         | python-Beaker         | py27-beaker        |
 | BeautifulSoup4    | python2-beautifulsoup4 | python-bs4                 | python-beautifulsoup4 | python-beautifulsoup4 | python-beautifulsoup4 | py27-beautifulsoup |
 | pycrypto          | python2-crypto         | python-crypto              | python-crypto (<= 23)<br/>python2-crypto (>= 24) | python-crypto (<= 6)<br/>python2-crypto (>= 7) | python-pycrypto | py27-pycrypto |
-| python-django     | python2-django         | python-django              | python-django         | python-django         | python-django         | py27-django
+| python-django     | python2-django         | python-django              | python-django (<= 23)<br/>python2-django (>= 24) | Django(<= 6)<br/>python-django (>= 7) | python-django | py27-django
 | python-feedparser | python2-feedparser     | python-feedparser          | python-feedparser     | python-feedparser     | python-feedparser     | py27-feedparser    |
 | python-flup       | python2-flup           | python-flup                | python-flup           | python-flup           | python-flup           | py27-flup          |
 | python-html5lib   | python2-html5lib       | python-html5lib            | python-html5lib       | python-html5lib       | python-html5lib       | py27-html5lib      |
 | python-imaging    | python2-pillow         | python-imaging             | python-pillow         | python-imaging (<= 6)<br/>python-pillow (>= 7) | python-imaging (<= 13.1)<br/>python-Pillow (>= 13.2) | py27-pillow |
-| jinja2            | python2-jinja          | python-jinja2              | python-jinja2         | python-jinja2         | python-Jinja2         | py27-Jinja2        |
+| jinja2            | python2-jinja          | python-jinja2              | python-jinja2 (<= 23)<br/>python2-jinja2 (>= 24) | python-jinja2 | python-Jinja2 | py27-Jinja2 |
 | pycurl            | python2-pycurl         | python-pycurl              | python-pycurl         | python-pycurl         | python-pycurl         | py27-pycurl        |
 | pyOpenSSL         | python2-pyopenssl      | python-openssl             | pyOpenSSL             | pyOpenSSL             | python-pyOpenSSL      | py27-openssl       |
 | pyqt4             | python2-pyqt4          | python-qt4                 | PyQt4                 | PyQt4                 | python-qt4            | py27-qt4           |
