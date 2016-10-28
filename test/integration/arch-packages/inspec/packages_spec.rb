@@ -46,6 +46,10 @@ describe package('python2-crypto') do
   it { should be_installed }
 end
 
+describe package('python2-django') do
+  it { should be_installed }
+end
+
 describe package('python2-feedparser') do
   it { should be_installed }
 end

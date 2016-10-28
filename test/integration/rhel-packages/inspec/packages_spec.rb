@@ -42,6 +42,10 @@ describe package('python-beautifulsoup4') do
   it { should be_installed }
 end
 
+describe package('python-django') do
+  it { should be_installed }
+end
+
 describe package('python-feedparser') do
   it { should be_installed }
 end

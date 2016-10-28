@@ -46,6 +46,10 @@ describe package('py27-pycrypto') do
   it { should be_installed }
 end
 
+describe package('python-django') do
+  it { should be_installed }
+end
+
 describe package('py27-feedparser') do
   it { should be_installed }
 end
