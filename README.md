@@ -233,7 +233,7 @@ This cookbook will install various packages during its execution by using the ta
 | beaker            | python2-beaker         | python-beaker              | python-beaker         | python-beaker         | python-Beaker         | py27-beaker        |
 | BeautifulSoup4    | python2-beautifulsoup4 | python-bs4                 | python-beautifulsoup4 | python-beautifulsoup4 | python-beautifulsoup4 | py27-beautifulsoup |
 | pycrypto          | python2-crypto         | python-crypto              | python-crypto (<= 23)<br/>python2-crypto (>= 24) | python-crypto (<= 6)<br/>python2-crypto (>= 7) | python-pycrypto | py27-pycrypto |
-| python-django     | python2-django         | python-django              | python-django (<= 23)<br/>python2-django (>= 24) | Django(<= 6)<br/>python-django (>= 7) | python-django | py27-django
+| python-django     | python2-django         | python-django              | python-django (<= 23)<br/>python2-django (>= 24) | Django(<= 6)<br/>python-django (>= 7) | python-django | py27-django19
 | python-feedparser | python2-feedparser     | python-feedparser          | python-feedparser     | python-feedparser     | python-feedparser     | py27-feedparser    |
 | python-flup       | python2-flup           | python-flup                | python-flup           | python-flup           | python-flup           | py27-flup          |
 | python-html5lib   | python2-html5lib       | python-html5lib            | python-html5lib       | python-html5lib       | python-html5lib       | py27-html5lib      |
