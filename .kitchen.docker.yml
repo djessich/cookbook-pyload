@@ -148,12 +148,16 @@ suites:
   - name: service-init
     run_list:
       - recipe[pyload::default]
-    attributes:
-    includes: [
+    attributes: [
       'ubuntu-12.04',
       'ubuntu-14.04',
-      'debian-7',
-      'centos-6'
+      'ubuntu-16.04',
+      'debian-7.11',
+      'centos-6.8',
+      'centos-7.2',
+      'fedora-22',
+      'fedora-23',
+      'fedora-24'
     ]
   - name: service-systemd
     run_list:

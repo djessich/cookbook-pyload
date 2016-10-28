@@ -43,8 +43,12 @@ env:
   - INSTANCE=suse-packages-opensuse-132
   - INSTANCE=service-init-ubuntu-1204
   - INSTANCE=service-init-ubuntu-1404
+  - INSTANCE=service-init-ubuntu-1604
   - INSTANCE=service-init-debian-7
   - INSTANCE=service-init-centos-6
+  - INSTANCE=service-init-fedora-22
+  - INSTANCE=service-init-fedora-23
+  - INSTANCE=service-init-fedora-24
   - INSTANCE=service-systemd-ubuntu-1604
   - INSTANCE=service-systemd-debian-8
   - INSTANCE=service-systemd-centos-7
