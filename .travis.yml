@@ -33,7 +33,6 @@ env:
   - INSTANCE=debian-packages-ubuntu-1404
   - INSTANCE=debian-packages-ubuntu-1604
   - INSTANCE=debian-packages-debian-7
-  - INSTANCE=debian-packages-debian-7
   - INSTANCE=debian-packages-debian-8
   - INSTANCE=fedora-packages-fedora-22
   - INSTANCE=fedora-packages-fedora-23
@@ -45,7 +44,9 @@ env:
   - INSTANCE=service-init-ubuntu-1404
   - INSTANCE=service-init-ubuntu-1604
   - INSTANCE=service-init-debian-7
+  - INSTANCE=service-init-debian-8
   - INSTANCE=service-init-centos-6
+  - INSTANCE=service-init-centos-7
   - INSTANCE=service-init-fedora-22
   - INSTANCE=service-init-fedora-23
   - INSTANCE=service-init-fedora-24
@@ -56,6 +57,9 @@ env:
   - INSTANCE=service-systemd-fedora-23
   - INSTANCE=service-systemd-fedora-24
   - INSTANCE=service-systemd-opensuse-132
+  - INSTANCE=service-upstart-ubuntu-1204
+  - INSTANCE=service-upstart-ubuntu-1404
+  - INSTANCE=service-upstart-ubuntu-1604
 
 # Don't `bundle install`
 install: echo "skip bundle install"
