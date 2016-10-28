@@ -45,18 +45,18 @@ when 'arch'
   default['pyload']['pid_dir']    = '/var/run/pyload'
   default['pyload']['log_dir']    = '/var/log/pyload'
   default['pyload']['packages']   = %w(
-    git curl openssl python2 python2-beaker python2-beautifulsoup4 python2-crypto python2-feedparser python2-flup
-    python2-html5lib python2-pillow python2-jinja python2-pycurl python2-pyopenssl python2-pyqt4 python2-simplejson
-    python2-thrift js rhino tesseract tesseract-git tesseract-ocr-git gocr
+    git curl openssl python2 python2-beaker python2-beautifulsoup4 python2-crypto python2-django python2-feedparser
+    python2-flup python2-html5lib python2-pillow python2-jinja python2-pycurl python2-pyopenssl python2-pyqt4
+    python2-simplejson python2-thrift js rhino tesseract tesseract-git tesseract-ocr-git gocr
   )
 when 'debian'
   default['pyload']['init_style'] = node['init_package']
   default['pyload']['pid_dir']    = '/var/run/pyload'
   default['pyload']['log_dir']    = '/var/log/pyload'
   default['pyload']['packages']   = %w(
-    git curl openssl python python-beaker python-bs4 python-crypto python-feedparser python-flup python-html5lib
-    python-imaging python-jinja2 python-pycurl python-openssl python-qt4 python-simplejson rhino tesseract-ocr
-    tesseract-ocr-eng gocr
+    git curl openssl python python-beaker python-bs4 python-crypto python-django python-feedparser python-flup
+    python-html5lib python-imaging python-jinja2 python-pycurl python-openssl python-qt4 python-simplejson rhino
+    tesseract-ocr tesseract-ocr-eng gocr
   )
   case node['platform']
   when 'debian'
@@ -77,26 +77,26 @@ when 'fedora'
   default['pyload']['pid_dir']    = '/var/run/pyload'
   default['pyload']['log_dir']    = '/var/log/pyload'
   default['pyload']['packages']   = %w(
-    git curl openssl python python-beaker python-beautifulsoup4 python-crypto python-feedparser python-flup
-    python-html5lib python-pillow python-jinja2 python-pycurl pyOpenSSL PyQt4 python-simplejson python-thrift
-    js rhino tesseract gocr
+    git curl openssl python python-beaker python-beautifulsoup4 python-crypto python-django python-feedparser
+    python-flup python-html5lib python-pillow python-jinja2 python-pycurl pyOpenSSL PyQt4 python-simplejson
+    python-thrift js rhino tesseract gocr
   )
 when 'freebsd'
   default['pyload']['init_style'] = 'bsd'
   default['pyload']['pid_dir']    = '/var/run'
   default['pyload']['log_dir']    = '/var/log/pyload'
   default['pyload']['packages']   = %w(
-    git curl openssl python27 py27-beaker py27-beautifulsoup py27-pycrypto py27-feedparser py27-flup py27-html5lib
-    py27-pillow py27-Jinja2 py27-pycurl py27-openssl py27-qt4 py27-simplejson py27-thrift spidermonkey24 rhino
-    tesseract tesseract-data gocr py27-sqlite3
+    git curl openssl python27 py27-beaker py27-beautifulsoup py27-pycrypto py27-django py27-feedparser py27-flup
+    py27-html5lib py27-pillow py27-Jinja2 py27-pycurl py27-openssl py27-qt4 py27-simplejson py27-thrift
+    spidermonkey24 rhino tesseract tesseract-data gocr py27-sqlite3
   )
 when 'rhel'
   default['pyload']['init_style'] = node['init_package']
   default['pyload']['pid_dir']    = '/var/run/pyload'
   default['pyload']['log_dir']    = '/var/log/pyload'
   default['pyload']['packages']   = %w(
-    git curl openssl python python-beaker python-beautifulsoup4 python-feedparser python-flup python-html5lib
-    python-jinja2 python-pycurl pyOpenSSL PyQt4 python-simplejson js rhino tesseract
+    git curl openssl python python-beaker python-beautifulsoup4 python-django python-feedparser python-flup
+    python-html5lib python-jinja2 python-pycurl pyOpenSSL PyQt4 python-simplejson js rhino tesseract
   )
   default['pyload']['packages'] += if node['platform_version'].to_f < 7
                                      %w(python-crypto python-imaging)
@@ -109,9 +109,9 @@ when 'suse'
   default['pyload']['log_dir']    = '/var/log/pyload'
   default['pyload']['use_fix']    = true
   default['pyload']['packages']   = %w(
-    git curl openssl python python-Beaker python-beautifulsoup4 python-pycrypto python-feedparser python-flup
-    python-html5lib python-Jinja2 python-pycurl python-pyOpenSSL python-qt4 python-simplejson python-thrift js
-    python-python-spidermonkey rhino tesseract gocr
+    git curl openssl python python-Beaker python-beautifulsoup4 python-pycrypto python-django python-feedparser
+    python-flup python-html5lib python-Jinja2 python-pycurl python-pyOpenSSL python-qt4 python-simplejson
+    python-thrift js python-python-spidermonkey rhino tesseract gocr
   )
   default['pyload']['packages'] += if node['platform_version'].to_f < 13.2
                                      %w(python-imaging)
