@@ -148,7 +148,8 @@ suites:
   - name: service-init
     run_list:
       - recipe[pyload::default]
-    attributes: [
+    attributes:
+    includes: [
       'ubuntu-12.04',
       'ubuntu-14.04',
       'ubuntu-16.04',
