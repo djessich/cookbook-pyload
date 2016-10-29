@@ -59,7 +59,6 @@ env:
   - INSTANCE=service-systemd-opensuse-132
   - INSTANCE=service-upstart-ubuntu-1204
   - INSTANCE=service-upstart-ubuntu-1404
-  - INSTANCE=service-upstart-ubuntu-1604
 
 # Don't `bundle install`
 install: echo "skip bundle install"
