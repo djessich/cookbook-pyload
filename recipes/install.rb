@@ -76,7 +76,7 @@ git node['pyload']['install_dir'] do
   group node['pyload']['group']
   action :sync
   notifies :run, 'execute[system_check_pyload]', :immediately
-  notifies :restart, 'service[pyload]', :dealayed
+  notifies :restart, 'service[pyload]', :delayed
 end
 
 # this fix only applies to suse platform family as Pyload fails to start due to
