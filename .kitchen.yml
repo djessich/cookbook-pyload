@@ -125,8 +125,6 @@ suites:
     run_list:
       - recipe[pyload::default]
     attributes:
-      pyload:
-        init_style: init
     includes: [
       'ubuntu-12.04',
       'ubuntu-14.04',
