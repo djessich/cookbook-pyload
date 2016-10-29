@@ -20,7 +20,8 @@
 dist_dir, conf_dir = value_for_platform_family(
   debian: %w(debian default),
   fedora: %w(rhel sysconfig),
-  rhel:   %w(rhel sysconfig)
+  rhel:   %w(rhel sysconfig),
+  suse:   %w(suse sysconfig)
 )
 
 template '/etc/init.d/pyload' do

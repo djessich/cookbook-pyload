@@ -152,14 +152,8 @@ suites:
     includes: [
       'ubuntu-12.04',
       'ubuntu-14.04',
-      'ubuntu-16.04',
-      'debian-7',
-      'debian-8',
-      'centos-6',
-      'centos-7',
-      'fedora-22',
-      'fedora-23',
-      'fedora-24'
+      'debian-7.11',
+      'centos-6.8',
     ]
   - name: service-systemd
     run_list:
