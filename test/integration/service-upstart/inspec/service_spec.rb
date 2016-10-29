@@ -18,7 +18,8 @@
 # limitations under the License.
 #
 
-describe upstart_service('pyload') do
+# as we have no upstart script for upstart enable platforms, we check for Sys-V-Init
+describe sysv_service('pyload') do
   it { should be_enabled }
   it { should be_running }
 end
