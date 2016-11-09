@@ -26,16 +26,12 @@ dist_dir, conf_dir = value_for_platform_family(
 
 template '/etc/init.d/pyload' do
   source "#{dist_dir}/init.d/pyload.erb"
-  user 'root'
-  group 'root'
   mode '0755'
   notifies :restart, 'service[pyload]', :delayed
 end
 
 template "/etc/#{conf_dir}/pyload" do
   source "#{dist_dir}/#{conf_dir}/pyload.erb"
-  user 'root'
-  group 'root'
   mode '0644'
   variables(
     install_dir: node['pyload']['install_dir'],

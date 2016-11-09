@@ -41,8 +41,6 @@ end
 
 template '/etc/rc.conf.d/pyload' do
   source 'rc.conf.d/pyload.erb'
-  owner 'root'
-  group 'wheel'
   mode '0644'
   notifies :restart, 'service[pyload]', :delayed
 end

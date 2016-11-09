@@ -19,8 +19,6 @@
 
 template '/etc/systemd/system/pyload.service' do
   source 'systemd_service.erb'
-  user 'root'
-  group 'root'
   mode '0755'
   variables(
     install_dir: node['pyload']['install_dir'],

@@ -22,3 +22,9 @@ describe systemd_service('pyload') do
   it { should be_enabled }
   it { should be_running }
 end
+
+describe file('/etc/systemd/system/pyload.service') do
+  it { should exist }
+  it { should be_file }
+  its('mode') { should cmp '0755' }
+end
