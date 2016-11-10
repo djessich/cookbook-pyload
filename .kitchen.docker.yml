@@ -149,6 +149,8 @@ suites:
     run_list:
       - recipe[pyload::default]
     attributes:
+      pyload:
+        init_style: init
     includes: [
       'ubuntu-12.04',
       'ubuntu-14.04',
@@ -159,6 +161,8 @@ suites:
     run_list:
       - recipe[pyload::default]
     attributes:
+      pyload:
+        init_style: systemd
     includes: [
       'ubuntu-16.04',
       'debian-8',
@@ -172,6 +176,8 @@ suites:
     run_list:
       - recipe[pyload::default]
     attributes:
+      pyload:
+        init_style: upstart
     includes: [
       'ubuntu-12.04',
       'ubuntu-14.04'

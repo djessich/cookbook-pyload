@@ -118,6 +118,8 @@ suites:
     run_list:
       - recipe[pyload::default]
     attributes:
+      pyload:
+        init_style: bsd
     includes: [
       'freebsd-10.3'
     ]
@@ -125,6 +127,8 @@ suites:
     run_list:
       - recipe[pyload::default]
     attributes:
+      pyload:
+        init_style: init
     includes: [
       'ubuntu-12.04',
       'ubuntu-14.04',
@@ -135,6 +139,8 @@ suites:
     run_list:
       - recipe[pyload::default]
     attributes:
+      pyload:
+        init_style: systemd
     includes: [
       'ubuntu-16.04',
       'debian-8.5',
@@ -148,6 +154,8 @@ suites:
     run_list:
       - recipe[pyload::default]
     attributes:
+      pyload:
+        init_style: upstart
     includes: [
       'ubuntu-12.04',
       'ubuntu-14.04'
