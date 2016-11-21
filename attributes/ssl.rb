@@ -18,6 +18,7 @@
 #
 
 default['pyload']['ssl']['activated'] = false
-default['pyload']['ssl']['cert_path'] = nil
-default['pyload']['ssl']['cert'] = 'ssl.crt'
-default['pyload']['ssl']['key'] = 'ssl.key'
+default['pyload']['ssl']['certificate_path'] = '/etc/ssl'
+default['pyload']['ssl']['certificate_key_path'] = '/etc/ssl'
+default['pyload']['ssl']['certificate'] = 'ssl.crt'
+default['pyload']['ssl']['certificate_key'] = 'ssl.key'
