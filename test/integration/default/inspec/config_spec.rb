@@ -51,9 +51,9 @@ describe file('/home/pyload/.pyload/pyload.conf') do
   its('content') { should match(/webinterface\s[a-zA-Z0-9\-\.\"\:\;\_\=\n\s]*template.*default/) }
   its('content') { should match(/webinterface\s[a-zA-Z0-9\-\.\"\:\;\_\=\n\s]*prefix.*=.*/) }
   its('content') { should match(/webinterface\s[a-zA-Z0-9\-\.\"\:\;\_\=\n\s]*https.*False/) }
-  its('content') { should match(/ssl\s[a-zA-Z0-9\-\.\"\:\;\_\=\n\s]*activated.*False/) }
-  its('content') { should match(/ssl\s[a-zA-Z0-9\-\.\"\:\;\_\=\n\s]*cert.*ssl.crt/) }
-  its('content') { should match(/ssl\s[a-zA-Z0-9\-\.\"\:\;\_\=\n\s]*key.*ssl.key/) }
+  its('content') { should match(%r{ssl\s[a-zA-Z0-9\-\.\"\:\;\_\=\(\)/\n\s]*activated.*False}) }
+  its('content') { should match(%r{ssl\s[a-zA-Z0-9\-\.\"\:\;\_\=\(\)/\n\s]*cert.*/etc/ssl/ssl.crt}) }
+  its('content') { should match(%r{ssl\s[a-zA-Z0-9\-\.\"\:\;\_\=\(\)/\n\s]*key.*/etc/ssl/ssl.key}) }
   its('content') { should match(%r{download\s[a-zA-Z0-9\-\.\"\:\;\_\=\(\)/\n\s]*interface.*None}) }
   its('content') { should match(%r{download\s[a-zA-Z0-9\-\.\"\:\;\_\=\(\)/\n\s]*ipv6.*False}) }
   its('content') { should match(%r{download\s[a-zA-Z0-9\-\.\"\:\;\_\=\(\)/\n\s]*chunks.*3}) }
