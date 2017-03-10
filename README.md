@@ -251,6 +251,16 @@ This cookbook will install various packages during its execution by using the ta
 
 More information on required and optional dependencies of Pyload can be found in the official Pyloads project [README](https://github.com/pyload/pyload/blob/stable/README).
 
+### How is this cookbook used without the Chef Server, f.e. to just install Pyload on the system?
+
+To execute this cookbook without the Chef Server, you could use Chef Client local mode. First install the [latest Chef Client version](https://downloads.chef.io/chef) for your platform. Next clone the latest release from this cookbooks Git repository and copy it to the folder `cookbooks/pyload`. This is the directory layout required by the Chef Client. Last but not least, execute the following command, to install Pyload with Chef using the following command.
+
+```bash
+sudo chef-client -z -o pyload
+```
+
+Thats it, the cookbook should now be executed by the Chef Client. After it has been successfully finished, Pyload should be installed on your system.
+
 ### Why does this cookbook doesn't use Python PIP to install all dependencies for Pyload?
 
 We thought about that, but we really do not need Python packages in a virtualenv but system-wide and we definitly can use the latest version of Python packages as no specific version is needed, so we decided in the end to use the systems package manager only. We could use Python PIP by just including the [poise-python](https://github.com/poise/poise-python) cookbook, as it provides a custom resource for installing packages using pip.
