@@ -22,14 +22,14 @@ platforms:
   - name: debian-7.11
     run_list:
       - recipe[apt]
-  - name: debian-8.5
+  - name: debian-8.6
     run_list:
       - recipe[apt]
   - name: centos-6.8
     run_list:
       - recipe[yum]
       - recipe[yum-epel]
-  - name: centos-7.2
+  - name: centos-7.3
     run_list:
       - recipe[yum]
       - recipe[yum-epel]
@@ -81,7 +81,7 @@ suites:
       'ubuntu-14.04',
       'ubuntu-16.04',
       'debian-7.11',
-      'debian-8.5'
+      'debian-8.6'
     ]
   - name: fedora-packages
     run_list:
@@ -105,7 +105,7 @@ suites:
     attributes:
     includes: [
       'centos-6.8',
-      'centos-7.2'
+      'centos-7.3'
     ]
   - name: suse-packages
     run_list:
@@ -143,8 +143,8 @@ suites:
         init_style: systemd
     includes: [
       'ubuntu-16.04',
-      'debian-8.5',
-      'centos-7.2',
+      'debian-8.6',
+      'centos-7.3',
       'fedora-22',
       'fedora-23',
       'fedora-24',
