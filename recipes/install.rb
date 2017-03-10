@@ -71,17 +71,17 @@ execute 'system_check_pyload' do
   not_if { node['platform_family'].eql?('freebsd') }
 end
 
+# determine the correct version to checkout from attribute
 version = if node['pyload']['version'] =~ /^[0-9\.]*$/
             "v#{node['pyload']['version']}"
           else
             node['pyload']['version']
           end
 
+# checkout version from git
 git node['pyload']['install_dir'] do
   repository 'https://github.com/pyload/pyload.git'
   revision version
-  checkout_branch version
-  enable_checkout false
   user node['pyload']['user']
   group node['pyload']['group']
   action :sync
