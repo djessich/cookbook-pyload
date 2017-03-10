@@ -66,10 +66,6 @@ describe package('PyQt4') do
   it { should be_installed }
 end
 
-describe package('python-simplejson') do
-  it { should be_installed }
-end
-
 describe package('js') do
   it { should be_installed }
 end
@@ -91,6 +87,10 @@ if os[:release].to_f < 7
     it { should be_installed }
   end
 
+  describe package('python-simplejson') do
+    it { should be_installed }
+  end
+
   describe package('python-imaging') do
     it { should be_installed }
   end
@@ -100,6 +100,10 @@ else
   end
 
   describe package('python-django') do
+    it { should be_installed }
+  end
+
+  describe package('python2-simplejson') do
     it { should be_installed }
   end
 
