@@ -1,8 +1,4 @@
 #
-# Cookbook Name:: pyload
-# Suite:: arch-packages
-# Test:: packages
-#
 # Copyright 2016, Gridtec
 #
 # Licensed under the Apache License, Version 2.0 (the "License");

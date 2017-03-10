@@ -1,7 +1,4 @@
 #
-# Cookbook Name:: pyload
-# Spec:: spec_helper
-#
 # Copyright 2016, Dominik Jessich
 #
 # Licensed under the Apache License, Version 2.0 (the "License");

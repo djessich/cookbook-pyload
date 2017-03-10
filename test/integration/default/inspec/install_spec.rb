@@ -1,8 +1,4 @@
 #
-# Cookbook Name:: pyload
-# Suite:: default
-# Test:: install
-#
 # Copyright 2016, Gridtec
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
@@ -64,22 +60,4 @@ describe file('/usr/share/pyload/.git') do
   its('owner') { should eq 'pyload' }
   its('group') { should eq 'pyload' }
   its('mode') { should eq 0755 }
-end
-
-describe file('/usr/bin/pyLoadCli') do
-  it { should exist }
-  it { should be_symlink }
-  it { should be_linked_to '/usr/share/pyload/pyLoadCli.py' }
-end
-
-describe file('/usr/bin/pyLoadCore') do
-  it { should exist }
-  it { should be_symlink }
-  it { should be_linked_to '/usr/share/pyload/pyLoadCore.py' }
-end
-
-describe file('/usr/bin/pyLoadGui') do
-  it { should exist }
-  it { should be_symlink }
-  it { should be_linked_to '/usr/share/pyload/pyLoadGui.py' }
 end
