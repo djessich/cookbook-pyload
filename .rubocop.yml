@@ -1,6 +1,7 @@
 SpaceBeforeFirstArg:
   Exclude:
     - "**/metadata.rb"
+    - "**/Rakefile"
 LineLength:
   Max: 150
 Metrics/AbcSize:
