@@ -1,8 +1,12 @@
+AllCops:
+  Exclude:
+    - "**/Rakefile"
 SpaceBeforeFirstArg:
   Exclude:
     - "**/metadata.rb"
-    - "**/Rakefile"
 LineLength:
   Max: 150
 Metrics/AbcSize:
   Max: 20
+EndOfLine:
+  Enabled: false
