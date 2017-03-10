@@ -42,6 +42,9 @@ platforms:
   - name: fedora-24
     run_list:
       - recipe[yum::dnf_yum_compat]
+  - name: fedora-25
+    run_list:
+      - recipe[yum::dnf_yum_compat]
   - name: opensuse-13.2
     run_list:
       - recipe[zypper]
@@ -90,7 +93,8 @@ suites:
     includes: [
       'fedora-22',
       'fedora-23',
-      'fedora-24'
+      'fedora-24',
+      'fedora-25'
     ]
   - name: freebsd-packages
     run_list:
@@ -148,6 +152,7 @@ suites:
       'fedora-22',
       'fedora-23',
       'fedora-24',
+      'fedora-25',
       'opensuse-13.2'
     ]
   - name: service-upstart

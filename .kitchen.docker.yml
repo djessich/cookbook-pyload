@@ -93,6 +93,13 @@ platforms:
       intermediate_instructions:
         - RUN dnf -y install yum which systemd-sysv initscripts
 
+  - name: fedora-25
+    driver:
+      image: fedora:25
+      pid_one_command: /usr/lib/systemd/systemd
+      intermediate_instructions:
+        - RUN dnf -y install yum which systemd-sysv initscripts
+
   - name: opensuse-13.2
     driver:
       image: opensuse:13.2
@@ -128,7 +135,8 @@ suites:
     includes: [
       'fedora-22',
       'fedora-23',
-      'fedora-24'
+      'fedora-24',
+      'fedora-25'
     ]
   - name: rhel-packages
     run_list:
@@ -170,6 +178,7 @@ suites:
       'fedora-22',
       'fedora-23',
       'fedora-24',
+      'fedora-25',
       'opensuse-13.2'
     ]
   - name: service-upstart

@@ -28,6 +28,7 @@ env:
   - INSTANCE=default-fedora-22
   - INSTANCE=default-fedora-23
   - INSTANCE=default-fedora-24
+  - INSTANCE=default-fedora-25
   - INSTANCE=default-opensuse-132
   - INSTANCE=debian-packages-ubuntu-1204
   - INSTANCE=debian-packages-ubuntu-1404
@@ -37,6 +38,7 @@ env:
   - INSTANCE=fedora-packages-fedora-22
   - INSTANCE=fedora-packages-fedora-23
   - INSTANCE=fedora-packages-fedora-24
+  - INSTANCE=fedora-packages-fedora-25
   - INSTANCE=rhel-packages-centos-6
   - INSTANCE=rhel-packages-centos-7
   - INSTANCE=suse-packages-opensuse-132
@@ -50,6 +52,7 @@ env:
   - INSTANCE=service-systemd-fedora-22
   - INSTANCE=service-systemd-fedora-23
   - INSTANCE=service-systemd-fedora-24
+  - INSTANCE=service-systemd-fedora-25
   - INSTANCE=service-systemd-opensuse-132
   - INSTANCE=service-upstart-ubuntu-1204
   - INSTANCE=service-upstart-ubuntu-1404
