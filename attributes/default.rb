@@ -75,12 +75,17 @@ when 'fedora'
   default['pyload']['log_dir']    = '/var/log/pyload'
   default['pyload']['packages']   = %w(
     git curl openssl python python-beaker python-beautifulsoup4 python-feedparser python-flup python-html5lib
-    python-pillow python-pycurl pyOpenSSL PyQt4 python-simplejson python-thrift js rhino tesseract gocr
+    python-pycurl pyOpenSSL PyQt4 python-thrift js rhino tesseract gocr
   )
   default['pyload']['packages'] += if node['platform_version'].to_f < 24
                                      %w(python-crypto python-django python-jinja2)
                                    else
                                      %w(python2-crypto python2-django python2-jinja2)
+                                   end
+  default['pyload']['packages'] += if node['platform_version'].to_f < 25
+                                     %w(python-pillow python-simplejson)
+                                   else
+                                     %w(python2-pillow python2-simplejson)
                                    end
 when 'freebsd'
   default['pyload']['init_style'] = 'bsd'
@@ -97,12 +102,12 @@ when 'rhel'
   default['pyload']['log_dir']    = '/var/log/pyload'
   default['pyload']['packages']   = %w(
     git curl openssl python python-beaker python-beautifulsoup4 python-feedparser python-flup python-html5lib
-    python-jinja2 python-pycurl pyOpenSSL PyQt4 python-simplejson js rhino tesseract
+    python-jinja2 python-pycurl pyOpenSSL PyQt4 js rhino tesseract
   )
   default['pyload']['packages'] += if node['platform_version'].to_f < 7
-                                     %w(python-crypto Django python-imaging)
+                                     %w(python-crypto Django python-imaging python-simplejson)
                                    else
-                                     %w(python2-crypto python-django python-pillow python-thrift)
+                                     %w(python2-crypto python-django python-pillow python2-simplejson python-thrift)
                                    end
 when 'suse'
   default['pyload']['init_style'] = 'systemd'

@@ -237,12 +237,12 @@ This cookbook will install various packages during its execution by using the ta
 | python-feedparser | python2-feedparser     | python-feedparser          | python-feedparser     | python-feedparser     | python-feedparser     | py27-feedparser    |
 | python-flup       | python2-flup           | python-flup                | python-flup           | python-flup           | python-flup           | py27-flup          |
 | python-html5lib   | python2-html5lib       | python-html5lib            | python-html5lib       | python-html5lib       | python-html5lib       | py27-html5lib      |
-| python-imaging    | python2-pillow         | python-imaging             | python-pillow         | python-imaging (<= 6)<br/>python-pillow (>= 7) | python-imaging (<= 13.1)<br/>python-Pillow (>= 13.2) | py27-pillow |
+| python-imaging    | python2-pillow         | python-imaging             | python-pillow (<= 24)<br/>python2-pillow (>= 25) | python-imaging (<= 6)<br/>python-pillow (>= 7) | python-imaging (<= 13.1)<br/>python-Pillow (>= 13.2) | py27-pillow |
 | jinja2            | python2-jinja          | python-jinja2              | python-jinja2 (<= 23)<br/>python2-jinja2 (>= 24) | python-jinja2 | python-Jinja2 | py27-Jinja2 |
 | pycurl            | python2-pycurl         | python-pycurl              | python-pycurl         | python-pycurl         | python-pycurl         | py27-pycurl        |
 | pyOpenSSL         | python2-pyopenssl      | python-openssl             | pyOpenSSL             | pyOpenSSL             | python-pyOpenSSL      | py27-openssl       |
 | pyqt4             | python2-pyqt4          | python-qt4                 | PyQt4                 | PyQt4                 | python-qt4            | py27-qt4           |
-| simplejson        | python2-simplejson     | python-simplejson          | python-simplejson     | python-simplejson     | python-simplejson     | py27-simplejson    |
+| simplejson        | python2-simplejson     | python-simplejson          | python-simplejson (<= 24)<br/>python2-simplejson (>= 25) | python-simplejson (<= 6)<br/>python2-simplejson (>= 7) | python-simplejson     | py27-simplejson    |
 | thrift            | python2-thrift         | python-thrift (>= 8/14.04) | python-thrift         | python-thrift (>=7)   | python-thrift         | py27-thrift        |
 | ossp-js           | js                     | libmozjs185-1.0 (<= 7/12.04)<br/>libmozjs-24-bin (>= 8/14.04) | js | js    | js<br/>python-python-spidermonkey | spidermonkey24 |
 | rhino             | rhino                  | rhino                      | rhino                 | rhino                 | rhino                 | rhino              |

@@ -50,10 +50,6 @@ describe package('python-html5lib') do
   it { should be_installed }
 end
 
-describe package('python-pillow') do
-  it { should be_installed }
-end
-
 describe package('python-pycurl') do
   it { should be_installed }
 end
@@ -63,10 +59,6 @@ describe package('pyOpenSSL') do
 end
 
 describe package('PyQt4') do
-  it { should be_installed }
-end
-
-describe package('python-simplejson') do
   it { should be_installed }
 end
 
@@ -112,6 +104,24 @@ else
   end
 
   describe package('python2-jinja2') do
+    it { should be_installed }
+  end
+end
+
+if os[:release].to_f < 25
+  describe package('python-pillow') do
+    it { should be_installed }
+  end
+
+  describe package('python-simplejson') do
+    it { should be_installed }
+  end
+else
+  describe package('python2-pillow') do
+    it { should be_installed }
+  end
+
+  describe package('python2-simplejson') do
     it { should be_installed }
   end
 end
