@@ -94,7 +94,7 @@ when 'freebsd'
   default['pyload']['packages']   = %w(
     git curl openssl python27 py27-beaker py27-beautifulsoup py27-pycrypto py27-django19 py27-feedparser py27-flup
     py27-html5lib py27-pillow py27-Jinja2 py27-pycurl py27-openssl py27-qt4 py27-simplejson py27-thrift
-    spidermonkey24 rhino tesseract tesseract-data gocr py27-sqlite3
+    spidermonkey24 rhino tesseract gocr py27-sqlite3
   )
 when 'rhel'
   default['pyload']['init_style'] = node['init_package']

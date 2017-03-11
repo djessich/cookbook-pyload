@@ -56,6 +56,7 @@ platforms:
   #  run_list:
   #    - recipe[pacman]
   - name: freebsd-10.3
+  - name: freebsd-11.0
 
 suites:
   - name: default
@@ -101,7 +102,8 @@ suites:
       - recipe[pyload::packages]
     attributes:
     includes: [
-      'freebsd-10.3'
+      'freebsd-10.3',
+      'freebsd-11.0'
     ]
   - name: rhel-packages
     run_list:
@@ -125,7 +127,8 @@ suites:
       pyload:
         init_style: bsd
     includes: [
-      'freebsd-10.3'
+      'freebsd-10.3',
+      'freebsd-11.0'
     ]
   - name: service-init
     run_list:
