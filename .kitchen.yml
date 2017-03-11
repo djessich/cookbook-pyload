@@ -22,7 +22,7 @@ platforms:
   - name: debian-7.11
     run_list:
       - recipe[apt]
-  - name: debian-8.6
+  - name: debian-8.7
     run_list:
       - recipe[apt]
   - name: centos-6.8
@@ -85,7 +85,7 @@ suites:
       'ubuntu-14.04',
       'ubuntu-16.04',
       'debian-7.11',
-      'debian-8.6'
+      'debian-8.7'
     ]
   - name: fedora-packages
     run_list:
@@ -150,7 +150,7 @@ suites:
         init_style: systemd
     includes: [
       'ubuntu-16.04',
-      'debian-8.6',
+      'debian-8.7',
       'centos-7.3',
       'fedora-22',
       'fedora-23',
