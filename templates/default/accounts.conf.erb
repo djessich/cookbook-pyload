@@ -1,7 +1,7 @@
 version: 1
 
 <%# Format does not matter here, as Pyload will reorganise files as it needs them! %>
-<% @accounts.each do |account_id, account_data| %>
-  <%= account_data['name'] || account_id.to_s.capitalize %>:
+<% node['pyload']['accounts'].each do |account_id, account_data| %>
+  <%= account_data['name'] || account_id.to_s %>:
   <%= account_data['user'] %>:<%= account_data['password'] %>
 <% end %>

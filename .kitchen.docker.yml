@@ -114,7 +114,7 @@ suites:
     attributes:
       pyload:
         accounts:
-          test:
+          TestTest:
             user: test
             password: test
   - name: debian-packages

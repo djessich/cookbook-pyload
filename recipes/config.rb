@@ -19,9 +19,6 @@ template "#{node['pyload']['config_dir']}/accounts.conf" do
   owner node['pyload']['user']
   group node['pyload']['group']
   mode 0600
-  variables(
-    accounts: node['pyload']['accounts']
-  )
   action :create_if_missing
 end unless node['pyload']['accounts'].empty?
 

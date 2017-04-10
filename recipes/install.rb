@@ -49,16 +49,6 @@ directory node['pyload']['log_dir'] do
   recursive true
 end
 
-if node['pyload']['ssl']['activated']
-  directory node['pyload']['ssl']['certificate_path'] do
-    recursive true
-  end
-
-  directory node['pyload']['ssl']['certificate_Key_path'] do
-    recursive true
-  end
-end
-
 execute 'system_check_pyload' do
   command 'echo \n | python systemCheck.py'
   cwd node['pyload']['install_dir']
