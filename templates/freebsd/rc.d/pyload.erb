@@ -12,11 +12,11 @@
 #
 #   pyload_enable="YES"
 #   # Optional
-#   pyload_daemon="<%= @install_dir %>/pyLoadCore.py"
-#   pyload_user="<%= @user %>"
-#   pyload_group="<%= @group %>"
-#   pyload_pid="<%= @pid_file %>"
-#   pyload_options="--daemon --configdir=<%= @config_dir %> --pidfile=<%= @pid_file %>"
+#   pyload_daemon="<%= node['pyload']['install_dir'] %>/pyLoadCore.py"
+#   pyload_user="<%= node['pyload']['user'] %>"
+#   pyload_group="<%= node['pyload']['group'] %>"
+#   pyload_pid="<%= node['pyload']['pid_dir']/pyload.pid %>"
+#   pyload_options="--daemon --configdir=<%= node['pyload']['config_dir'] %> --pidfile=<%= node['pyload']['pid_dir']/pyload.pid %>"
 
 . /etc/rc.subr
 
@@ -26,11 +26,11 @@ name="pyload"
 rcvar=${name}_enable
 
 : ${pyload_enable:="YES"}
-: ${pyload_daemon:="<%= @install_dir %>/pyLoadCore.py"}
-: ${pyload_user:="<%= @user %>"}
-: ${pyload_group:="<%= @group %>"}
-: ${pyload_pid:="<%= @pid_file %>"}
-: ${pyload_options:="--daemon --configdir=<%= @config_dir %> --pidfile=<%= @pid_file %>"}
+: ${pyload_daemon:="<%= node['pyload']['install_dir'] %>/pyLoadCore.py"}
+: ${pyload_user:="<%= node['pyload']['user'] %>"}
+: ${pyload_group:="<%= node['pyload']['group'] %>"}
+: ${pyload_pid:="<%= node['pyload']['pid_dir']/pyload.pid %>"}
+: ${pyload_options:="--daemon --configdir=<%= node['pyload']['config_dir'] %> --pidfile=<%= node['pyload']['pid_dir']/pyload.pid %>"}
 
 command_interpreter="python"
 command="${pyload_daemon}"

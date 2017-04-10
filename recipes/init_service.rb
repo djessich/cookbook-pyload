@@ -30,13 +30,6 @@ end
 template "/etc/#{conf_dir}/pyload" do
   source "#{dist_dir}/#{conf_dir}/pyload.erb"
   mode '0644'
-  variables(
-    install_dir: node['pyload']['install_dir'],
-    config_dir: node['pyload']['config_dir'],
-    user: node['pyload']['user'],
-    group: node['pyload']['group'],
-    pid_file: "#{node['pyload']['pid_dir']}/pyload.pid"
-  )
   notifies :restart, 'service[pyload]', :delayed
 end
 
