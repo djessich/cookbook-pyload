@@ -13,4 +13,4 @@ end
 source_url 'https://github.com/gridtec/cookbook-pyload'
 issues_url 'https://github.com/gridtec/cookbook-pyload/issues'
 
-chef_version '~> 12.5'
+chef_version '>= 12.5'
