@@ -80,8 +80,10 @@ end
 # an error of file function we will comment out the following line
 # 'translation.func_globals['find'] = find' of file <pyload_install_dir>/module/common/pylgettext.py
 execute 'opensuse_fix' do
-  command "sed -i s/translation.func_globals/#translation.func_globals/g #{node['pyload']['install_dir']}/module/common/pylgettext.py"
-  only_if "grep -q ^translation.func_globals.* #{node['pyload']['install_dir']}/module/common/pylgettext.py"
+  # command "sed -i s/translation.func_globals/#translation.func_globals/g #{node['pyload']['install_dir']}/module/common/pylgettext.py"
+  # only_if "grep -q ^translation.func_globals.* #{node['pyload']['install_dir']}/module/common/pylgettext.py"
+  command "echo \"origfind.func_globals['find'] = origfind\" >> #{node['pyload']['install_dir']}/module/common/pylgettext.py"
+  not_if "grep -q ^origfind.func_globals.* #{node['pyload']['install_dir']}/module/common/pylgettext.py"
 end if node['platform_family'].eql?('suse') && node['pyload']['use_fix']
 
 %w(pyLoadCli pyLoadCore pyLoadGui).each do |bin|
