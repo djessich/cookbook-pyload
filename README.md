@@ -147,9 +147,8 @@ The `node['pyload']['remote']` namespace defines remote API settings for Pyload,
 The `node['pyload']['ssl']` namespace defines SSL settings for Pyload, which will be set in *pyload.conf* configuration file.
 
 * `node['pyload']['ssl']['activated']` - Enables or disables SSL. By default, this is disabled, which means that this is set to *false*.
-* `node['pyload']['ssl']['cert_path']` - Specifies the path where SSL certificates should be searched for. This is set to *nil*, which means that SSL certificates are searched for in configuration directory, as specified in `node['pyload']['config_dir']`.
-* `node['pyload']['ssl']['cert']` - Specifies the SSL certificate name. By default, this is set to *ssl.crt*.
-* `node['pyload']['ssl']['key']` - Specifies the SSL certificate key name. By default, this is set to *ssl.key*.
+* `node['pyload']['ssl']['cert']` - Specifies the SSL certificate path. By default, this is set to */etc/ssl/ssl.crt*.
+* `node['pyload']['ssl']['key']` - Specifies the SSL certificate key path. By default, this is set to */etc/ssl/ssl.key*.
 
 ### Webinterface Settings
 
@@ -181,15 +180,15 @@ This recipe does a number of things to install Pyload. This includes the followi
 * create the download directory as specified in `node['pyload']['download_dir']`
 * create the pid file directory (run directory) as specified in `node['pyload']['pid_dir']`
 * create the logging directory as specified in `node['pyload']['log_dir']`
-* clone Pyload source code from the [official Pyload Git repository](https://github.com/pyload/pyload) and checkout the version tag or branch (default will be the latest *stable* branch)
+* clone Pyload source code from the [official Pyload Git repository](https://github.com/pyload/pyload) and checkout the version tag or branch as specified by `node['pyload']['version']` (default will be the latest *stable* branch)
 * perform a system check, to check if Pyload is able to run by using the [*systemCheck.py*](https://github.com/pyload/pyload/blob/stable/systemCheck.py) script in the source code
 * create symbolic links to */usr/bin* for all Pyload executeables ([pyLoadCli](https://github.com/pyload/pyload/blob/stable/pyLoadCli.py), [pyLoadCore](https://github.com/pyload/pyload/blob/stable/pyLoadCore.py), [pyLoadGui](https://github.com/pyload/pyload/blob/stable/pyLoadGui.py)), to allow running Pyload directly from bash as command
 
 #### Note for OpenSUSE and derivatives:
 
-On OpenSUSE and derivatives, the install recipe will need to execute a fix for starting Pyload as it fails to start due to overwritten `find` function. This fix will remove the line `translation.func_globals['find'] = find` from file `node['pyload']['install_dir']/module/common/pylgettext.py` by commenting it out. See issue [#2755](https://github.com/pyload/pyload/issues/2577) of Pyload repository.
+On OpenSUSE and derivatives, the install recipe will need to execute a fix for starting Pyload as it fails to start due to overwritten `find` function. This fix will add the line `origfind.func_globals['find'] = origfind` to file `node['pyload']['install_dir']/module/common/pylgettext.py` by commenting it out. See issue [#2755](https://github.com/pyload/pyload/issues/2577) of Pyload repository, as this fix was suggested by Pyload team.
 
-If you encounter issues in Pyload functionality because of this fix, you can uncomment the commented line `translation.func_globals['find'] = find` from file `node['pyload']['install_dir']/module/common/pylgettext.py` and disable the execution of the fix in this cookbook. This can be done by overwriting the attribute `node['pyload']['use_fix']` with value *false* (by default *true*).
+If you encounter issues in Pyload functionality, because of this fix, you can comment the line `origfind.func_globals['find'] = origfind` from file `node['pyload']['install_dir']/module/common/pylgettext.py` and disable the execution of the fix in this cookbook. This can be done by overwriting the attribute `node['pyload']['use_fix']` with value *false* (by default *true*).
 
 ### packages
 
