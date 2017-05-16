@@ -1,5 +1,5 @@
 #
-# Copyright 2016, Gridtec
+# Copyright 2017, Gridtec
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -14,5 +14,9 @@
 # limitations under the License.
 #
 
-# use Sys-V-Init script for Upstart enabled platforms 
-include_recipe 'pyload::init_service'
+default['pyload']['language'] = 'en'
+default['pyload']['debug_mode'] = false
+default['pyload']['min_free_space'] = 200
+default['pyload']['folder_per_package'] = true
+default['pyload']['cpu_priority'] = 0
+default['pyload']['use_checksum'] = false

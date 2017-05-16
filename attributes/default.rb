@@ -26,15 +26,7 @@ default['pyload']['config_dir'] = if node['pyload']['user'] == 'root'
 default['pyload']['download_dir'] = "#{node['pyload']['config_dir']}/downloads"
 default['pyload']['dir_mode'] = '0755'
 default['pyload']['file_mode'] = '0644'
-
 default['pyload']['accounts'] = {}
-
-default['pyload']['language'] = 'en'
-default['pyload']['debug_mode'] = false
-default['pyload']['min_free_space'] = 200
-default['pyload']['folder_per_package'] = true
-default['pyload']['cpu_priority'] = 0
-default['pyload']['use_checksum'] = false
 
 case node['platform_family']
 when 'arch'

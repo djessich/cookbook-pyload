@@ -36,7 +36,7 @@ Regarding your OS, you may need additional recipes or cookbooks for this cookboo
 
 The attributes used by this cookbook are in the `node['pyload']` namespace which is broken up into different groups.
 
-### General Settings
+### Cookbook Settings
 
 The `node['pyload']` global namespace defines general settings for this cookbook.
 
@@ -44,8 +44,8 @@ The `node['pyload']` global namespace defines general settings for this cookbook
 * `node['pyload']['install_dir']` - Specifies the location for Pyload package itself. By default, this is set to */usr/share/pyload*.
 * `node['pyload']['config_dir']` - Specifies the location for Pyload configuration folders and files. By default, this is set to */home/&lt;user&gt;/.pyload* (interpolates to */home/pyload/.pyload* if defaults are used).
 * `node['pyload']['download_dir']` - Specifies the location for all Pyload downloaded files. By default, this is set to *node['pyload']['config_dir']/downloads* (interpolates to */home/pyload/.pyload/downloads* if defaults are used).
-* `node['pyload']['pid_dir']` - Specifies the location of the PID file for Pyload. By default, this is set to */var/run/pyload*.
 * `node['pyload']['log_dir']` - Specifies the location where log files will be placed. By default, this is set to */var/log/pyload*.
+* `node['pyload']['pid_dir']` - Specifies the location of the PID file for Pyload. By default, this is set to */var/run/pyload*.
 * `node['pyload']['user']` - Specifies the user which is used to run Pyload. By default, this is set to *pyload*.
 * `node['pyload']['group']` - Specifies the group which is used to run Pyload. By default, this is set to *pyload*.
 * `node['pyload']['dir_mode']` - Specifies the mode for folders created by this cookbook. By default, this is set to *0755*.
@@ -67,6 +67,8 @@ The `node['pyload']` global namespace defines general settings for this cookbook
       }
     }
   ```
+
+### General Settings
 
 The `node['pyload']` global namespace also defines the following general settings for Pyload, which will be set in *pyload.conf* configuration file.
 
@@ -200,8 +202,8 @@ This recipe includes one of the `pyload::INIT_STYLE_service` recipes based on th
 
 * `bsd` - uses the rc.d init script included in this cookbook, supported on FreeBSD only.
 * `init` - uses the Sys-V-Init script included in this cookbook, supported on Debian and Red Hat Enterprise Linux (RHEL) family distributions.
-* `upstart` - uses the Upstart job included in this cookbook, supported on Ubuntu. *Currently this delegates to use the Sys-V-Init script!*
-* `systemd` - sets up the service under SystemD. Supported on SystemD based distros.
+* `upstart` - uses the Sys-V-Init script included in this cookbook, as Upstart script in this cookbook is not supported.
+* `systemd` - sets up the service under SystemD. Supported on SystemD based platforms.
 
 If the init system cannot be determined by this cookbook (f.e. unsupported platform) or any other desriptor is specified, there will be no init system script created from this cookbook.
 
@@ -274,7 +276,7 @@ On RHEL and derivatives, it is required to install 3rd party repositories as bas
 
 ### Why does this cookbook does not provide an Upstart config on Upstart enabled platforms?
 
-We are currently working on an Upstart configuration file for Pyload. As this was not working well in the first place, we decided to just use the well-developed and working Sys-V-Init script on Upstart enabled platforms. In future releases, we may be able to include an Upstart configuration file in this cookbook.
+On Upstart enabled platforms, we will just add a Sys-V-Init script and no Upstart configuration.
 
 ### Why are there no unpacking software installed by the cookbook, such as `unzip` or `unrar`?
 
@@ -292,7 +294,7 @@ SSL certificate can be manually created for example by executing
 
 ### I want to execute this cookbooks tests. What do I need to do?
 
-We have provided a file called [TESTING.md](https://github.com/gridtec/cookbook-pyload/blob/master/TESTING.md) where you can find information on how to test this cookbook. We also suggest, that you have a look at [Travis CI](https://travis-ci.org/gridtec/cookbook-pyload), to see all tests we are currently executing to test this cookbook.
+We have provided an information file, so see [TESTING.md](https://github.com/gridtec/cookbook-pyload/blob/master/TESTING.md) where you can find information on how to test this cookbook. We also suggest, that you have a look at [Travis CI](https://travis-ci.org/gridtec/cookbook-pyload), to see all tests we are currently executing to test this cookbook.
 
 ### I want to contribute. What do I need to do?
 
@@ -320,9 +322,6 @@ limitations under the License.
 
 <!---
 ## TODO
-* move the global namespace (not cookbook specific) to an own namespace
-* possibily to configure each plugin
+* possibility to configure each plugin
 * extensions from git should be automatically added
-* add ssl_certificate cookbook to manage certificates
-* attribute cert_path is not required; remove and only specify absolute paths to cert_crt and cert_key
 --->
