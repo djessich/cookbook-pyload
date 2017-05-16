@@ -1,6 +1,6 @@
 # Testing the Pyload Cookbook
 
-This document describes the process for testing the Pyload cookbook using the ChefDK. Cookbooks can be tested using the test dependencies defined in the cookbooks Gemfile alone, but that process will not be covered in this document in order to maintain simplicity.
+This document describes the process for testing the Pyload cookbook using the ChefDK.
 
 ## Testing Prerequisites
 
@@ -26,15 +26,17 @@ chef exec bundle update
 
 ## Rakefile
 
-The cookbook contains a Rakefile which includes a number of tasks, each of which can be ran individually, or in groups. Typing *rake* by itself will perform the default checks: style checks (Rubocop/Cookstyle and Foodcritic), unit tests (Chefspec) and integration tests (Kitchen). To see a complete list of available tasks run `rake -T`
+The cookbook contains a Rakefile which includes a number of tasks, each of which can be ran individually, or in groups. Typing *rake* by itself will perform the default checks: style checks (Rubocop/Cookstyle and Foodcritic), unit tests (Chefspec) and integration tests (Kitchen). To see a complete list of available tasks run `chef exec rake -T`.
 
 ```bash
 $ chef exec rake -T
 rake integration:kitchen:all
+# ...
 rake spec
 rake style
 rake style:chef
 rake style:ruby
+rake style:ruby:auto_correct
 ```
 
 ## Style Testing
@@ -51,9 +53,9 @@ Chef style/correctness tests can be performed with Foodcritic by issuing
 chef exec rake style:chef
 ```
 
-## Spec Testing
+## Unit Testing
 
-Unit testing is done by running Rspec examples. Rspec will test any libraries, then test recipes using ChefSpec. This works by compiling a recipe (but not converging it), and allowing the user to make assertions about the resource_collection. The tests can be performed by issuing
+Unit testing is performed with [ChefSpec](http://sethvargo.github.io/chefspec/). ChefSpec is an extension of Rspec, specially formulated for testing Chef cookbooks. Chefspec compiles your cookbook code and converges the run in memory, without actually executing the changes. The user can write various assertions based on what they expect to have happened during the Chef run. Chefspec is very fast, and quick useful for testing complex logic as you can easily converge a cookbook many times in different ways. All unit tests can be executed by issuing
 
 ```shell
 chef exec rake spec
@@ -61,13 +63,25 @@ chef exec rake spec
 
 ## Integration Testing
 
-Integration testing is performed by Test Kitchen. After a successful converge, tests are uploaded and ran out of band of Chef. Tests should be designed to ensure that a recipe has accomplished its goal. The tests can be performed by issuing
+Integration testing is performed by Test Kitchen. Tests should be designed to ensure that a recipe has accomplished its goal. Integration tests can be performed on a local workstation using either VirtualBox or Docker as the virtualization hypervisor. To run tests against all available instances run:
 
 ```shell
-chef exec rake integration:kitchen:all
+chef exec kitchen test
 ```
 
-This cookbook provides a default Kitchen configuration file (kitchen.yml), which performs integration tests using Hashicorp's [Vagrant](https://www.vagrantup.com/downloads.html) and Oracle's [Virtualbox](https://www.virtualbox.org/wiki/Downloads) and an other Kitchen configuration file (kitchen.docker.yml), which performs integration tests using [Docker](https://www.docker.com/).
+To see a list of available test instances run:
+
+```shell
+chef exec kitchen list
+```
+
+To test specific instance run:
+
+```shell
+chef exec kitchen test INSTANCE_NAME
+```
+
+This cookbook provides a default Kitchen configuration file (kitchen.yml), which performs integration tests using Hashicorp's [Vagrant](https://www.vagrantup.com/downloads.html) and Oracle's [Virtualbox](https://www.virtualbox.org/wiki/Downloads) and a other Kitchen configuration file (kitchen.docker.yml), which performs integration tests using [Docker](https://www.docker.com/).
 
 ## Testing Everything
 
