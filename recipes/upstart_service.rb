@@ -14,5 +14,5 @@
 # limitations under the License.
 #
 
-# use Sys-V-Init script for Upstart enabled platforms 
+# use Sys-V-Init script for Upstart enabled platforms
 include_recipe 'pyload::init_service'
