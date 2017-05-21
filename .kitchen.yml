@@ -56,7 +56,11 @@ platforms:
   #  run_list:
   #    - recipe[pacman]
   - name: freebsd-10.3
+    run_list:
+      - recipe[freebsd::portsnap]
   - name: freebsd-11.0
+    run_list:
+      - recipe[freebsd::portsnap]
 
 suites:
   - name: default
