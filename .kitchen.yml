@@ -48,19 +48,23 @@ platforms:
   - name: opensuse-13.2
     run_list:
       - recipe[zypper]
-  # Unsupported by omnibus-chef installation script
-  #- name: arch
-  #  driver:
-  #    box: terrywang/archlinux
-  #    box_version: 1.0.0
-  #  run_list:
-  #    - recipe[pacman]
   - name: freebsd-10.3
     run_list:
       - recipe[freebsd::portsnap]
   - name: freebsd-11.0
     run_list:
       - recipe[freebsd::portsnap]
+  # Unsupported by omnibus-chef installation script, so add custom Vagrantfile
+  - name: arch
+    driver:
+      box: terrywang/archlinux
+      provision: true
+      vagrantfiles:
+        - test/fixtures/vagrant/vagrant_arch.rb
+    provisioner:
+      require_chef_omnibus: false
+    run_list:
+      - recipe[pacman]
 
 suites:
   - name: default
