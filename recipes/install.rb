@@ -50,8 +50,7 @@ directory node['pyload']['log_dir'] do
 end
 
 execute 'system_check_pyload' do
-  command 'echo \n | python systemCheck.py'
-  cwd node['pyload']['install_dir']
+  command "echo '\n' | #{node['pyload']['python_exec']} #{node['pyload']['install_dir']}/systemCheck.py"
   action :nothing
   # not_if node['platform'].eql?('rhel') && node['platform_version'].to_f == 7
   only_if { ::File.exist?("#{node['pyload']['install_dir']}/systemCheck.py") }
@@ -86,6 +85,7 @@ execute 'opensuse_fix' do
   not_if "grep -q ^origfind.func_globals.* #{node['pyload']['install_dir']}/module/common/pylgettext.py"
 end if node['platform_family'].eql?('suse') && node['pyload']['use_fix']
 
+# create symbolic links for pyload executeables
 %w(pyLoadCli pyLoadCore pyLoadGui).each do |bin|
   link "/usr/bin/#{bin}" do
     to "#{node['pyload']['install_dir']}/#{bin}.py"

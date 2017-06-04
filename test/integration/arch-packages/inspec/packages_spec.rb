@@ -62,7 +62,7 @@ describe package('python2-pillow') do
   it { should be_installed }
 end
 
-describe package('python2-jinja2') do
+describe package('python2-jinja') do
   it { should be_installed }
 end
 
@@ -82,7 +82,7 @@ describe package('python2-simplejson') do
   it { should be_installed }
 end
 
-describe package('python2-thrift') do
+describe package('thrift') do
   it { should be_installed }
 end
 
@@ -95,14 +95,6 @@ describe package('rhino') do
 end
 
 describe package('tesseract') do
-  it { should be_installed }
-end
-
-describe package('tesseract-git') do
-  it { should be_installed }
-end
-
-describe package('tesseract-ocr-git') do
   it { should be_installed }
 end
 

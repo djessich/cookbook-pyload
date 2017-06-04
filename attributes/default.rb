@@ -26,17 +26,19 @@ default['pyload']['config_dir'] = if node['pyload']['user'] == 'root'
 default['pyload']['download_dir'] = "#{node['pyload']['config_dir']}/downloads"
 default['pyload']['dir_mode'] = '0755'
 default['pyload']['file_mode'] = '0644'
+default['pyload']['python_exec'] = '/bin/python'
 default['pyload']['accounts'] = {}
 
 case node['platform_family']
 when 'arch'
-  default['pyload']['init_style'] = 'systemd'
-  default['pyload']['pid_dir']    = '/var/run/pyload'
-  default['pyload']['log_dir']    = '/var/log/pyload'
-  default['pyload']['packages']   = %w(
+  default['pyload']['init_style']  = 'systemd'
+  default['pyload']['pid_dir']     = '/var/run/pyload'
+  default['pyload']['log_dir']     = '/var/log/pyload'
+  default['pyload']['python_exec'] = '/usr/bin/python2'
+  default['pyload']['packages']    = %w(
     git curl openssl python2 python2-beaker python2-beautifulsoup4 python2-crypto python2-django python2-feedparser
     python2-flup python2-html5lib python2-pillow python2-jinja python2-pycurl python2-pyopenssl python2-pyqt4
-    python2-simplejson python2-thrift js rhino tesseract tesseract-git tesseract-ocr-git gocr
+    python2-simplejson thrift js rhino tesseract gocr
   )
 when 'debian'
   default['pyload']['init_style'] = node['init_package']

@@ -244,10 +244,10 @@ This cookbook will install various packages during its execution by using the ta
 | pyOpenSSL         | python2-pyopenssl      | python-openssl             | pyOpenSSL             | pyOpenSSL             | python-pyOpenSSL      | py27-openssl       |
 | pyqt4             | python2-pyqt4          | python-qt4                 | PyQt4                 | PyQt4                 | python-qt4            | py27-qt4           |
 | simplejson        | python2-simplejson     | python-simplejson          | python-simplejson (<= 24)<br/>python2-simplejson (>= 25) | python-simplejson (<= 6)<br/>python2-simplejson (>= 7) | python-simplejson     | py27-simplejson    |
-| thrift            | python2-thrift         | python-thrift (>= 8/14.04) | python-thrift         | python-thrift (>=7)   | python-thrift         | py27-thrift        |
+| thrift            | thrift                 | python-thrift (>= 8/14.04) | python-thrift         | python-thrift (>=7)   | python-thrift         | py27-thrift        |
 | ossp-js           | js                     | libmozjs185-1.0 (<= 7/12.04)<br/>libmozjs-24-bin (>= 8/14.04) | js | js    | js<br/>python-python-spidermonkey | spidermonkey24 |
 | rhino             | rhino                  | rhino                      | rhino                 | rhino                 | rhino                 | rhino              |
-| tesseract         | tesseract<br/>tesseract-git<br/>tesseract-ocr-git<br/>gocr | tesseract-ocr<br/>tesseract-ocr-eng<br/>gocr | tesseract<br/>gocr | tesseract | tesseract<br/>gocr | tesseract<br/>tesseract-data<br/>gocr |
+| tesseract         | tesseract<br/>gocr | tesseract-ocr<br/>tesseract-ocr-eng<br/>gocr | tesseract<br/>gocr | tesseract | tesseract<br/>gocr | tesseract<br/>tesseract-data<br/>gocr |
 | sqlite3           |                        |                            |                       |                       |                       | py27-sqlite3       |
 
 More information on required and optional dependencies of Pyload can be found in the official Pyloads project [README](https://github.com/pyload/pyload/blob/stable/README).

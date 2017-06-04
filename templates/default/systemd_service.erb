@@ -4,7 +4,7 @@ After=local-fs.target remote-fs.target network.target network-online.target
 
 [Service]
 Type=forking
-ExecStart=<%= node['pyload']['install_dir'] %>/pyLoadCore.py --daemon --configdir=<%= node['pyload']['config_dir'] %> --pidfile=<%= node['pyload']['pid_dir'] %>/pyload.pid
+ExecStart=<%= node['pyload']['python_exec'] %> <%= node['pyload']['install_dir'] %>/pyLoadCore.py --daemon --configdir=<%= node['pyload']['config_dir'] %> --pidfile=<%= node['pyload']['pid_dir'] %>/pyload.pid
 Restart=on-abort
 User=<%= node['pyload']['user'] %>
 Group=<%= node['pyload']['group'] %>
