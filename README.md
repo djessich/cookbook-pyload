@@ -50,7 +50,8 @@ The `node['pyload']` global namespace defines general settings for this cookbook
 * `node['pyload']['group']` - Specifies the group which is used to run Pyload. By default, this is set to *pyload*.
 * `node['pyload']['dir_mode']` - Specifies the mode for folders created by this cookbook. By default, this is set to *0755*.
 * `node['pyload']['file_mode']` - Specifies the mode for files created by this cookbook. By default, this is set to *0644*.
-* `node['pyload']['init_style']` - Specifies the platforms init system type which can be either set to `init` or `systemd`. If something else is specified, no install script will be created. By default, the correct init system type is determined by this cookbook itself, which means that this attribute should not be required to be set manually.
+* `node['pyload']['init_style']` - Specifies the platforms init system type which can be either set to `bsd`, `init`, `systemd` or `upstart`. If something else is specified, no install script will be created. By default, the correct init system type is determined by this cookbook itself, which means that this attribute should not be required to be set manually.
+* `node['pyload']['python_exec']` - Specifies the platforms Python executable (interpreter) used to run Pyload. By default, the correct Python executable is determined by this cookbook itself regarding your platform, which means that this attribute should not be required to be set manually.
 * `node['pyload']['packages']` - Specifies a list of dependencies of Pyload which are required to successfully start Pyload. The correct package names are determined by this cookbook, regarding platform and platfom version. By default, this is set to all required dependencies for Pyload, including optional ones, which can be examined at Pyload repository or in the corresponding attribute file of this cookbook.
 * `node['pyload']['accounts']` - Specifies all accounts to be configured for Pyload. The value is expected to be a hash which includes one or multiple ids representing an account whereas each id has a subhash as value representing the account data. The subhash should have the following content:
   * `user` - The name of the user which identifies the account. Required.
@@ -184,7 +185,7 @@ This recipe does a number of things to install Pyload. This includes the followi
 * create the logging directory as specified in `node['pyload']['log_dir']`
 * clone Pyload source code from the [official Pyload Git repository](https://github.com/pyload/pyload) and checkout the version tag or branch as specified by `node['pyload']['version']` (default will be the latest *stable* branch)
 * perform a system check, to check if Pyload is able to run by using the [*systemCheck.py*](https://github.com/pyload/pyload/blob/stable/systemCheck.py) script in the source code
-* create symbolic links to */usr/bin* for all Pyload executeables ([pyLoadCli](https://github.com/pyload/pyload/blob/stable/pyLoadCli.py), [pyLoadCore](https://github.com/pyload/pyload/blob/stable/pyLoadCore.py), [pyLoadGui](https://github.com/pyload/pyload/blob/stable/pyLoadGui.py)), to allow running Pyload directly from bash as command
+* create symbolic links to */usr/bin* for all Pyload executables ([pyLoadCli](https://github.com/pyload/pyload/blob/stable/pyLoadCli.py), [pyLoadCore](https://github.com/pyload/pyload/blob/stable/pyLoadCore.py), [pyLoadGui](https://github.com/pyload/pyload/blob/stable/pyLoadGui.py)), to allow running Pyload directly from bash as command
 
 #### Note for OpenSUSE and derivatives:
 

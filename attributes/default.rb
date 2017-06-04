@@ -26,25 +26,25 @@ default['pyload']['config_dir'] = if node['pyload']['user'] == 'root'
 default['pyload']['download_dir'] = "#{node['pyload']['config_dir']}/downloads"
 default['pyload']['dir_mode'] = '0755'
 default['pyload']['file_mode'] = '0644'
-default['pyload']['python_exec'] = '/bin/python'
 default['pyload']['accounts'] = {}
 
 case node['platform_family']
 when 'arch'
   default['pyload']['init_style']  = 'systemd'
+  default['pyload']['python_exec'] = '/usr/bin/python2'
   default['pyload']['pid_dir']     = '/var/run/pyload'
   default['pyload']['log_dir']     = '/var/log/pyload'
-  default['pyload']['python_exec'] = '/usr/bin/python2'
   default['pyload']['packages']    = %w(
     git curl openssl python2 python2-beaker python2-beautifulsoup4 python2-crypto python2-django python2-feedparser
     python2-flup python2-html5lib python2-pillow python2-jinja python2-pycurl python2-pyopenssl python2-pyqt4
     python2-simplejson thrift js rhino tesseract gocr
   )
 when 'debian'
-  default['pyload']['init_style'] = node['init_package']
-  default['pyload']['pid_dir']    = '/var/run/pyload'
-  default['pyload']['log_dir']    = '/var/log/pyload'
-  default['pyload']['packages']   = %w(
+  default['pyload']['init_style']  = node['init_package']
+  default['pyload']['python_exec'] = '/usr/bin/python'
+  default['pyload']['pid_dir']     = '/var/run/pyload'
+  default['pyload']['log_dir']     = '/var/log/pyload'
+  default['pyload']['packages']    = %w(
     git curl openssl python python-beaker python-bs4 python-crypto python-django python-feedparser python-flup
     python-html5lib python-imaging python-jinja2 python-pycurl python-openssl python-qt4 python-simplejson rhino
     tesseract-ocr tesseract-ocr-eng gocr
@@ -64,10 +64,11 @@ when 'debian'
                                      end
   end
 when 'fedora'
-  default['pyload']['init_style'] = 'systemd'
-  default['pyload']['pid_dir']    = '/var/run/pyload'
-  default['pyload']['log_dir']    = '/var/log/pyload'
-  default['pyload']['packages']   = %w(
+  default['pyload']['init_style']  = 'systemd'
+  default['pyload']['python_exec'] = '/usr/bin/python'
+  default['pyload']['pid_dir']     = '/var/run/pyload'
+  default['pyload']['log_dir']     = '/var/log/pyload'
+  default['pyload']['packages']    = %w(
     git curl openssl python python-beaker python-beautifulsoup4 python-feedparser python-flup python-html5lib
     python-pycurl pyOpenSSL PyQt4 python-thrift js rhino tesseract gocr
   )
@@ -82,19 +83,21 @@ when 'fedora'
                                      %w(python2-pillow python2-simplejson)
                                    end
 when 'freebsd'
-  default['pyload']['init_style'] = 'bsd'
-  default['pyload']['pid_dir']    = '/var/run'
-  default['pyload']['log_dir']    = '/var/log/pyload'
-  default['pyload']['packages']   = %w(
+  default['pyload']['init_style']  = 'bsd'
+  default['pyload']['python_exec'] = '/usr/local/bin/python'
+  default['pyload']['pid_dir']     = '/var/run'
+  default['pyload']['log_dir']     = '/var/log/pyload'
+  default['pyload']['packages']    = %w(
     git curl openssl python27 py27-beaker py27-beautifulsoup py27-pycrypto py27-django19 py27-feedparser py27-flup
     py27-html5lib py27-pillow py27-Jinja2 py27-pycurl py27-openssl py27-qt4 py27-simplejson py27-thrift
     spidermonkey24 rhino tesseract gocr py27-sqlite3
   )
 when 'rhel'
-  default['pyload']['init_style'] = node['init_package']
-  default['pyload']['pid_dir']    = '/var/run/pyload'
-  default['pyload']['log_dir']    = '/var/log/pyload'
-  default['pyload']['packages']   = %w(
+  default['pyload']['init_style']  = node['init_package']
+  default['pyload']['python_exec'] = '/usr/bin/python'
+  default['pyload']['pid_dir']     = '/var/run/pyload'
+  default['pyload']['log_dir']     = '/var/log/pyload'
+  default['pyload']['packages']    = %w(
     git curl openssl python python-beaker python-beautifulsoup4 python-feedparser python-flup python-html5lib
     python-jinja2 python-pycurl pyOpenSSL PyQt4 js rhino tesseract
   )
@@ -104,11 +107,12 @@ when 'rhel'
                                      %w(python2-crypto python-django python-pillow python2-simplejson python-thrift)
                                    end
 when 'suse'
-  default['pyload']['init_style'] = 'systemd'
-  default['pyload']['pid_dir']    = '/var/run/pyload'
-  default['pyload']['log_dir']    = '/var/log/pyload'
-  default['pyload']['use_fix']    = true
-  default['pyload']['packages']   = %w(
+  default['pyload']['init_style']  = 'systemd'
+  default['pyload']['python_exec'] = '/usr/bin/python'
+  default['pyload']['pid_dir']     = '/var/run/pyload'
+  default['pyload']['log_dir']     = '/var/log/pyload'
+  default['pyload']['use_fix']     = true
+  default['pyload']['packages']    = %w(
     git curl openssl python python-Beaker python-beautifulsoup4 python-pycrypto python-django python-feedparser
     python-flup python-html5lib python-Jinja2 python-pycurl python-pyOpenSSL python-qt4 python-simplejson
     python-thrift js python-python-spidermonkey rhino tesseract gocr
@@ -119,10 +123,11 @@ when 'suse'
                                      %w(python-Pillow)
                                    end
 else
-  default['pyload']['init_style'] = 'none'
-  default['pyload']['pid_dir']    = '/var/run'
-  default['pyload']['log_dir']    = '/var/log/pyload'
-  default['pyload']['packages']   = %w(
+  default['pyload']['init_style']  = 'none'
+  default['pyload']['python_exec'] = '/usr/bin/python'
+  default['pyload']['pid_dir']     = '/var/run'
+  default['pyload']['log_dir']     = '/var/log/pyload'
+  default['pyload']['packages']    = %w(
     git curl openssl python python-beaker python-beautifulsoup4 python-crypto python-django python-feedparser
     python-flup python-html5lib python-imaging python-jinja2 python-pycurl python-openssl python-simplejson
     rhino tesseract gocr

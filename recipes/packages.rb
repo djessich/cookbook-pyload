@@ -28,4 +28,5 @@ end
 link '/usr/local/bin/python' do
   to '/usr/local/bin/python2'
   link_type :symbolic
-end if node['platform_family'].eql?('freebsd')
+  only_if { node['platform_family'].eql?('freebsd') }
+end

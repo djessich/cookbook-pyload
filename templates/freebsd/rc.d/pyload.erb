@@ -32,7 +32,7 @@ rcvar=${name}_enable
 : ${pyload_pid:="<%= node['pyload']['pid_dir'] %>/pyload.pid"}
 : ${pyload_options:="--daemon --configdir=<%= node['pyload']['config_dir'] %> --pidfile=<%= node['pyload']['pid_dir'] %>/pyload.pid"}
 
-command_interpreter="python"
+command_interpreter="<%= node['pyload']['python_exec'] %>"
 command="${pyload_daemon}"
 command_args="${pyload_options}"
 command_full="${command_interpreter} ${command} ${command_args}"

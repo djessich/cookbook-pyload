@@ -20,7 +20,8 @@ template "#{node['pyload']['config_dir']}/accounts.conf" do
   group node['pyload']['group']
   mode 0600
   action :create_if_missing
-end unless node['pyload']['accounts'].empty?
+  not_if { node['pyload']['accounts'].empty? }
+end
 
 template "#{node['pyload']['config_dir']}/pyload.conf" do
   source 'pyload.conf.erb'
