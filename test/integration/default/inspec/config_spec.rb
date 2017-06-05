@@ -20,7 +20,7 @@ describe file('/home/pyload/.pyload/accounts.conf') do
   its('owner') { should eq 'pyload' }
   its('group') { should eq 'pyload' }
   its('mode') { should eq 0600 }
-  its('content') { should match(/TestTest:\n\n\ttest:test/) }
+  its('content') { should match(/TestTest:\n\s\stest:test/) }
 end
 
 describe file('/home/pyload/.pyload/pyload.conf') do
