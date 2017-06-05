@@ -50,10 +50,6 @@ describe package('python-html5lib') do
   it { should be_installed }
 end
 
-describe package('python-pycurl') do
-  it { should be_installed }
-end
-
 describe package('pyOpenSSL') do
   it { should be_installed }
 end
@@ -113,11 +109,19 @@ if os[:release].to_f < 25
     it { should be_installed }
   end
 
+  describe package('python-pycurl') do
+    it { should be_installed }
+  end
+
   describe package('python-simplejson') do
     it { should be_installed }
   end
 else
   describe package('python2-pillow') do
+    it { should be_installed }
+  end
+
+  describe package('python2-pycurl') do
     it { should be_installed }
   end
 

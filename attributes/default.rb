@@ -70,7 +70,7 @@ when 'fedora'
   default['pyload']['log_dir']     = '/var/log/pyload'
   default['pyload']['packages']    = %w(
     git curl openssl python python-beaker python-beautifulsoup4 python-feedparser python-flup python-html5lib
-    python-pycurl pyOpenSSL PyQt4 python-thrift js rhino tesseract gocr
+    pyOpenSSL PyQt4 python-thrift js rhino tesseract gocr
   )
   default['pyload']['packages'] += if node['platform_version'].to_f < 24
                                      %w(python-crypto python-django python-jinja2)
@@ -78,9 +78,9 @@ when 'fedora'
                                      %w(python2-crypto python2-django python2-jinja2)
                                    end
   default['pyload']['packages'] += if node['platform_version'].to_f < 25
-                                     %w(python-pillow python-simplejson)
+                                     %w(python-pillow python-pycurl python-simplejson)
                                    else
-                                     %w(python2-pillow python2-simplejson)
+                                     %w(python2-pillow python2-pycurl python2-simplejson)
                                    end
 when 'freebsd'
   default['pyload']['init_style']  = 'bsd'

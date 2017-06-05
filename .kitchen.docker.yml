@@ -105,7 +105,17 @@ platforms:
       image: opensuse:13.2
       pid_one_command: /bin/systemd
       intermediate_instructions:
-        - RUN zypper --non-interactive install aaa_base perl-Getopt-Long-Descriptive which
+        - RUN zypper --non-interactive install aaa_base perl-Getopt-Long-Descriptive which hostname
+
+  - name: arch
+    driver:
+      image: logankoester/archlinux-chef
+      pid_one_command: /bin/systemd
+      require_chef_omnibus: false
+      intermediate_instructions:
+        - RUN pacman -S --noconfirm --needed supervisor git
+        - RUN rm /etc/gemrc
+        #- RUN /usr/sbin/sshd -o UseDNS=no -o UsePAM=no -o PasswordAuthentication=yes && /usr/sbin/supervisord -c /etc/supervisord.conf -n
 
 suites:
   - name: default
