@@ -113,6 +113,7 @@ suites:
       - recipe[pyload::default]
     attributes:
       pyload:
+        pid_dir: /var/run/pyload
         accounts:
           TestTest:
             user: test
