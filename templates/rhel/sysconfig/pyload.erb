@@ -1,7 +1,7 @@
 # Configuration file for the pyload service
 
 # Specifies the executeable file for pyload daemon
-DAEMON=<%= node['pyload']['python_exec'] %> <%= node['pyload']['install_dir'] %>/pyLoadCore.py
+DAEMON=<%= node['pyload']['install_dir'] %>/pyLoadCore.py
 # The user to start the pyload process with
 USER=<%= node['pyload']['user'] %>
 # The group to start the pyload process with
