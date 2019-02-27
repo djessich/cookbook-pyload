@@ -4,27 +4,12 @@ driver:
 
 provisioner:
   name: chef_zero
+  deprecations_as_errors: true
 
 verifier:
   name: inspec
-  format: doc
 
 platforms:
-  - name: ubuntu-12.04
-    run_list:
-      - recipe[apt]
-  - name: ubuntu-14.04
-    run_list:
-      - recipe[apt]
-  - name: ubuntu-16.04
-    run_list:
-      - recipe[apt]
-  - name: debian-7.11
-    run_list:
-      - recipe[apt]
-  - name: debian-8.7
-    run_list:
-      - recipe[apt]
   - name: centos-6
     run_list:
       - recipe[yum]
@@ -33,27 +18,33 @@ platforms:
     run_list:
       - recipe[yum]
       - recipe[yum-epel]
-  - name: fedora-22
+  - name: debian-8
+    run_list:
+      - recipe[apt]
+  - name: debian-9
+    run_list:
+      - recipe[apt]
+  - name: fedora-28
     run_list:
       - recipe[yum::dnf_yum_compat]
-  - name: fedora-23
+  - name: freebsd-10
     run_list:
-      - recipe[yum::dnf_yum_compat]
-  - name: fedora-24
+      - recipe[freebsd::portsnap]
+  - name: freebsd-11
     run_list:
-      - recipe[yum::dnf_yum_compat]
-  - name: fedora-25
-    run_list:
-      - recipe[yum::dnf_yum_compat]
-  - name: opensuse-13.2
+      - recipe[freebsd::portsnap]
+  - name: opensuse-leap-42
     run_list:
       - recipe[zypper]
-  - name: freebsd-10.3
+  - name: ubuntu-14.04
     run_list:
-      - recipe[freebsd::portsnap]
-  - name: freebsd-11.0
+      - recipe[apt]
+  - name: ubuntu-16.04
     run_list:
-      - recipe[freebsd::portsnap]
+      - recipe[apt]
+  - name: ubuntu-18.04
+    run_list:
+    - recipe[apt]
   # Unsupported by omnibus-chef installation script, so add custom Vagrantfile
   # - name: arch
   #   driver:
@@ -72,7 +63,6 @@ suites:
       - recipe[pyload::default]
     attributes:
       pyload:
-        pid_dir: /var/run/pyload
         accounts:
           Http:
             user: test
@@ -84,95 +74,95 @@ suites:
   #   includes: [
   #     'arch'
   #   ]
-  - name: debian-packages
-    run_list:
-      - recipe[pyload::packages]
-    attributes:
-    includes: [
-      'ubuntu-12.04',
-      'ubuntu-14.04',
-      'ubuntu-16.04',
-      'debian-7.11',
-      'debian-8.7'
-    ]
-  - name: fedora-packages
-    run_list:
-      - recipe[pyload::packages]
-    attributes:
-    includes: [
-      'fedora-22',
-      'fedora-23',
-      'fedora-24',
-      'fedora-25'
-    ]
-  - name: freebsd-packages
-    run_list:
-      - recipe[pyload::packages]
-    attributes:
-    includes: [
-      'freebsd-10.3',
-      'freebsd-11.0'
-    ]
-  - name: rhel-packages
-    run_list:
-      - recipe[pyload::packages]
-    attributes:
-    includes: [
-      'centos-6.8',
-      'centos-7.3'
-    ]
-  - name: suse-packages
-    run_list:
-      - recipe[pyload::packages]
-    attributes:
-    includes: [
-      'opensuse-13.2'
-    ]
-  - name: service-bsd
-    run_list:
-      - recipe[pyload::default]
-    attributes:
-      pyload:
-        init_style: bsd
-    includes: [
-      'freebsd-10.3',
-      'freebsd-11.0'
-    ]
-  - name: service-init
-    run_list:
-      - recipe[pyload::default]
-    attributes:
-      pyload:
-        init_style: init
-    includes: [
-      'ubuntu-12.04',
-      'ubuntu-14.04',
-      'debian-7.11',
-      'centos-6.8'
-    ]
-  - name: service-systemd
-    run_list:
-      - recipe[pyload::default]
-    attributes:
-      pyload:
-        init_style: systemd
-    includes: [
-      'ubuntu-16.04',
-      'debian-8.7',
-      'centos-7.3',
-      'fedora-22',
-      'fedora-23',
-      'fedora-24',
-      'fedora-25',
-      'opensuse-13.2'
-    ]
-  - name: service-upstart
-    run_list:
-      - recipe[pyload::default]
-    attributes:
-      pyload:
-        init_style: upstart
-    includes: [
-      'ubuntu-12.04',
-      'ubuntu-14.04'
-    ]
+  # - name: debian-packages
+  #   run_list:
+  #     - recipe[pyload::packages]
+  #   attributes:
+  #   includes: [
+  #     'ubuntu-12.04',
+  #     'ubuntu-14.04',
+  #     'ubuntu-16.04',
+  #     'debian-7.11',
+  #     'debian-8.7'
+  #   ]
+  # - name: fedora-packages
+  #   run_list:
+  #     - recipe[pyload::packages]
+  #   attributes:
+  #   includes: [
+  #     'fedora-22',
+  #     'fedora-23',
+  #     'fedora-24',
+  #     'fedora-25'
+  #   ]
+  # - name: freebsd-packages
+  #   run_list:
+  #     - recipe[pyload::packages]
+  #   attributes:
+  #   includes: [
+  #     'freebsd-10.3',
+  #     'freebsd-11.0'
+  #   ]
+  # - name: rhel-packages
+  #   run_list:
+  #     - recipe[pyload::packages]
+  #   attributes:
+  #   includes: [
+  #     'centos-6.8',
+  #     'centos-7.3'
+  #   ]
+  # - name: suse-packages
+  #   run_list:
+  #     - recipe[pyload::packages]
+  #   attributes:
+  #   includes: [
+  #     'opensuse-13.2'
+  #   ]
+  # - name: service-bsd
+  #   run_list:
+  #     - recipe[pyload::default]
+  #   attributes:
+  #     pyload:
+  #       init_style: bsd
+  #   includes: [
+  #     'freebsd-10.3',
+  #     'freebsd-11.0'
+  #   ]
+  # - name: service-init
+  #   run_list:
+  #     - recipe[pyload::default]
+  #   attributes:
+  #     pyload:
+  #       init_style: init
+  #   includes: [
+  #     'ubuntu-12.04',
+  #     'ubuntu-14.04',
+  #     'debian-7.11',
+  #     'centos-6.8'
+  #   ]
+  # - name: service-systemd
+  #   run_list:
+  #     - recipe[pyload::default]
+  #   attributes:
+  #     pyload:
+  #       init_style: systemd
+  #   includes: [
+  #     'ubuntu-16.04',
+  #     'debian-8.7',
+  #     'centos-7.3',
+  #     'fedora-22',
+  #     'fedora-23',
+  #     'fedora-24',
+  #     'fedora-25',
+  #     'opensuse-13.2'
+  #   ]
+  # - name: service-upstart
+  #   run_list:
+  #     - recipe[pyload::default]
+  #   attributes:
+  #     pyload:
+  #       init_style: upstart
+  #   includes: [
+  #     'ubuntu-12.04',
+  #     'ubuntu-14.04'
+  #   ]
