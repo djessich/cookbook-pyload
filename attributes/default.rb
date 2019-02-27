@@ -36,7 +36,6 @@ when 'arch'
     python2-pyopenssl python2-pyqt4 python2-simplejson thrift js rhino tesseract gocr
   )
 when 'debian'
-  default['pyload']['install_method'] = 'package'
   default['pyload']['packages'] = %w(
     curl openssl python python-beaker python-bs4 python-crypto python-django python-feedparser
     python-flup python-html5lib python-imaging python-pycurl python-openssl python-qt4
@@ -88,7 +87,7 @@ when 'rhel'
                                      %w(python2-crypto python-django python-pillow python2-simplejson python-thrift)
                                    end
 when 'suse'
-  default['pyload']['use_fix']     = true
+  default['pyload']['use_fix'] = true
   default['pyload']['packages'] = %w(
     curl openssl python python-Beaker python-beautifulsoup4 python-pycrypto python-django
     python-feedparser python-flup python-html5lib python-pycurl python-pyOpenSSL python-qt4
@@ -99,14 +98,6 @@ when 'suse'
                                    else
                                      %w(python-Pillow)
                                    end
-# else
-#   default['pyload']['init_style']  = 'none'
-#   default['pyload']['python_exec'] = '/usr/bin/python'
-#   default['pyload']['pid_dir']     = '/var/run'
-#   default['pyload']['log_dir']     = '/var/log/pyload'
-#   default['pyload']['packages']    = %w(
-#     git curl openssl python python-beaker python-beautifulsoup4 python-crypto python-django python-feedparser
-#     python-flup python-html5lib python-imaging python-jinja2 python-pycurl python-openssl python-simplejson
-#     rhino tesseract gocr
-#   )
+else
+  raise 'Could not determine your platform; is it supported by this cookbook?'
 end
