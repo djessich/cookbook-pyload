@@ -13,4 +13,6 @@ issues_url 'https://github.com/gridtec/cookbook-pyload/issues'
   supports os
 end
 
-chef_version '>= 12.5'
+depends 'ark', '>= 4.0.0'
+
+chef_version '>= 13'

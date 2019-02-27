@@ -1,5 +1,5 @@
 #
-# Copyright 2016, Gridtec
+# Copyright 2019 Dominik Jessich
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -14,19 +14,33 @@
 # limitations under the License.
 #
 
+directory node['pyload']['conf_dir'] do
+  user node['pyload']['user']
+  group node['pyload']['group']
+  mode '0755'
+  recursive true
+end
+
+template "#{node['pyload']['conf_dir']}/pyload.conf" do
+  source 'pyload.conf.erb'
+  user node['pyload']['user']
+  group node['pyload']['group']
+  mode '0600'
+  notifies :restart, 'pyload_service[pyload]', :delayed
+end
+
 template "#{node['pyload']['config_dir']}/accounts.conf" do
   source 'accounts.conf.erb'
   owner node['pyload']['user']
   group node['pyload']['group']
-  mode 0600
+  mode '0600'
   action :create_if_missing
   not_if { node['pyload']['accounts'].empty? }
 end
 
-template "#{node['pyload']['config_dir']}/pyload.conf" do
-  source 'pyload.conf.erb'
-  owner node['pyload']['user']
+directory node['pyload']['download_dir'] do
+  user node['pyload']['user']
   group node['pyload']['group']
-  mode 0600
-  notifies :restart, 'service[pyload]', :delayed
+  mode '0755'
+  recursive true
 end

@@ -1,5 +1,5 @@
 #
-# Copyright 2016, Gridtec
+# Copyright 2019 Dominik Jessich
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -14,19 +14,20 @@
 # limitations under the License.
 #
 
-# on FreeBSD we need to remove curl package first if it is set to be installed
+# On FreeBSD remove package curl first, if it should be installed
 package 'curl' do
   action :remove
-end if node['platform_family'].eql?('freebsd') && node['pyload']['packages'].include?('curl')
+  only_if { node['platform_family'].eql?('freebsd') && node['pyload']['packages'].include?('curl') }
+end
 
+# Install all configured packages
 node['pyload']['packages'].each do |pkg|
   package pkg
 end
 
-# on FreeBSD we need to manually create python executeable in /usr/local/bin
-# after python package is installed
+# On FreeBSD create python executeable in /usr/local/bin after python package
+# has been installed
 link '/usr/local/bin/python' do
   to '/usr/local/bin/python2'
-  link_type :symbolic
   only_if { node['platform_family'].eql?('freebsd') }
 end

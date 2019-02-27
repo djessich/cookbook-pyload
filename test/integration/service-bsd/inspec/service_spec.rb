@@ -1,5 +1,5 @@
 #
-# Copyright 2016, Gridtec
+# Copyright 2019 Dominik Jessich
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -15,6 +15,7 @@
 #
 
 describe bsd_service('pyload') do
+  it { should be_installed }
   it { should be_enabled }
   it { should be_running }
 end

@@ -25,11 +25,11 @@ platforms:
   - name: debian-8.7
     run_list:
       - recipe[apt]
-  - name: centos-6.8
+  - name: centos-6
     run_list:
       - recipe[yum]
       - recipe[yum-epel]
-  - name: centos-7.3
+  - name: centos-7
     run_list:
       - recipe[yum]
       - recipe[yum-epel]
@@ -55,16 +55,16 @@ platforms:
     run_list:
       - recipe[freebsd::portsnap]
   # Unsupported by omnibus-chef installation script, so add custom Vagrantfile
-  - name: arch
-    driver:
-      box: terrywang/archlinux
-      provision: true
-      vagrantfiles:
-        - test/fixtures/vagrant/vagrant_arch.rb
-    provisioner:
-      require_chef_omnibus: false
-    run_list:
-      - recipe[pacman]
+  # - name: arch
+  #   driver:
+  #     box: terrywang/archlinux
+  #     provision: true
+  #     vagrantfiles:
+  #       - test/fixtures/vagrant/vagrant_arch.rb
+  #   provisioner:
+  #     require_chef_omnibus: false
+  #   run_list:
+  #     - recipe[pacman]
 
 suites:
   - name: default
@@ -74,16 +74,16 @@ suites:
       pyload:
         pid_dir: /var/run/pyload
         accounts:
-          TestTest:
+          Http:
             user: test
             password: test
-  - name: arch-packages
-    run_list:
-      - recipe[pyload::packages]
-    attributes:
-    includes: [
-      'arch'
-    ]
+  # - name: arch-packages
+  #   run_list:
+  #     - recipe[pyload::packages]
+  #   attributes:
+  #   includes: [
+  #     'arch'
+  #   ]
   - name: debian-packages
     run_list:
       - recipe[pyload::packages]

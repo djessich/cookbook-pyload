@@ -1,74 +1,74 @@
 version: 1 
 
-remote - "Remote":
-	bool nolocalauth : "No authentication on local connections" = <%= node['pyload']['remote']['no_local_auth'].to_s.capitalize %>
-	bool activated : "Activated" = <%= node['pyload']['remote']['activated'].to_s.capitalize %>
-	int port : "Port" = <%= node['pyload']['remote']['port'] %>
-	ip listenaddr : "Adress" = <%= node['pyload']['remote']['listen_address'].nil? ? '0.0.0.0' : node['pyload']['remote']['listen_address'] %>
+download - "Download":
+	int chunks : "Max connections for one download" = <%= node['pyload']['download']['max_connections'] %>
+	str interface : "Download interface to bind (ip or Name)" = <%= node['pyload']['download']['bind_interface'].nil? ? 'None' : node['pyload']['download']['bind_interface'] %>
+	bool ipv6 : "Allow IPv6" = <%= node['pyload']['download']['allow_ipv6'].to_s.capitalize %>
+	bool limit_speed : "Limit Download Speed" = <%= node['pyload']['download']['limit_speed'].to_s.capitalize %>
+	int max_downloads : "Max Parallel Downloads" = <%= node['pyload']['download']['max_downloads'] %>
+	int max_speed : "Max Download Speed in kb/s" = <%= node['pyload']['download']['max_speed'] %>
+	bool skip_existing : "Skip already existing files" = <%= node['pyload']['download']['skip_existing'].to_s.capitalize %>
 
-log - "Log":
-	int log_size : "Size in kb" = <%= node['pyload']['log']['size'] %>
-	folder log_folder : "Folder" = <%= node['pyload']['log_dir'] %>
-	bool file_log : "File Log" = <%= node['pyload']['log']['activated'].to_s.capitalize %>
-	int log_count : "Count" = <%= node['pyload']['log']['count'] %>
-	bool log_rotate : "Log Rotate" = <%= node['pyload']['log']['rotate'].to_s.capitalize %>
-
-permission - "Permissions":
-	str group : "Groupname" = <%= node['pyload']['permission']['group'].nil? ? node['pyload']['group'] : node['pyload']['permission']['group'] %>
-	bool change_dl : "Change Group and User of Downloads" = <%= node['pyload']['permission']['change_downloads'].to_s.capitalize %>
-	bool change_file : "Change file mode of downloads" = <%= node['pyload']['permission']['change_file'].to_s.capitalize %>
-	str user : "Username" = <%= node['pyload']['permission']['user'].nil? ? node['pyload']['user'] : node['pyload']['permission']['user'] %>
-	str file : "Filemode for Downloads" = <%= node['pyload']['permission']['file_mode'] %>
-	bool change_group : "Change group of running process" = <%= node['pyload']['permission']['change_group'].to_s.capitalize %>
-	str folder : "Folder Permission mode" = <%= node['pyload']['permission']['dir_mode'] %>
-	bool change_user : "Change user of running process" = <%= node['pyload']['permission']['change_user'].to_s.capitalize %>
+downloadTime - "Download Time":
+	time end : "End" = <%= node['pyload']['download']['end_time'].nil? ? '0:00' : node['pyload']['download']['end_time'] %>
+	time start : "Start" = <%= node['pyload']['download']['start_time'].nil? ? '0:00' : node['pyload']['download']['start_time'] %>
 
 general - "General":
-	en;de;fr;it;es;nl;sv;ru;pl;cs;sr;pt_BR language : "Language" = <%= node['pyload']['language'] %>
-	folder download_folder : "Download Folder" = <%= node['pyload']['download_dir'] %>
 	bool checksum : "Use Checksum" = <%= node['pyload']['use_checksum'].to_s.capitalize %>
-	bool folder_per_package : "Create folder for each package" = <%= node['pyload']['folder_per_package'].to_s.capitalize %>
 	bool debug_mode : "Debug Mode" = <%= node['pyload']['debug_mode'].to_s.capitalize %>
+	folder download_folder : "Download Folder" = <%= node['pyload']['download_dir'] %>
+	bool folder_per_package : "Create folder for each package" = <%= node['pyload']['folder_per_package'].to_s.capitalize %>
+	en;de;fr;it;es;nl;sv;ru;pl;cs;sr;pt_BR language : "Language" = <%= node['pyload']['language'] %>
 	int min_free_space : "Min Free Space (MB)" = <%= node['pyload']['min_free_space'] %>
 	int renice : "CPU Priority" = <%= node['pyload']['cpu_priority'] %>
 
-ssl - "SSL":
-	file cert : "SSL Certificate" = <%= node['pyload']['ssl']['cert'] %>
-	bool activated : "Activated" = <%= node['pyload']['ssl']['activated'].to_s.capitalize %>
-	file key : "SSL Key" = <%= node['pyload']['ssl']['key'] %>
+log - "Log":
+	bool file_log : "File Log" = <%= node['pyload']['log']['activated'].to_s.capitalize %>
+	int log_count : "Count" = <%= node['pyload']['log']['count'] %>
+	folder log_folder : "Folder" = <%= node['pyload']['log_dir'] %>
+	bool log_rotate : "Log Rotate" = <%= node['pyload']['log']['rotate'].to_s.capitalize %>
+	int log_size : "Size in kb" = <%= node['pyload']['log']['size'] %>
 
-webinterface - "Webinterface":
-	str template : "Template" = <%= node['pyload']['webinterface']['template'] %>
-	bool activated : "Activated" = <%= node['pyload']['webinterface']['activated'].to_s.capitalize %>
-	str prefix : "Path Prefix" = <%= node['pyload']['webinterface']['prefix'] %>
-	builtin;threaded;fastcgi;lightweight server : "Server" = <%= node['pyload']['webinterface']['server_type'] %>
-	ip host : "IP" = <%= node['pyload']['webinterface']['listen_address'].nil? ? '0.0.0.0' : node['pyload']['webinterface']['listen_address'] %>
-	bool https : "Use HTTPS" = <%= node['pyload']['ssl']['activated'].to_s.capitalize %>
-	int port : "Port" = <%= node['pyload']['webinterface']['port'] %>
+permission - "Permissions":
+	bool change_dl : "Change Group and User of Downloads" = <%= node['pyload']['permission']['change_downloads'].to_s.capitalize %>
+	bool change_file : "Change file mode of downloads" = <%= node['pyload']['permission']['change_file'].to_s.capitalize %>
+	bool change_group : "Change group of running process" = <%= node['pyload']['permission']['change_group'].to_s.capitalize %>
+	bool change_user : "Change user of running process" = <%= node['pyload']['permission']['change_user'].to_s.capitalize %>
+	str file : "Filemode for Downloads" = <%= node['pyload']['permission']['file_mode'] %>
+	str folder : "Folder Permission mode" = <%= node['pyload']['permission']['dir_mode'] %>
+	str group : "Groupname" = <%= node['pyload']['permission']['group'].nil? ? node['pyload']['group'] : node['pyload']['permission']['group'] %>
+	str user : "Username" = <%= node['pyload']['permission']['user'].nil? ? node['pyload']['user'] : node['pyload']['permission']['user'] %>
 
 proxy - "Proxy":
-	str username : "Username" = <%= node['pyload']['proxy']['user'].nil? ? 'None' : node['pyload']['proxy']['user'] %>
-	bool proxy : "Use Proxy" = <%= node['pyload']['proxy']['activated'].to_s.capitalize %>
 	str address : "Address" = <%= node['pyload']['proxy']['bind_address'] %>
 	password password : "Password" = <%= node['pyload']['proxy']['password'].nil? ? 'None' : node['pyload']['proxy']['password'] %>
-	http;socks4;socks5 type : "Protocol" = <%= node['pyload']['proxy']['protocol'] %>
 	int port : "Port" = <%= node['pyload']['proxy']['port'] %>
+	bool proxy : "Use Proxy" = <%= node['pyload']['proxy']['activated'].to_s.capitalize %>
+	http;socks4;socks5 type : "Protocol" = <%= node['pyload']['proxy']['protocol'] %>
+	str username : "Username" = <%= node['pyload']['proxy']['user'].nil? ? 'None' : node['pyload']['proxy']['user'] %>
 
 reconnect - "Reconnect":
-	time endTime : "End" = <%= node['pyload']['reconnect']['end_time'].nil? ? '0:00' : node['pyload']['reconnect']['end_time'] %>
 	bool activated : "Use Reconnect" = <%= node['pyload']['reconnect']['activated'].to_s.capitalize %>
+	time endTime : "End" = <%= node['pyload']['reconnect']['end_time'].nil? ? '0:00' : node['pyload']['reconnect']['end_time'] %>
 	str method : "Method" = <%=  node['pyload']['reconnect']['method'].nil? ? 'None' : node['pyload']['reconnect']['method'] %>
 	time startTime : "Start" = <%= node['pyload']['reconnect']['start_time'].nil? ? '0:00' : node['pyload']['reconnect']['start_time'] %>
 
-download - "Download":
-	int max_downloads : "Max Parallel Downloads" = <%= node['pyload']['download']['max_downloads'] %>
-	bool limit_speed : "Limit Download Speed" = <%= node['pyload']['download']['limit_speed'].to_s.capitalize %>
-	str interface : "Download interface to bind (ip or Name)" = <%= node['pyload']['download']['bind_interface'].nil? ? 'None' : node['pyload']['download']['bind_interface'] %>
-	bool skip_existing : "Skip already existing files" = <%= node['pyload']['download']['skip_existing'].to_s.capitalize %>
-	int max_speed : "Max Download Speed in kb/s" = <%= node['pyload']['download']['max_speed'] %>
-	bool ipv6 : "Allow IPv6" = <%= node['pyload']['download']['allow_ipv6'].to_s.capitalize %>
-	int chunks : "Max connections for one download" = <%= node['pyload']['download']['max_connections'] %>
+remote - "Remote":
+	bool activated : "Activated" = <%= node['pyload']['remote']['activated'].to_s.capitalize %>
+	ip listenaddr : "Adress" = <%= node['pyload']['remote']['listen_address'].nil? ? '0.0.0.0' : node['pyload']['remote']['listen_address'] %>
+	bool nolocalauth : "No authentication on local connections" = <%= node['pyload']['remote']['no_local_auth'].to_s.capitalize %>
+	int port : "Port" = <%= node['pyload']['remote']['port'] %>
 
-downloadTime - "Download Time":
-	time start : "Start" = <%= node['pyload']['download']['start_time'].nil? ? '0:00' : node['pyload']['download']['start_time'] %>
-	time end : "End" = <%= node['pyload']['download']['end_time'].nil? ? '0:00' : node['pyload']['download']['end_time'] %>
+ssl - "SSL":
+	bool activated : "Activated" = <%= node['pyload']['ssl']['activated'].to_s.capitalize %>
+	file cert : "SSL Certificate" = <%= node['pyload']['ssl']['cert'] %>
+	file key : "SSL Key" = <%= node['pyload']['ssl']['key'] %>
+
+webinterface - "Webinterface":
+	bool activated : "Activated" = <%= node['pyload']['webinterface']['activated'].to_s.capitalize %>
+	ip host : "IP" = <%= node['pyload']['webinterface']['listen_address'].nil? ? '0.0.0.0' : node['pyload']['webinterface']['listen_address'] %>
+	bool https : "Use HTTPS" = <%= node['pyload']['ssl']['activated'].to_s.capitalize %>
+	int port : "Port" = <%= node['pyload']['webinterface']['port'] %>
+	str prefix : "Path Prefix" = <%= node['pyload']['webinterface']['prefix'] %>
+	builtin;threaded;fastcgi;lightweight server : "Server" = <%= node['pyload']['webinterface']['server_type'] %>
+	classic;modern;pyplex template : "Template" = <%= node['pyload']['webinterface']['template'] %>

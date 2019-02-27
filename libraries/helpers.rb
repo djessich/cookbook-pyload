@@ -14,6 +14,24 @@
 # limitations under the License.
 #
 
-pyload_service 'pyload' do
-  action [:start, :enable]
+module PyloadCookbook
+  module Helpers
+    # Returns the path to python executable.
+    #
+    # @return The path to python executable.
+    def python_bin
+      case node['platform_family']
+      when 'debian', 'fedora', 'rhel', 'suse'
+        '/usr/bin/python'
+      when 'arch'
+        '/usr/bin/python2'
+      when 'freebsd'
+        '/usr/local/bin/python'
+      end
+    end
+  end
 end
+
+Chef::Recipe.send(:include, PyloadCookbook::Helpers)
+Chef::Resource.send(:include, PyloadCookbook::Helpers)
+Chef::Provider.send(:include, PyloadCookbook::Helpers)

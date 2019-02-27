@@ -21,7 +21,7 @@ This cookbook is used to install and configure [Pyload](https://github.com/pyloa
 
 ### Chef
 
-Chef 12.5+
+Chef 13+
 
 ### Cookbooks
 
@@ -323,6 +323,10 @@ limitations under the License.
 
 <!---
 ## TODO
+* completely rethink cookbook
+* check newest pyload version (if any test cookbook)
+* add debian 9 support
+* check travis-ci tests working
 * possibility to configure each plugin
 * extensions from git should be automatically added
 --->

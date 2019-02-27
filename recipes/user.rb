@@ -1,5 +1,5 @@
 #
-# Copyright 2016, Gridtec
+# Copyright 2019 Dominik Jessich
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -14,28 +14,15 @@
 # limitations under the License.
 #
 
-directory '/etc/rc.conf.d' do
-  owner 'root'
-  group 'wheel'
-  mode '0644'
-  action :create
-end
+unless node['pyload']['user'].eql?('root')
+  group node['pyload']['group'] do
+    system true
+  end
 
-template '/usr/local/etc/rc.d/pyload' do
-  source 'rc.d/pyload.erb'
-  owner 'root'
-  group 'wheel'
-  mode '0755'
-  notifies :restart, 'service[pyload]', :delayed
-end
-
-template '/etc/rc.conf.d/pyload' do
-  source 'rc.conf.d/pyload.erb'
-  mode '0644'
-  notifies :restart, 'service[pyload]', :delayed
-end
-
-service 'pyload' do
-  supports status: true, restart: true
-  action [:enable, :start]
+  user node['pyload']['user'] do
+    gid node['pyload']['group']
+    home "/home/#{node['pyload']['user']}"
+    shell '/bin/false'
+    system true
+  end
 end

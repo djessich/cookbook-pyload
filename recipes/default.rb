@@ -1,5 +1,5 @@
 #
-# Copyright 2016, Gridtec
+# Copyright 2019 Dominik Jessich
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -14,17 +14,7 @@
 # limitations under the License.
 #
 
-# add user unless root
-unless node['pyload']['user'].eql?('root')
-  group node['pyload']['group']
-
-  user node['pyload']['user'] do
-    gid node['pyload']['group']
-    home "/home/#{node['pyload']['user']}"
-    system true
-  end
-end
-
+include_recipe 'pyload::user'
 include_recipe 'pyload::packages'
 include_recipe 'pyload::install'
 include_recipe 'pyload::config'
