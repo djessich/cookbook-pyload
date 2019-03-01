@@ -71,4 +71,4 @@ webinterface - "Webinterface":
 	int port : "Port" = <%= node['pyload']['webinterface']['port'] %>
 	str prefix : "Path Prefix" = <%= node['pyload']['webinterface']['prefix'] %>
 	builtin;threaded;fastcgi;lightweight server : "Server" = <%= node['pyload']['webinterface']['server_type'] %>
-	classic;modern;pyplex template : "Template" = <%= node['pyload']['webinterface']['template'] %>
+	modern;classic;pyplex template : "Template" = <%= node['pyload']['webinterface']['template'] %>

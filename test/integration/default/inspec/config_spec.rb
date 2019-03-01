@@ -83,14 +83,14 @@ describe file('/home/pyload/.pyload/pyload.conf') do
   its('content') { should match(/webinterface\s[a-zA-Z0-9\-\.\"\:\;\_\=\n\s]*https.*False/) }
 end
 
-describe file('/home/pyload/.pyload/accounts.conf') do
-  it { should exist }
-  it { should be_file }
-  its('owner') { should eq 'pyload' }
-  its('group') { should eq 'pyload' }
-  its('mode') { should cmp '0600' }
-  its('content') { should match(/Http:\n\s\stest:test/) }
-end
+# describe file('/home/pyload/.pyload/accounts.conf') do
+#   it { should exist }
+#   it { should be_file }
+#   its('owner') { should eq 'pyload' }
+#   its('group') { should eq 'pyload' }
+#   its('mode') { should cmp '0600' }
+#   its('content') { should match(/Http:\n\s\stest:test/) }
+# end
 
 describe file('/tmp/downloads') do
   it { should exist }

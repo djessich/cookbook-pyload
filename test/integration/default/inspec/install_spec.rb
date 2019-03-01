@@ -14,6 +14,12 @@
 # limitations under the License.
 #
 
+# TODO: execute system check and chefck for missing libs
+
+package 'git' do
+  it { should be_installed }
+end
+
 describe file('/usr/share/pyload') do
   it { should exist }
   it { should be_directory }
@@ -46,6 +52,22 @@ describe file('/usr/share/pyload/pyLoadGui.py') do
   its('mode') { should cmp '0755' }
 end
 
+describe file('/var/log/pyload') do
+  it { should exist }
+  it { should be_directory }
+  its('owner') { should eq 'pyload' }
+  its('group') { should eq 'pyload' }
+  its('mode') { should cmp '0755' }
+end
+
+describe file('/var/run/pyload') do
+  it { should exist }
+  it { should be_directory }
+  its('owner') { should eq 'pyload' }
+  its('group') { should eq 'pyload' }
+  its('mode') { should cmp '0755' }
+end
+
 describe file('/usr/bin/pyLoadCli') do
   it { should exist }
   it { should be_symlink }
@@ -70,21 +92,5 @@ describe file('/usr/bin/pyLoadGui') do
   it { should be_linked_to '/usr/share/pyload/pyLoadGui.py' }
   its('owner') { should eq 'root' }
   its('group') { should eq 'root' }
-  its('mode') { should cmp '0755' }
-end
-
-describe file('/var/run/pyload') do
-  it { should exist }
-  it { should be_directory }
-  its('owner') { should eq 'pyload' }
-  its('group') { should eq 'pyload' }
-  its('mode') { should cmp '0755' }
-end
-
-describe file('/var/log/pyload') do
-  it { should exist }
-  it { should be_directory }
-  its('owner') { should eq 'pyload' }
-  its('group') { should eq 'pyload' }
   its('mode') { should cmp '0755' }
 end

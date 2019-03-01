@@ -40,34 +40,3 @@ ark 'pyload' do
   notifies :run, 'execute[pyload system check]', :immediately
   notifies :restart, 'pyload_service[pyload]', :delayed
 end
-
-# Define command to execute a system check for Pyload
-execute 'pyload system check' do
-  command "echo '\n' | #{python_bin} #{node['pyload']['install_dir']}/systemCheck.py"
-  action :nothing
-  only_if { ::File.exist?("#{node['pyload']['install_dir']}/systemCheck.py") }
-  # not_if { node['platform_family'].eql?('freebsd') }
-end
-
-# Create logging directory
-directory node['pyload']['log_dir'] do
-  owner node['pyload']['user']
-  group node['pyload']['group']
-  mode '0755'
-  recursive true
-end
-
-# Create pid directory
-directory node['pyload']['pid_dir'] do
-  owner node['pyload']['user']
-  group node['pyload']['group']
-  mode '0755'
-  recursive true
-end
-
-# Create symbolic links for Pyload executables to /usr/bin directory
-%w(pyLoadCli pyLoadCore pyLoadGui).each do |bin|
-  link "/usr/bin/#{bin}" do
-    to "#{node['pyload']['install_dir']}/#{bin}.py"
-  end
-end

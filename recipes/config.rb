@@ -29,14 +29,14 @@ template "#{node['pyload']['conf_dir']}/pyload.conf" do
   notifies :restart, 'pyload_service[pyload]', :delayed
 end
 
-template "#{node['pyload']['config_dir']}/accounts.conf" do
-  source 'accounts.conf.erb'
-  owner node['pyload']['user']
-  group node['pyload']['group']
-  mode '0600'
-  action :create_if_missing
-  not_if { node['pyload']['accounts'].empty? }
-end
+# template "#{node['pyload']['conf_dir']}/accounts.conf" do
+#   source 'accounts.conf.erb'
+#   owner node['pyload']['user']
+#   group node['pyload']['group']
+#   mode '0600'
+#   action :create_if_missing
+#   not_if { node['pyload']['accounts'].empty? }
+# end
 
 directory node['pyload']['download_dir'] do
   user node['pyload']['user']
