@@ -14,12 +14,9 @@
 # limitations under the License.
 #
 
-provides :pyload_service_upstart
+provides :pyload_service_sysvinit
 
-provides :pyload_service, platform_family: 'debian' do |node|
-  Chef::Platform::ServiceHelpers.service_resource_providers.include?(:upstart) &&
-  !Chef::Platform::ServiceHelpers.service_resource_providers.include?(:systemd)
-end
+provides :pyload_service, os: 'linux'
 
 property :service_name, String, name_property: true
 property :install_dir, String, default: lazy { node['pyload']['install_dir'] }
@@ -32,7 +29,6 @@ action :start do
   create_init
 
   service new_resource.service_name do
-    provider Chef::Provider::Service::Upstart
     supports status: true, restart: true
     action :start
   end
@@ -40,10 +36,9 @@ end
 
 action :stop do
   service new_resource.service_name do
-    provider Chef::Provider::Service::Upstart
     supports status: true, restart: true
     action :stop
-    only_if { ::File.exist?("/etc/init/#{new_resource.service_name}") }
+    only_if { ::File.exist?("/etc/init.d/#{new_resource.service_name}") }
   end
 end
 
@@ -51,7 +46,6 @@ action :enable do
   create_init
 
   service new_resource.service_name do
-    provider Chef::Provider::Service::Upstart
     supports status: true, restart: true
     action :enable
   end
@@ -59,16 +53,14 @@ end
 
 action :disable do
   service new_resource.service_name do
-    provider Chef::Provider::Service::Upstart
     supports status: true, restart: true
     action :disable
-    only_if { ::File.exist?("/etc/init/#{new_resource.service_name}") }
+    only_if { ::File.exist?("/etc/init.d/#{new_resource.service_name}") }
   end
 end
 
 action :restart do
   service new_resource.service_name do
-    provider Chef::Provider::Service::Upstart
     supports status: true, restart: true
     action :restart
   end
@@ -77,10 +69,17 @@ end
 action_class do
   # Creates the configuration for the init system.
   def create_init
-    template "/etc/init/#{new_resource.service_name}.conf" do
-      source 'debian/init/pyload.conf.erb'
+    dist_dir, conf_dir = value_for_platform_family(
+      debian: %w(debian default),
+      fedora: %w(rhel sysconfig),
+      rhel: %w(rhel sysconfig),
+      suse: %w(suse sysconfig)
+    )
+
+    template "/etc/#{conf_dir}/#{new_resource.service_name}" do
+      source "#{dist_dir}/#{conf_dir}/pyload.erb"
       owner 'root'
-      group 'root'
+      group root_group
       mode '0644'
       variables(
         install_dir: new_resource.install_dir,
@@ -89,12 +88,15 @@ action_class do
         user: new_resource.user,
         group: new_resource.group
       )
-      notifies :run, 'execute[initctl reload-configuration]', :immediate
       notifies :restart, "service[#{new_resource.service_name}]", :delayed
     end
 
-    execute 'initctl reload-configuration' do
-      action :nothing
+    template "/etc/init.d/#{new_resource.service_name}" do
+      source "#{dist_dir}/init.d/pyload.erb"
+      owner 'root'
+      group root_group
+      mode '0755'
+      notifies :restart, "service[#{new_resource.service_name}]", :delayed
     end
   end
 end
