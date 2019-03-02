@@ -81,83 +81,47 @@ suites:
     run_list:
       - recipe[pyload::default]
     attributes:
-      pyload:
-        pid_dir: /var/run/pyload
-        accounts:
-          TestTest:
-            user: test
-            password: test
+  # - name: arch-packages
+  #   run_list:
+  #     - recipe[pyload::packages]
+  #   attributes:
+  #   includes: [
+  #     'arch'
+  #   ]
   - name: debian-packages
     run_list:
       - recipe[pyload::packages]
     attributes:
-    includes: [
-      'ubuntu-12.04',
-      'ubuntu-14.04',
-      'ubuntu-16.04',
-      'debian-7',
-      'debian-8'
-    ]
+    includes: [ 'debian-8', 'debian-9', 'ubuntu-14.04', 'ubuntu-16.04', 'ubuntu-18.04' ]
   - name: fedora-packages
     run_list:
       - recipe[pyload::packages]
     attributes:
-    includes: [
-      'fedora-22',
-      'fedora-23',
-      'fedora-24',
-      'fedora-25'
-    ]
+    includes: [ 'fedora-latest' ]
   - name: rhel-packages
     run_list:
       - recipe[pyload::packages]
     attributes:
-    includes: [
-      'centos-6',
-      'centos-7'
-    ]
-  - name: suse-packages
-    run_list:
-      - recipe[pyload::packages]
-    attributes:
-    includes: [
-      'opensuse-13.2'
-    ]
+    includes: [ 'centos-6', 'centos-7' ]
+  # - name: suse-packages
+  #   run_list:
+  #     - recipe[pyload::packages]
+  #   attributes:
+  #   includes: [
+  #     'opensuse-13.2'
+  #   ]
   - name: service-init
     run_list:
       - recipe[pyload::default]
     attributes:
-      pyload:
-        init_style: init
-    includes: [
-      'ubuntu-12.04',
-      'ubuntu-14.04',
-      'debian-7',
-      'centos-6'
-    ]
+    includes: [ 'centos-6', 'ubuntu-14.04' ]
   - name: service-systemd
     run_list:
       - recipe[pyload::default]
     attributes:
-      pyload:
-        init_style: systemd
-    includes: [
-      'ubuntu-16.04',
-      'debian-8',
-      'centos-7',
-      'fedora-22',
-      'fedora-23',
-      'fedora-24',
-      'fedora-25',
-      'opensuse-13.2'
-    ]
+    includes: [ 'centos-7', 'debian-8', 'debian-9', 'fedora-latest', 'ubuntu-16.04', 'ubuntu-18.04' ]
   - name: service-upstart
     run_list:
       - recipe[pyload::default]
     attributes:
-      pyload:
-        init_style: upstart
-    includes: [
-      'ubuntu-12.04',
-      'ubuntu-14.04'
-    ]
+    includes: [ 'ubuntu-14.04' ]
