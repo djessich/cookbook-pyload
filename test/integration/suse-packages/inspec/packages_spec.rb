@@ -14,9 +14,9 @@
 # limitations under the License.
 #
 
-describe package('git') do
-  it { should be_installed }
-end
+# describe package('git') do
+#   it { should be_installed }
+# end
 
 describe package('curl') do
   it { should be_installed }
@@ -30,13 +30,13 @@ describe package('python') do
   it { should be_installed }
 end
 
-describe package('python-Beaker') do
-  it { should be_installed }
-end
+# describe package('python-Beaker') do
+#   it { should be_installed }
+# end
 
-describe package('python-beautifulsoup4') do
-  it { should be_installed }
-end
+# describe package('python-beautifulsoup4') do
+#   it { should be_installed }
+# end
 
 describe package('python-pycrypto') do
   it { should be_installed }
@@ -54,7 +54,11 @@ describe package('python-html5lib') do
   it { should be_installed }
 end
 
-describe package('python-Jinja2') do
+# describe package('python-Jinja2') do
+#   it { should be_installed }
+# end
+
+describe package('python-notify') do
   it { should be_installed }
 end
 
@@ -74,17 +78,17 @@ describe package('python-simplejson') do
   it { should be_installed }
 end
 
-describe package('python-thrift') do
-  it { should be_installed }
-end
+# describe package('python-thrift') do
+#   it { should be_installed }
+# end
 
-describe package('js') do
-  it { should be_installed }
-end
+# describe package('js') do
+#   it { should be_installed }
+# end
 
-describe package('python-python-spidermonkey') do
-  it { should be_installed }
-end
+# describe package('python-python-spidermonkey') do
+#   it { should be_installed }
+# end
 
 describe package('rhino') do
   it { should be_installed }
@@ -94,9 +98,9 @@ describe package('tesseract') do
   it { should be_installed }
 end
 
-describe package('gocr') do
-  it { should be_installed }
-end
+# describe package('gocr') do
+#   it { should be_installed }
+# end
 
 if os[:release].to_f < 13.2
   describe package('python-imaging') do

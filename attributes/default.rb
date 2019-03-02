@@ -29,69 +29,60 @@ default['pyload']['download_dir'] = '/tmp/downloads'
 default['pyload']['log_dir'] = '/var/log/pyload'
 
 case node['platform_family']
-when 'arch'
+when 'arch' # python2-beaker thrift python2-beautifulsoup4 js gocr
   default['pyload']['packages'] = %w(
-    curl openssl python2 python2-beaker python2-beautifulsoup4 python2-crypto python2-django
-    python2-feedparser python2-flup python2-html5lib python2-pillow python2-pycurl
-    python2-pyopenssl python2-pyqt4 python2-simplejson thrift js rhino tesseract gocr
+    curl openssl python2 python2-crypto python2-feedparser python2-flup
+    python2-html5lib python2-imaging python2-notify python2-pycurl
+    python2-pyopenssl python2-pyqt python2-simplejson rhino tesseract
   )
-when 'debian'
+when 'debian' # python-beaker python-bs4 gocr
   default['pyload']['packages'] = %w(
-    curl openssl python python-beaker python-bs4 python-crypto python-django python-feedparser
-    python-flup python-html5lib python-imaging python-pycurl python-openssl python-qt4
-    python-simplejson rhino tesseract-ocr tesseract-ocr-eng gocr
+    curl openssl python python-crypto python-feedparser python-flup
+    python-html5lib python-pil python-notify python-pycurl python-openssl
+    python-qt4 python-simplejson rhino tesseract-ocr tesseract-ocr-eng
   )
-  case node['platform']
-  when 'debian'
-    default['pyload']['packages'] += if node['platform_version'].to_f < 8
-                                       %w(libmozjs185-1.0)
-                                     else
-                                       %w(python-thrift libmozjs-24-bin)
-                                     end
-  when 'ubuntu'
-    default['pyload']['packages'] += if node['platform_version'].to_f < 14.04
-                                       %w(libmozjs185-1.0)
-                                     else
-                                       %w(python-thrift libmozjs-24-bin)
-                                     end
-  end
-when 'fedora'
+  # case node['platform']
+  # when 'debian'
+  #   default['pyload']['packages'] += if node['platform_version'].to_f < 8
+  #                                      %w(libmozjs185-1.0)
+  #                                    else # python-thrift
+  #                                      %w(libmozjs-24-bin)
+  #                                    end
+  # when 'ubuntu'
+  #   default['pyload']['packages'] += if node['platform_version'].to_f < 14.04
+  #                                      %w(libmozjs185-1.0)
+  #                                    else # python-thrift
+  #                                      %w(libmozjs-24-bin)
+  #                                    end
+  # end
+when 'fedora' # python-beaker python-thrift python-beautifulsoup4 js  gocr
   default['pyload']['packages'] = %w(
-    curl openssl python python-beaker python-beautifulsoup4 python-feedparser python-flup
-    python-html5lib pyOpenSSL PyQt4 python-thrift js rhino tesseract gocr
+    curl openssl python2 python2-crypto python2-feedparser python2-flup
+    python2-html5lib python2-pillow python2-notify python2-pycurl python2-pyOpenSSL
+    PyQt4 python2-simplejson rhino tesseract
   )
-  default['pyload']['packages'] += if node['platform_version'].to_f < 24
-                                     %w(python-crypto python-django)
-                                   else
-                                     %w(python2-crypto python2-django)
-                                   end
-  default['pyload']['packages'] += if node['platform_version'].to_f < 25
-                                     %w(python-pillow python-pycurl python-simplejson)
-                                   else
-                                     %w(python2-pillow python2-pycurl python2-simplejson)
-                                   end
-when 'freebsd'
+when 'freebsd' # py27-beaker py27-thrift py27-beautifulsoup spidermonkey24 gocr
   default['pyload']['packages'] = %w(
-    curl openssl python27 py27-beaker py27-beautifulsoup py27-pycrypto py27-django19
-    py27-feedparser py27-flup py27-html5lib py27-pillow py27-pycurl py27-openssl py27-qt4
-    py27-simplejson py27-thrift spidermonkey24 rhino tesseract gocr py27-sqlite3
+    curl openssl python27 py27-pycrypto py27-feedparser py27-flup6 py27-html5lib
+    py27-pillow py27-notify py27-pycurl py27-openssl py27-qt4 py27-simplejson
+    rhino tesseract py27-sqlite3
   )
-when 'rhel'
+when 'rhel' # python-beaker python-beautifulsoup4 js
   default['pyload']['packages'] = %w(
-    curl openssl python python-beaker python-beautifulsoup4 python-feedparser python-flup
-    python-html5lib python-pycurl pyOpenSSL PyQt4 js rhino tesseract
+    curl openssl python python-feedparser python-flup python-html5lib
+    notify-python python-pycurl pyOpenSSL PyQt4 rhino tesseract
   )
   default['pyload']['packages'] += if node['platform_version'].to_f < 7
-                                     %w(python-crypto Django python-imaging python-simplejson)
-                                   else
-                                     %w(python2-crypto python-django python-pillow python2-simplejson python-thrift)
+                                     %w(python-crypto python-imaging python-simplejson)
+                                   else # python-thrift
+                                     %w(python2-crypto python-pillow python2-simplejson)
                                    end
-when 'suse'
+when 'suse' # python-Beaker python-thrift python-beautifulsoup4 python-python-spidermonkey js  gocr
   default['pyload']['use_fix'] = true
   default['pyload']['packages'] = %w(
-    curl openssl python python-Beaker python-beautifulsoup4 python-pycrypto python-django
-    python-feedparser python-flup python-html5lib python-pycurl python-pyOpenSSL python-qt4
-    python-simplejson python-thrift js python-python-spidermonkey rhino tesseract gocr
+    curl openssl python python-pycrypto python-feedparser python-flup python-html5lib
+    python-notify python-pycurl python-pyOpenSSL python-qt4 python-simplejson
+    rhino tesseract
   )
   default['pyload']['packages'] += if node['platform_version'].to_f < 13.2
                                      %w(python-imaging)

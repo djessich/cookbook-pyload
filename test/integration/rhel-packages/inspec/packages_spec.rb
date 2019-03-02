@@ -14,9 +14,9 @@
 # limitations under the License.
 #
 
-describe package('git') do
-  it { should be_installed }
-end
+# describe package('git') do
+#   it { should be_installed }
+# end
 
 describe package('curl') do
   it { should be_installed }
@@ -30,13 +30,13 @@ describe package('python') do
   it { should be_installed }
 end
 
-describe package('python-beaker') do
-  it { should be_installed }
-end
+# describe package('python-beaker') do
+#   it { should be_installed }
+# end
 
-describe package('python-beautifulsoup4') do
-  it { should be_installed }
-end
+# describe package('python-beautifulsoup4') do
+#   it { should be_installed }
+# end
 
 describe package('python-feedparser') do
   it { should be_installed }
@@ -50,7 +50,11 @@ describe package('python-html5lib') do
   it { should be_installed }
 end
 
-describe package('python-jinja2') do
+# describe package('python-jinja2') do
+#   it { should be_installed }
+# end
+
+describe package('notify-python') do
   it { should be_installed }
 end
 
@@ -66,9 +70,9 @@ describe package('PyQt4') do
   it { should be_installed }
 end
 
-describe package('js') do
-  it { should be_installed }
-end
+# describe package('js') do
+#   it { should be_installed }
+# end
 
 describe package('rhino') do
   it { should be_installed }
@@ -78,20 +82,24 @@ describe package('tesseract') do
   it { should be_installed }
 end
 
+# describe package('gocr') do
+#   it { should be_installed }
+# end
+
 if os[:release].to_f < 7
   describe package('python-crypto') do
     it { should be_installed }
   end
 
-  describe package('Django14') do
+  # describe package('Django14') do
+  #   it { should be_installed }
+  # end
+
+  describe package('python-imaging') do
     it { should be_installed }
   end
 
   describe package('python-simplejson') do
-    it { should be_installed }
-  end
-
-  describe package('python-imaging') do
     it { should be_installed }
   end
 else
@@ -99,7 +107,11 @@ else
     it { should be_installed }
   end
 
-  describe package('python-django') do
+  # describe package('python-django') do
+  #   it { should be_installed }
+  # end
+
+  describe package('python-pillow') do
     it { should be_installed }
   end
 
@@ -107,11 +119,7 @@ else
     it { should be_installed }
   end
 
-  describe package('python-thrift') do
-    it { should be_installed }
-  end
-
-  describe package('python-pillow') do
-    it { should be_installed }
-  end
+  # describe package('python-thrift') do
+  #   it { should be_installed }
+  # end
 end

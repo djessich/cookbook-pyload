@@ -14,9 +14,9 @@
 # limitations under the License.
 #
 
-describe package('git') do
-  it { should be_installed }
-end
+# describe package('git') do
+#   it { should be_installed }
+# end
 
 describe package('curl') do
   it { should be_installed }
@@ -30,21 +30,21 @@ describe package('python27') do
   it { should be_installed }
 end
 
-describe package('py27-beaker') do
-  it { should be_installed }
-end
+# describe package('py27-beaker') do
+#   it { should be_installed }
+# end
 
-describe package('py27-beautifulsoup') do
-  it { should be_installed }
-end
+# describe package('py27-beautifulsoup') do
+#   it { should be_installed }
+# end
 
 describe package('py27-pycrypto') do
   it { should be_installed }
 end
 
-describe package('python-django') do
-  it { should be_installed }
-end
+# describe package('python-django') do
+#   it { should be_installed }
+# end
 
 describe package('py27-feedparser') do
   it { should be_installed }
@@ -62,7 +62,11 @@ describe package('py27-pillow') do
   it { should be_installed }
 end
 
-describe package('py27-Jinja2') do
+# describe package('py27-Jinja2') do
+#   it { should be_installed }
+# end
+
+describe package('py27-notify') do
   it { should be_installed }
 end
 
@@ -82,13 +86,13 @@ describe package('py27-simplejson') do
   it { should be_installed }
 end
 
-describe package('py27-thrift') do
-  it { should be_installed }
-end
+# describe package('py27-thrift') do
+#   it { should be_installed }
+# end
 
-describe package('spidermonkey24') do
-  it { should be_installed }
-end
+# describe package('spidermonkey24') do
+#   it { should be_installed }
+# end
 
 describe package('rhino') do
   it { should be_installed }
@@ -98,13 +102,13 @@ describe package('tesseract') do
   it { should be_installed }
 end
 
-describe package('tesseract-data') do
-  it { should be_installed }
-end
+# describe package('tesseract-data') do
+#   it { should be_installed }
+# end
 
-describe package('gocr') do
-  it { should be_installed }
-end
+# describe package('gocr') do
+#   it { should be_installed }
+# end
 
 describe package('py27-sqlite3') do
   it { should be_installed }

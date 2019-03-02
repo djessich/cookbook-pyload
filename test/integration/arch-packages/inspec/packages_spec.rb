@@ -14,9 +14,9 @@
 # limitations under the License.
 #
 
-describe package('git') do
-  it { should be_installed }
-end
+# describe package('git') do
+#   it { should be_installed }
+# end
 
 describe package('curl') do
   it { should be_installed }
@@ -30,21 +30,21 @@ describe package('python2') do
   it { should be_installed }
 end
 
-describe package('python2-beaker') do
-  it { should be_installed }
-end
+# describe package('python2-beaker') do
+#   it { should be_installed }
+# end
 
-describe package('python2-beautifulsoup4') do
-  it { should be_installed }
-end
+# describe package('python2-beautifulsoup4') do
+#   it { should be_installed }
+# end
 
 describe package('python2-crypto') do
   it { should be_installed }
 end
 
-describe package('python2-django') do
-  it { should be_installed }
-end
+# describe package('python2-django') do
+#   it { should be_installed }
+# end
 
 describe package('python2-feedparser') do
   it { should be_installed }
@@ -58,11 +58,15 @@ describe package('python2-html5lib') do
   it { should be_installed }
 end
 
-describe package('python2-pillow') do
+describe package('python2-imaging') do
   it { should be_installed }
 end
 
-describe package('python2-jinja') do
+# describe package('python2-jinja') do
+#   it { should be_installed }
+# end
+
+describe package('python2-notify') do
   it { should be_installed }
 end
 
@@ -74,7 +78,7 @@ describe package('python2-pyopenssl') do
   it { should be_installed }
 end
 
-describe package('python2-pyqt4') do
+describe package('python2-pyqt') do
   it { should be_installed }
 end
 
@@ -82,13 +86,13 @@ describe package('python2-simplejson') do
   it { should be_installed }
 end
 
-describe package('thrift') do
-  it { should be_installed }
-end
+# describe package('thrift') do
+#   it { should be_installed }
+# end
 
-describe package('js') do
-  it { should be_installed }
-end
+# describe package('js') do
+#   it { should be_installed }
+# end
 
 describe package('rhino') do
   it { should be_installed }
@@ -98,6 +102,6 @@ describe package('tesseract') do
   it { should be_installed }
 end
 
-describe package('gocr') do
-  it { should be_installed }
-end
+# describe package('gocr') do
+#   it { should be_installed }
+# end
