@@ -24,7 +24,7 @@ describe file('/usr/share/pyload') do
   it { should exist }
   it { should be_directory }
   its('owner') { should eq 'root' }
-  its('group') { should eq 'root' }
+  its('group') { should eq os.family == 'bsd' ? 'wheel' : 'root' }
   its('mode') { should cmp '0755' }
 end
 
@@ -32,7 +32,7 @@ describe file('/usr/share/pyload/pyLoadCli.py') do
   it { should exist }
   it { should be_file }
   its('owner') { should eq 'root' }
-  its('group') { should eq 'root' }
+  its('group') { should eq os.family == 'bsd' ? 'wheel' : 'root' }
   its('mode') { should cmp '0755' }
 end
 
@@ -40,7 +40,7 @@ describe file('/usr/share/pyload/pyLoadCore.py') do
   it { should exist }
   it { should be_file }
   its('owner') { should eq 'root' }
-  its('group') { should eq 'root' }
+  its('group') { should eq os.family == 'bsd' ? 'wheel' : 'root' }
   its('mode') { should cmp '0755' }
 end
 
@@ -48,7 +48,7 @@ describe file('/usr/share/pyload/pyLoadGui.py') do
   it { should exist }
   it { should be_file }
   its('owner') { should eq 'root' }
-  its('group') { should eq 'root' }
+  its('group') { should eq os.family == 'bsd' ? 'wheel' : 'root' }
   its('mode') { should cmp '0755' }
 end
 
@@ -73,7 +73,7 @@ describe file('/usr/bin/pyLoadCli') do
   it { should be_symlink }
   it { should be_linked_to '/usr/share/pyload/pyLoadCli.py' }
   its('owner') { should eq 'root' }
-  its('group') { should eq 'root' }
+  its('group') { should eq os.family == 'bsd' ? 'wheel' : 'root' }
   its('mode') { should cmp '0755' }
 end
 
@@ -82,7 +82,7 @@ describe file('/usr/bin/pyLoadCore') do
   it { should be_symlink }
   it { should be_linked_to '/usr/share/pyload/pyLoadCore.py' }
   its('owner') { should eq 'root' }
-  its('group') { should eq 'root' }
+  its('group') { should eq os.family == 'bsd' ? 'wheel' : 'root' }
   its('mode') { should cmp '0755' }
 end
 
@@ -91,6 +91,14 @@ describe file('/usr/bin/pyLoadGui') do
   it { should be_symlink }
   it { should be_linked_to '/usr/share/pyload/pyLoadGui.py' }
   its('owner') { should eq 'root' }
-  its('group') { should eq 'root' }
+  its('group') { should eq os.family == 'bsd' ? 'wheel' : 'root' }
   its('mode') { should cmp '0755' }
+end
+
+describe command('python') do
+  it { should exist }
+end
+
+describe command("echo '\n' | python /usr/share/pyload/systemCheck.py") do
+  its('stdout') { should_not match(/missing/) }
 end

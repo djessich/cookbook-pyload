@@ -16,6 +16,13 @@
 
 module PyloadCookbook
   module Helpers
+    # Returns the platforms root group.
+    #
+    # @return The platforms root group.
+    def root_group
+      node['platform_family'] == 'freebsd' ? 'wheel' : 'root'
+    end
+
     # Returns the path to python executable.
     #
     # @return The path to python executable.
@@ -26,7 +33,7 @@ module PyloadCookbook
       when 'arch'
         '/usr/bin/python2'
       when 'freebsd'
-        '/usr/local/bin/python'
+        '/usr/local/bin/python2.7'
       end
     end
   end

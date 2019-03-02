@@ -8,40 +8,26 @@
 # PROVIDE: pyload
 # REQUIRE: LOGIN NETWORK
 # KEYWORD: shutdown
-#
-# Add the following lines to /etc/rc.conf.local or /etc/rc.conf to enable this
-# service during boot; setting optional parameters it is possible to overwrite
-# defaults from this script
-#
-#   pyload_enable="YES"
-#   # Optional
-#   pyload_daemon="<%= @install_dir%>/pyLoadCore.py"
-#   pyload_user="<%= @user %>"
-#   pyload_group="<%= @group %>"
-#   pyload_pid="<%= @pid_dir %>/pyload.pid"
-#   pyload_options="--daemon --configdir=<%= @config_dir %> --pidfile=<%= @pid_dir %>/pyload.pid"
 
 . /etc/rc.subr
 
 PATH="$PATH:/usr/local/bin"
 
 name="pyload"
+desc="Downloadtool for One-Click-Hoster written in python."
 rcvar=${name}_enable
 
-: ${pyload_enable:="YES"}
-: ${pyload_daemon:="<%= @install_dir%>/pyLoadCore.py"}
-: ${pyload_user:="<%= @user %>"}
-: ${pyload_group:="<%= @group %>"}
-: ${pyload_pid:="<%= @pid_dir %>/pyload.pid"}
-: ${pyload_options:="--daemon --configdir=<%= @config_dir %> --pidfile=<%= @pid_dir %>/pyload.pid"}
-
-command_interpreter="<%= @python %>"
-command="${pyload_daemon}"
-command_args="${pyload_options}"
-command_full="${command_interpreter} ${command} ${command_args}"
-
-start_cmd="su -m ${pyload_user} -c '${command_full}'"
-stop_cmd="su -m ${pyload_user} -c '${command_full} --quit'"
-
 load_rc_config $name
+: ${pyload_enable:="YES"}
+: ${pyload_daemon:=""}
+: ${pyload_user:=""}
+: ${pyload_group:=""}
+: ${pyload_pid:=""}
+: ${pyload_options:=""}
+
+pidfile="${pyload_pidfile}"
+command="${pyload_daemon}"
+command_interpreter="python"
+command_args="${pyload_options}"
+
 run_rc_command "$1"

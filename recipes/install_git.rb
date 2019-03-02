@@ -20,7 +20,7 @@ package 'git'
 # Create install directory
 directory node['pyload']['install_dir'] do
   owner 'root'
-  group 'root'
+  group root_group
   mode '0755'
   recursive true
 end
@@ -39,7 +39,7 @@ git node['pyload']['install_dir'] do
   repository 'https://github.com/pyload/pyload.git'
   revision version
   user 'root'
-  group 'root'
+  group root_group
   action :sync
   notifies :run, 'execute[pyload system check]', :immediately
   notifies :restart, 'pyload_service[pyload]', :delayed

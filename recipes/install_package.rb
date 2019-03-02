@@ -25,7 +25,7 @@ when 'debian'
   remote_file "#{Chef::Config[:file_cache_path]}/pyload_#{node['pyload']['version']}_all.deb" do
     source "https://github.com/pyload/pyload/releases/download/v#{node['pyload']['version']}/pyload_#{node['pyload']['version']}_all.deb"
     owner 'root'
-    group 'root'
+    group root_group
     mode '0644'
   end
 

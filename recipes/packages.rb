@@ -25,9 +25,9 @@ node['pyload']['packages'].each do |pkg|
   package pkg
 end
 
-# On FreeBSD create python executeable in /usr/local/bin after python package
+# On FreeBSD symlink python executeable in /usr/local/bin after python package
 # has been installed
 link '/usr/local/bin/python' do
-  to '/usr/local/bin/python2'
+  to '/usr/local/bin/python2.7'
   only_if { node['platform_family'].eql?('freebsd') }
 end

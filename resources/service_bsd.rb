@@ -16,7 +16,7 @@
 
 provides :pyload_service_bsd
 
-provides :pyload_service, platform_family: 'bsd'
+provides :pyload_service, platform_family: 'freebsd'
 
 property :service_name, String, name_property: true
 property :install_dir, String, default: lazy { node['pyload']['install_dir'] }
@@ -38,7 +38,7 @@ action :stop do
   service new_resource.service_name do
     supports status: true, restart: true
     action :stop
-    only_if { ::File.exist?("/etc/init.d/#{new_resource.service_name}") }
+    only_if { ::File.exist?("/usr/local/etc/rc.d/#{new_resource.service_name}") }
   end
 end
 
@@ -55,7 +55,7 @@ action :disable do
   service new_resource.service_name do
     supports status: true, restart: true
     action :disable
-    only_if { ::File.exist?("/etc/init.d/#{new_resource.service_name}") }
+    only_if { ::File.exist?("/usr/local/etc/rc.d/#{new_resource.service_name}") }
   end
 end
 
@@ -71,31 +71,30 @@ action_class do
   def create_init
     directory '/etc/rc.conf.d' do
       owner 'root'
-      group 'wheel'
+      group root_group
       mode '0644'
     end
 
-    template '/etc/rc.conf.d/pyload' do
+    template "/etc/rc.conf.d/#{new_resource.service_name}" do
       source 'rc.conf.d/pyload.erb'
       owner 'root'
-      group 'wheel'
+      group root_group
       mode '0644'
-      notifies :restart, "service[#{new_resource.service_name}]", :delayed
-    end
-
-    template '/usr/local/etc/rc.d/pyload' do
-      source 'rc.d/pyload.erb'
-      owner 'root'
-      group 'wheel'
-      mode '0755'
       variables(
-        python: python_bin,
         install_dir: new_resource.install_dir,
         conf_dir: new_resource.conf_dir,
         pid_dir: new_resource.pid_dir,
         user: new_resource.user,
         group: new_resource.group
       )
+      notifies :restart, "service[#{new_resource.service_name}]", :delayed
+    end
+
+    template "/usr/local/etc/rc.d/#{new_resource.service_name}" do
+      source 'rc.d/pyload.erb'
+      owner 'root'
+      group root_group
+      mode '0755'
       notifies :restart, "service[#{new_resource.service_name}]", :delayed
     end
   end

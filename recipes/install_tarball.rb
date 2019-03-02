@@ -20,7 +20,7 @@ include_recipe 'ark'
 # Create install directory
 directory ::File.dirname(node['pyload']['install_dir']) do
   owner 'root'
-  group 'root'
+  group root_group
   mode '0755'
   recursive true
 end
