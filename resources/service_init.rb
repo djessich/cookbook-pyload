@@ -14,7 +14,7 @@
 # limitations under the License.
 #
 
-provides :pyload_service_sysvinit
+provides :pyload_service_init
 
 provides :pyload_service, os: 'linux'
 
