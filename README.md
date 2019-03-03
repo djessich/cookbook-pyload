@@ -1,6 +1,6 @@
 # Pyload Cookbook
 
-[![Build Status](https://travis-ci.org/gridtec/cookbook-pyload.svg?branch=master)](https://travis-ci.org/gridtec/cookbook-pyload)
+[![Build Status](https://travis-ci.org/djessich/cookbook-pyload.svg?branch=master)](https://travis-ci.org/djessich/cookbook-pyload)
 [![License](https://img.shields.io/badge/license-Apache_2-blue.svg)](https://www.apache.org/licenses/LICENSE-2.0)
 [![Cookbook Version](https://img.shields.io/cookbook/v/pyload.svg)](https://supermarket.chef.io/cookbooks/pyload)
 
