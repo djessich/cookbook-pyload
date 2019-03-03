@@ -103,13 +103,11 @@ suites:
       - recipe[pyload::packages]
     attributes:
     includes: [ 'centos-6', 'centos-7' ]
-  # - name: suse-packages
-  #   run_list:
-  #     - recipe[pyload::packages]
-  #   attributes:
-  #   includes: [
-  #     'opensuse-13.2'
-  #   ]
+  - name: suse-packages
+    run_list:
+      - recipe[pyload::packages]
+    attributes:
+    includes: [ 'opensuse-leap-42' ]
   - name: service-init
     run_list:
       - recipe[pyload::default]
@@ -119,7 +117,7 @@ suites:
     run_list:
       - recipe[pyload::default]
     attributes:
-    includes: [ 'centos-7', 'debian-8', 'debian-9', 'fedora-latest', 'ubuntu-16.04', 'ubuntu-18.04' ]
+    includes: [ 'centos-7', 'debian-8', 'debian-9', 'fedora-latest', 'opensuse-leap-42', 'ubuntu-16.04', 'ubuntu-18.04' ]
   - name: service-upstart
     run_list:
       - recipe[pyload::default]
