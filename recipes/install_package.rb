@@ -32,7 +32,6 @@ when 'debian'
   # Installs and configures Pyload distribution
   dpkg_package 'pyload' do
     source "#{Chef::Config[:file_cache_path]}/pyload_#{node['pyload']['version']}_all.deb"
-    notifies :run, 'execute[pyload system check]', :immediately
     notifies :restart, 'pyload_service[pyload]', :delayed
   end
 else

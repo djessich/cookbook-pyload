@@ -41,6 +41,5 @@ git node['pyload']['install_dir'] do
   user 'root'
   group root_group
   action :sync
-  notifies :run, 'execute[pyload system check]', :immediately
   notifies :restart, 'pyload_service[pyload]', :delayed
 end

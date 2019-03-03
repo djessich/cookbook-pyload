@@ -37,6 +37,5 @@ ark 'pyload' do
   owner node['pyload']['user']
   group node['pyload']['group']
   mode '0755'
-  notifies :run, 'execute[pyload system check]', :immediately
   notifies :restart, 'pyload_service[pyload]', :delayed
 end

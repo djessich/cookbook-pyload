@@ -17,14 +17,6 @@
 # Include recipe for install method
 include_recipe "pyload::install_#{node['pyload']['install_method']}"
 
-# Define command to execute a system check for Pyload
-execute 'pyload system check' do
-  command "echo '\n' | #{python_bin} #{node['pyload']['install_dir']}/systemCheck.py"
-  action :nothing
-  only_if { ::File.exist?("#{node['pyload']['install_dir']}/systemCheck.py") }
-  # not_if { node['platform_family'].eql?('freebsd') }
-end
-
 # Create logging directory
 directory node['pyload']['log_dir'] do
   owner node['pyload']['user']
