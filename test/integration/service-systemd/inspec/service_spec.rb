@@ -23,5 +23,5 @@ end
 describe file('/etc/systemd/system/pyload.service') do
   it { should exist }
   it { should be_file }
-  its('mode') { should cmp '0755' }
+  its('mode') { should cmp '0644' }
 end
