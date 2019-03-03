@@ -16,7 +16,7 @@
 
 provides :pyload_service_systemd
 
-provides :pyload_service, os: 'linux' do |node|
+provides :pyload_service, os: 'linux' do
   Chef::Platform::ServiceHelpers.service_resource_providers.include?(:systemd)
 end
 
@@ -87,12 +87,12 @@ action_class do
         'User' => new_resource.user,
         'Group' => new_resource.group,
         'PIDFile' => "#{new_resource.pid_dir}/pyload.pid",
-        'KillSignal' => "SIGQUIT",
-        'UMask' => "0775",
+        'KillSignal' => 'SIGQUIT',
+        'UMask' => '0775',
         'Restart' => 'on-abort',
       },
       'Install' => {
-        'WantedBy' => 'multi-user.target'
+        'WantedBy' => 'multi-user.target',
       },
     }
 

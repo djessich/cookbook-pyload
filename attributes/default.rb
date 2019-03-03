@@ -20,10 +20,10 @@ default['pyload']['user'] = 'pyload'
 default['pyload']['group'] = 'pyload'
 default['pyload']['install_dir'] = '/usr/share/pyload'
 default['pyload']['conf_dir'] = if node['pyload']['user'] == 'root'
-                                    '/root/.pyload'
-                                  else
-                                    "/home/#{node['pyload']['user']}/.pyload"
-                                  end
+                                  '/root/.pyload'
+                                else
+                                  "/home/#{node['pyload']['user']}/.pyload"
+                                end
 default['pyload']['pid_dir'] = '/var/run/pyload'
 default['pyload']['download_dir'] = '/tmp/downloads'
 default['pyload']['log_dir'] = '/var/log/pyload'
