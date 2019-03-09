@@ -76,30 +76,25 @@ end
 action_class do
   # Creates the configuration for the init system.
   def create_init
-    service_unit_content = {
-      'Unit' => {
-        'Description' => 'Downloadtool for One-Click-Hoster written in python',
-        'After' => 'local-fs.target remote-fs.target network.target network-online.target',
-      },
-      'Service' => {
-        'Type' => 'forking',
-        'ExecStart' => "#{python_bin} #{new_resource.install_dir}/pyLoadCore.py --daemon --configdir=#{new_resource.conf_dir} --pidfile=#{new_resource.pid_dir}/pyload.pid",
-        'User' => new_resource.user,
-        'Group' => new_resource.group,
-        'PIDFile' => "#{new_resource.pid_dir}/pyload.pid",
-        'KillSignal' => 'SIGQUIT',
-        'UMask' => '0775',
-        'Restart' => 'on-abort',
-      },
-      'Install' => {
-        'WantedBy' => 'multi-user.target',
-      },
-    }
-
-    systemd_unit "#{new_resource.service_name}.service" do
-      content service_unit_content
-      action :create
+    template "/etc/systemd/system/#{new_resource.service_name}.service" do
+      source 'systemd_unit.erb'
+      owner 'root'
+      group root_group
+      mode '0644'
+      variables(
+        install_dir: new_resource.install_dir,
+        conf_dir: new_resource.conf_dir,
+        pid_dir: new_resource.pid_dir,
+        user: new_resource.user,
+        group: new_resource.group
+      )
+      notifies :run, 'execute[Load systemd unit file]', :immediately
       notifies :restart, "service[#{new_resource.service_name}]", :delayed
+    end
+
+    execute 'Load systemd unit file' do
+      command 'systemctl daemon-reload'
+      action :nothing
     end
   end
 end

@@ -26,16 +26,16 @@ module PyloadCookbook
     # Returns the path to python executable.
     #
     # @return The path to python executable.
-    def python_bin
-      case node['platform_family']
-      when 'debian', 'fedora', 'rhel', 'suse'
-        '/usr/bin/python'
-      when 'arch'
-        '/usr/bin/python2'
-      when 'freebsd'
-        '/usr/local/bin/python2.7'
-      end
-    end
+    # def python_bin
+    #   case node['platform_family']
+    #   when 'debian', 'fedora', 'rhel', 'suse'
+    #     '/usr/bin/python'
+    #   when 'arch'
+    #     '/usr/bin/python2'
+    #   when 'freebsd'
+    #     '/usr/local/bin/python2.7'
+    #   end
+    # end
   end
 end
 

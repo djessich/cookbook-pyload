@@ -23,6 +23,8 @@ end
 describe file('/etc/init.d/pyload') do
   it { should exist }
   it { should be_file }
+  its('owner') { should eq 'root' }
+  its('group') { should eq 'root' }
   its('mode') { should cmp '0755' }
 end
 
@@ -30,12 +32,16 @@ if os[:name].eql?('debian') || os[:name].eql?('ubuntu')
   describe file('/etc/default/pyload') do
     it { should exist }
     it { should be_file }
+    its('owner') { should eq 'root' }
+    its('group') { should eq 'root' }
     its('mode') { should cmp '0644' }
   end
 elsif os[:name].eql?('centos') || os[:name].eql?('rhel') || os[:name].eql?('fedora') || os[:name].eql?('suse')
   describe file('/etc/sysconfig/pyload') do
     it { should exist }
     it { should be_file }
+    its('owner') { should eq 'root' }
+    its('group') { should eq 'root' }
     its('mode') { should cmp '0644' }
   end
 end

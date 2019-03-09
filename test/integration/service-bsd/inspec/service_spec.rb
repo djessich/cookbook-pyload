@@ -39,5 +39,7 @@ end
 describe file('/etc/rc.conf.d/pyload') do
   it { should exist }
   it { should be_file }
+  its('owner') { should eq 'root' }
+  its('group') { should eq 'wheel' }
   its('mode') { should cmp '0644' }
 end
