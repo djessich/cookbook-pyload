@@ -5,6 +5,8 @@ driver:
 provisioner:
   name: chef_zero
   deprecations_as_errors: true
+  product_name: chef
+  product_version: <%= ENV['CHEF_VERSION'] || 'latest' %>
 
 verifier:
   name: inspec
