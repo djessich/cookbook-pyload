@@ -8,12 +8,12 @@ After=local-fs.target remote-fs.target network.target network-online.target
 [Service]
 Type=forking
 ExecStart=/usr/bin/python <%= @install_dir %>/pyLoadCore.py --daemon --configdir=<%= @conf_dir %> --pidfile=<%= @pid_dir %>/pyload.pid
+Restart=on-abort
 User=<%= @user %>
 Group=<%= @group %>
 PIDFile=<%= @pid_dir %>/pyload.pid
 KillSignal=SIGQUIT
-UMask=0775
-Restart=on-abort
+#UMask=0775
 
 [Install]
 WantedBy=multi-user.target
