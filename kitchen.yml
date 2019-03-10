@@ -41,6 +41,14 @@ platforms:
   - name: opensuse-leap-42
     run_list:
       - recipe[zypper]
+  - name: oracle-6
+    run_list:
+      - recipe[yum]
+      - recipe[yum-epel]
+  - name: oracle-7
+    run_list:
+      - recipe[yum]
+      - recipe[yum-epel]
   - name: ubuntu-14.04
     run_list:
       - recipe[apt]
@@ -75,7 +83,7 @@ suites:
     run_list:
       - recipe[pyload::packages]
     attributes:
-    includes: [ 'centos-6', 'centos-7' ]
+    includes: [ 'centos-6', 'centos-7', 'oracle-6', 'oracle-7' ]
   - name: suse-packages
     run_list:
       - recipe[pyload::packages]
@@ -90,12 +98,12 @@ suites:
     run_list:
       - recipe[pyload::default]
     attributes:
-    includes: [ 'centos-6', 'ubuntu-14.04' ]
+    includes: [ 'centos-6', 'oracle-6', 'ubuntu-14.04' ]
   - name: service-systemd
     run_list:
       - recipe[pyload::default]
     attributes:
-    includes: [ 'centos-7', 'debian-8', 'debian-9', 'fedora-28', 'fedora-29', 'opensuse-leap-42', 'ubuntu-16.04', 'ubuntu-18.04' ]
+    includes: [ 'centos-7', 'debian-8', 'debian-9', 'fedora-28', 'fedora-29', 'opensuse-leap-42', 'oracle-7', 'ubuntu-16.04', 'ubuntu-18.04' ]
   - name: service-upstart
     run_list:
       - recipe[pyload::default]

@@ -25,6 +25,8 @@ env:
   - CHEF_VERSION=14 INSTANCE=default-debian-9
   - CHEF_VERSION=14 INSTANCE=default-fedora-latest
   - CHEF_VERSION=14 INSTANCE=default-opensuse-leap-42
+  - CHEF_VERSION=14 INSTANCE=default-oracle-6
+  - CHEF_VERSION=14 INSTANCE=default-oracle-7
   - CHEF_VERSION=14 INSTANCE=default-ubuntu-1404
   - CHEF_VERSION=14 INSTANCE=default-ubuntu-1604
   - CHEF_VERSION=14 INSTANCE=default-ubuntu-1804
@@ -36,14 +38,18 @@ env:
   - CHEF_VERSION=14 INSTANCE=fedora-packages-fedora-latest
   - CHEF_VERSION=14 INSTANCE=rhel-packages-centos-6
   - CHEF_VERSION=14 INSTANCE=rhel-packages-centos-7
+  - CHEF_VERSION=14 INSTANCE=rhel-packages-oracle-6
+  - CHEF_VERSION=14 INSTANCE=rhel-packages-orcale-7
   - CHEF_VERSION=14 INSTANCE=suse-packages-opensuse-leap-42
   - CHEF_VERSION=14 INSTANCE=service-init-centos-6
+  - CHEF_VERSION=14 INSTANCE=service-init-oracle-6
   - CHEF_VERSION=14 INSTANCE=service-init-ubuntu-1404
   - CHEF_VERSION=14 INSTANCE=service-systemd-centos-7
   - CHEF_VERSION=14 INSTANCE=service-systemd-debian-8
   - CHEF_VERSION=14 INSTANCE=service-systemd-debian-9
   - CHEF_VERSION=14 INSTANCE=service-systemd-fedora-latest
   - CHEF_VERSION=14 INSTANCE=service-systemd-opensuse-leap-42
+  - CHEF_VERSION=14 INSTANCE=service-systemd-oracle-7
   - CHEF_VERSION=14 INSTANCE=service-systemd-ubuntu-1604
   - CHEF_VERSION=14 INSTANCE=service-systemd-ubuntu-1804
   - CHEF_VERSION=14 INSTANCE=service-upstart-ubuntu-1404
@@ -53,6 +59,8 @@ env:
   - CHEF_VERSION=13 INSTANCE=default-debian-9
   - CHEF_VERSION=13 INSTANCE=default-fedora-latest
   - CHEF_VERSION=13 INSTANCE=default-opensuse-leap-42
+  - CHEF_VERSION=13 INSTANCE=default-oracle-6
+  - CHEF_VERSION=13 INSTANCE=default-oracle-7
   - CHEF_VERSION=13 INSTANCE=default-ubuntu-1404
   - CHEF_VERSION=13 INSTANCE=default-ubuntu-1604
   - CHEF_VERSION=13 INSTANCE=default-ubuntu-1804
@@ -64,14 +72,18 @@ env:
   - CHEF_VERSION=13 INSTANCE=fedora-packages-fedora-latest
   - CHEF_VERSION=13 INSTANCE=rhel-packages-centos-6
   - CHEF_VERSION=13 INSTANCE=rhel-packages-centos-7
+  - CHEF_VERSION=13 INSTANCE=rhel-packages-oracle-6
+  - CHEF_VERSION=13 INSTANCE=rhel-packages-orcale-7
   - CHEF_VERSION=13 INSTANCE=suse-packages-opensuse-leap-42
   - CHEF_VERSION=13 INSTANCE=service-init-centos-6
+  - CHEF_VERSION=13 INSTANCE=service-init-oracle-6
   - CHEF_VERSION=13 INSTANCE=service-init-ubuntu-1404
   - CHEF_VERSION=13 INSTANCE=service-systemd-centos-7
   - CHEF_VERSION=13 INSTANCE=service-systemd-debian-8
   - CHEF_VERSION=13 INSTANCE=service-systemd-debian-9
   - CHEF_VERSION=13 INSTANCE=service-systemd-fedora-latest
   - CHEF_VERSION=13 INSTANCE=service-systemd-opensuse-leap-42
+  - CHEF_VERSION=13 INSTANCE=service-systemd-oracle-7
   - CHEF_VERSION=13 INSTANCE=service-systemd-ubuntu-1604
   - CHEF_VERSION=13 INSTANCE=service-systemd-ubuntu-1804
   - CHEF_VERSION=13 INSTANCE=service-upstart-ubuntu-1404

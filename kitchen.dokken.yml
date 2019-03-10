@@ -55,6 +55,22 @@ platforms:
       image: dokken/opensuse-leap-42
       pid_one_command: /bin/systemd
 
+  - name: oracle-6
+    driver:
+      image: dokken/oraclelinux-6
+      pid_one_command: /sbin/init
+    run_list:
+      - recipe[yum]
+      - recipe[yum-epel]
+
+  - name: oracle-7
+    driver:
+      image: dokken/oraclelinux-7
+      pid_one_command: /usr/lib/systemd/systemd
+    run_list:
+      - recipe[yum]
+      - recipe[yum-epel]
+
   - name: ubuntu-14.04
     driver:
       image: dokken/ubuntu-14.04
@@ -95,7 +111,7 @@ suites:
     run_list:
       - recipe[pyload::packages]
     attributes:
-    includes: [ 'centos-6', 'centos-7' ]
+    includes: [ 'centos-6', 'centos-7', 'oracle-6', 'oracle-7' ]
   - name: suse-packages
     run_list:
       - recipe[pyload::packages]
@@ -105,12 +121,12 @@ suites:
     run_list:
       - recipe[pyload::default]
     attributes:
-    includes: [ 'centos-6', 'ubuntu-14.04' ]
+    includes: [ 'centos-6', 'oracle-6', 'ubuntu-14.04' ]
   - name: service-systemd
     run_list:
       - recipe[pyload::default]
     attributes:
-    includes: [ 'centos-7', 'debian-8', 'debian-9', 'fedora-latest', 'opensuse-leap-42', 'ubuntu-16.04', 'ubuntu-18.04' ]
+    includes: [ 'centos-7', 'debian-8', 'debian-9', 'fedora-latest', 'opensuse-leap-42', 'oracle-7', 'ubuntu-16.04', 'ubuntu-18.04' ]
   - name: service-upstart
     run_list:
       - recipe[pyload::default]

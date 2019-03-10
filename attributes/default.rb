@@ -60,7 +60,7 @@ when 'rhel'
   )
   default['pyload']['packages'] += if node['platform_version'].to_f < 7
                                      %w(python-crypto python-imaging python-simplejson)
-                                   else # python-thrift
+                                   else
                                      %w(python2-crypto python-pillow python2-simplejson)
                                    end
 when 'suse'
