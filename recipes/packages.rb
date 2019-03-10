@@ -31,7 +31,7 @@ end
 package 'install java-headless dependency for rhino' do
   case node['platform_family']
   when 'rhel'
-    package_name 'java-headless'
+    package_name 'java-1.8.0-openjdk-headless'
   when 'suse'
     package_name 'java-1_8_0-openjdk-headless'
   end
