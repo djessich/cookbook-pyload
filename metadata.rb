@@ -9,7 +9,7 @@ version IO.read(File.join(File.dirname(__FILE__), 'VERSION')).chomp
 source_url 'https://github.com/djessich/cookbook-pyload'
 issues_url 'https://github.com/djessich/cookbook-pyload/issues'
 
-%w(ubuntu debian redhat centos fedora suse opensuse opensuseleap freebsd arch).each do |os|
+%w(ubuntu debian redhat centos fedora suse opensuse opensuseleap freebsd).each do |os|
   supports os
 end
 

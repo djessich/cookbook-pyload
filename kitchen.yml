@@ -50,30 +50,12 @@ platforms:
   - name: ubuntu-18.04
     run_list:
     - recipe[apt]
-  # Unsupported by omnibus-chef installation script, so add custom Vagrantfile
-  # - name: arch
-  #   driver:
-  #     box: terrywang/archlinux
-  #     provision: true
-  #     vagrantfiles:
-  #       - test/fixtures/vagrant/vagrant_arch.rb
-  #   provisioner:
-  #     require_chef_omnibus: false
-  #   run_list:
-  #     - recipe[pacman]
 
 suites:
   - name: default
     run_list:
       - recipe[pyload::default]
     attributes:
-  # - name: arch-packages
-  #   run_list:
-  #     - recipe[pyload::packages]
-  #   attributes:
-  #   includes: [
-  #     'arch'
-  #   ]
   - name: debian-packages
     run_list:
       - recipe[pyload::packages]

@@ -15,11 +15,6 @@
 #
 
 case node['platform_family']
-when 'arch'
-  package 'pyload-git' do
-    notifies :run, 'execute[pyload system check]', :immediately
-    notifies :restart, 'pyload_service[pyload]', :delayed
-  end
 when 'debian'
   # Download Pyload distribution
   remote_file "#{Chef::Config[:file_cache_path]}/pyload_#{node['pyload']['version']}_all.deb" do

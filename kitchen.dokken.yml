@@ -81,13 +81,6 @@ suites:
     run_list:
       - recipe[pyload::default]
     attributes:
-  # - name: arch-packages
-  #   run_list:
-  #     - recipe[pyload::packages]
-  #   attributes:
-  #   includes: [
-  #     'arch'
-  #   ]
   - name: debian-packages
     run_list:
       - recipe[pyload::packages]
