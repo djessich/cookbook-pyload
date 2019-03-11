@@ -90,11 +90,33 @@ action_class do
       )
       notifies :run, 'execute[Load systemd unit file]', :immediately
       notifies :restart, "service[#{new_resource.service_name}]", :delayed
+      notifies :run, 'bash[journalctl]', :delayed
     end
 
     execute 'Load systemd unit file' do
       command 'systemctl daemon-reload'
       action :nothing
+    end
+
+    bash 'journalctl' do
+      code <<-EOH
+        journalctl -xe &> /tmp/journalctl
+      EOH
+      action :nothing
+      notifies :run, 'ruby_block[print results]', :delayed
+    end
+
+    ruby_block "print results" do
+      block do
+        print "\n"
+        ::File.open('/tmp/journalctl', 'r') do |f|
+          f.each_line do |line|
+            print line
+          end
+        end
+      end
+      action :nothing
+      only_if { ::File.exists?('/tmp/journalctl') }
     end
   end
 end
