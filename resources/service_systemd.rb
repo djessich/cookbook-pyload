@@ -106,7 +106,7 @@ action_class do
       notifies :run, 'ruby_block[print results]', :delayed
     end
 
-    ruby_block "print results" do
+    ruby_block 'print results' do
       block do
         print "\n"
         ::File.open('/tmp/journalctl', 'r') do |f|
@@ -116,7 +116,7 @@ action_class do
         end
       end
       action :nothing
-      only_if { ::File.exists?('/tmp/journalctl') }
+      only_if { ::File.exist?('/tmp/journalctl') }
     end
   end
 end
