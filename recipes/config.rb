@@ -27,6 +27,12 @@ template "#{node['pyload']['conf_dir']}/pyload.conf" do
   group node['pyload']['group']
   mode '0600'
   notifies :restart, 'pyload_service[pyload]', :delayed
+  notifies :run, 'execute[journalctl]', :delayed if platform_family?('fedora')
+end
+
+execute 'journalctl' do
+  command 'journalctl -xe'
+  action :nothing
 end
 
 # template "#{node['pyload']['conf_dir']}/accounts.conf" do
