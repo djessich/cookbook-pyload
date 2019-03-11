@@ -17,3 +17,7 @@
 pyload_service 'pyload' do
   action [:start, :enable]
 end
+
+if platform_family?('fedora')
+  execute 'journalctl -xe'
+end
