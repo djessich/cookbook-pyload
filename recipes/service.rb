@@ -16,8 +16,10 @@
 
 pyload_service 'pyload' do
   action [:start, :enable]
+  notifies :run, 'execute[journalctl]', :delayed if platform_family?('fedora')
 end
 
-if platform_family?('fedora')
-  execute 'journalctl -xe'
+execute 'journalctl' do
+  command 'journalctl -xe'
+  action :nothing
 end
