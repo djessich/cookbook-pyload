@@ -27,6 +27,12 @@ default['pyload']['conf_dir'] = if node['pyload']['user'] == 'root'
 default['pyload']['pid_dir'] = '/var/run/pyload'
 default['pyload']['download_dir'] = '/tmp/downloads'
 default['pyload']['log_dir'] = '/var/log/pyload'
+default['pyload']['urls'] = {
+  '0.4.9' => 'https://github.com/pyload/pyload/archive/v0.4.9.tar.gz',
+}
+default['pyload']['checksums'] = {
+  '0.4.9' => '1a7248082bff8d1717a23049ebe2070a18fd727435a849e0450e82ca3f478017',
+}
 
 case node['platform_family']
 # when 'arch'

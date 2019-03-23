@@ -97,6 +97,20 @@ suites:
     run_list:
       - recipe[pyload::default]
     attributes:
+  - name: git
+    run_list:
+      - recipe[pyload::default]
+    attributes:
+      pyload:
+        version: 0.4.9
+        install_method: git
+  - name: tarball
+    run_list:
+      - recipe[pyload::default]
+    attributes:
+      pyload:
+        version: 0.4.9
+        install_method: tarball
   - name: debian-packages
     run_list:
       - recipe[pyload::packages]

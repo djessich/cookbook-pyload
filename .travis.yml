@@ -7,7 +7,6 @@ addons:
       - chef-current-trusty
     packages:
       - chefdk
-      - docker-ce
 
 # Don't `bundle install` which takes about 1.5 mins
 install: echo "skip bundle install"
@@ -31,6 +30,28 @@ env:
   - CHEF_VERSION=14 INSTANCE=default-ubuntu-1404
   - CHEF_VERSION=14 INSTANCE=default-ubuntu-1604
   - CHEF_VERSION=14 INSTANCE=default-ubuntu-1804
+  - CHEF_VERSION=14 INSTANCE=git-centos-6
+  - CHEF_VERSION=14 INSTANCE=git-centos-7
+  - CHEF_VERSION=14 INSTANCE=git-debian-8
+  - CHEF_VERSION=14 INSTANCE=git-debian-9
+  - CHEF_VERSION=14 INSTANCE=git-fedora-latest
+  - CHEF_VERSION=14 INSTANCE=git-opensuse-leap-42
+  - CHEF_VERSION=14 INSTANCE=git-oracle-6
+  - CHEF_VERSION=14 INSTANCE=git-oracle-7
+  - CHEF_VERSION=14 INSTANCE=git-ubuntu-1404
+  - CHEF_VERSION=14 INSTANCE=git-ubuntu-1604
+  - CHEF_VERSION=14 INSTANCE=git-ubuntu-1804
+  - CHEF_VERSION=14 INSTANCE=tarball-centos-6
+  - CHEF_VERSION=14 INSTANCE=tarball-centos-7
+  - CHEF_VERSION=14 INSTANCE=tarball-debian-8
+  - CHEF_VERSION=14 INSTANCE=tarball-debian-9
+  - CHEF_VERSION=14 INSTANCE=tarball-fedora-latest
+  - CHEF_VERSION=14 INSTANCE=tarball-opensuse-leap-42
+  - CHEF_VERSION=14 INSTANCE=tarball-oracle-6
+  - CHEF_VERSION=14 INSTANCE=tarball-oracle-7
+  - CHEF_VERSION=14 INSTANCE=tarball-ubuntu-1404
+  - CHEF_VERSION=14 INSTANCE=tarball-ubuntu-1604
+  - CHEF_VERSION=14 INSTANCE=tarball-ubuntu-1804
   - CHEF_VERSION=14 INSTANCE=debian-packages-debian-8
   - CHEF_VERSION=14 INSTANCE=debian-packages-debian-9
   - CHEF_VERSION=14 INSTANCE=debian-packages-ubuntu-1404
@@ -65,6 +86,28 @@ env:
   - CHEF_VERSION=13 INSTANCE=default-ubuntu-1404
   - CHEF_VERSION=13 INSTANCE=default-ubuntu-1604
   - CHEF_VERSION=13 INSTANCE=default-ubuntu-1804
+  - CHEF_VERSION=13 INSTANCE=git-centos-6
+  - CHEF_VERSION=13 INSTANCE=git-centos-7
+  - CHEF_VERSION=13 INSTANCE=git-debian-8
+  - CHEF_VERSION=13 INSTANCE=git-debian-9
+  - CHEF_VERSION=13 INSTANCE=git-fedora-latest
+  - CHEF_VERSION=13 INSTANCE=git-opensuse-leap-42
+  - CHEF_VERSION=13 INSTANCE=git-oracle-6
+  - CHEF_VERSION=13 INSTANCE=git-oracle-7
+  - CHEF_VERSION=13 INSTANCE=git-ubuntu-1304
+  - CHEF_VERSION=13 INSTANCE=git-ubuntu-1604
+  - CHEF_VERSION=13 INSTANCE=git-ubuntu-1804
+  - CHEF_VERSION=13 INSTANCE=tarball-centos-6
+  - CHEF_VERSION=13 INSTANCE=tarball-centos-7
+  - CHEF_VERSION=13 INSTANCE=tarball-debian-8
+  - CHEF_VERSION=13 INSTANCE=tarball-debian-9
+  - CHEF_VERSION=13 INSTANCE=tarball-fedora-latest
+  - CHEF_VERSION=13 INSTANCE=tarball-opensuse-leap-42
+  - CHEF_VERSION=13 INSTANCE=tarball-oracle-6
+  - CHEF_VERSION=13 INSTANCE=tarball-oracle-7
+  - CHEF_VERSION=13 INSTANCE=tarball-ubuntu-1304
+  - CHEF_VERSION=13 INSTANCE=tarball-ubuntu-1604
+  - CHEF_VERSION=13 INSTANCE=tarball-ubuntu-1804
   - CHEF_VERSION=13 INSTANCE=debian-packages-debian-8
   - CHEF_VERSION=13 INSTANCE=debian-packages-debian-9
   - CHEF_VERSION=13 INSTANCE=debian-packages-ubuntu-1404

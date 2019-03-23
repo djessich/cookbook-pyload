@@ -14,16 +14,21 @@
 # limitations under the License.
 #
 
-package 'git' do
+package 'tar' do
   it { should be_installed }
 end
 
-describe file('/usr/share/pyload') do
+describe file('/usr/share/pyload-0.4.9') do
   it { should exist }
   it { should be_directory }
   its('owner') { should eq 'root' }
   its('group') { should eq os.family == 'bsd' ? 'wheel' : 'root' }
   its('mode') { should cmp '0755' }
+end
+
+describe file('/usr/share/pyload') do
+  it { should exist }
+  it { should be_symlink }
 end
 
 describe file('/usr/share/pyload/pyLoadCli.py') do
