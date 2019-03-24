@@ -18,7 +18,7 @@ package 'tar' do
   it { should be_installed }
 end
 
-describe file('/usr/share/pyload-0.4.9') do
+describe file('/opt/pyload-0.4.9') do
   it { should exist }
   it { should be_directory }
   its('owner') { should eq 'root' }
@@ -26,12 +26,12 @@ describe file('/usr/share/pyload-0.4.9') do
   its('mode') { should cmp '0755' }
 end
 
-describe file('/usr/share/pyload') do
+describe file('/opt/pyload') do
   it { should exist }
   it { should be_symlink }
 end
 
-describe file('/usr/share/pyload/pyLoadCli.py') do
+describe file('/opt/pyload/pyLoadCli.py') do
   it { should exist }
   it { should be_file }
   its('owner') { should eq 'root' }
@@ -39,7 +39,7 @@ describe file('/usr/share/pyload/pyLoadCli.py') do
   its('mode') { should cmp '0755' }
 end
 
-describe file('/usr/share/pyload/pyLoadCore.py') do
+describe file('/opt/pyload/pyLoadCore.py') do
   it { should exist }
   it { should be_file }
   its('owner') { should eq 'root' }
@@ -47,7 +47,7 @@ describe file('/usr/share/pyload/pyLoadCore.py') do
   its('mode') { should cmp '0755' }
 end
 
-describe file('/usr/share/pyload/pyLoadGui.py') do
+describe file('/opt/pyload/pyLoadGui.py') do
   it { should exist }
   it { should be_file }
   its('owner') { should eq 'root' }
@@ -74,7 +74,7 @@ end
 describe file('/usr/bin/pyLoadCli') do
   it { should exist }
   it { should be_symlink }
-  it { should be_linked_to '/usr/share/pyload/pyLoadCli.py' }
+  it { should be_linked_to '/opt/pyload/pyLoadCli.py' }
   its('owner') { should eq 'root' }
   its('group') { should eq os.family == 'bsd' ? 'wheel' : 'root' }
   its('mode') { should cmp '0755' }
@@ -83,7 +83,7 @@ end
 describe file('/usr/bin/pyLoadCore') do
   it { should exist }
   it { should be_symlink }
-  it { should be_linked_to '/usr/share/pyload/pyLoadCore.py' }
+  it { should be_linked_to '/opt/pyload/pyLoadCore.py' }
   its('owner') { should eq 'root' }
   its('group') { should eq os.family == 'bsd' ? 'wheel' : 'root' }
   its('mode') { should cmp '0755' }
@@ -92,7 +92,7 @@ end
 describe file('/usr/bin/pyLoadGui') do
   it { should exist }
   it { should be_symlink }
-  it { should be_linked_to '/usr/share/pyload/pyLoadGui.py' }
+  it { should be_linked_to '/opt/pyload/pyLoadGui.py' }
   its('owner') { should eq 'root' }
   its('group') { should eq os.family == 'bsd' ? 'wheel' : 'root' }
   its('mode') { should cmp '0755' }
@@ -102,6 +102,6 @@ describe command('python') do
   it { should exist }
 end
 
-describe command("echo '\n' | python /usr/share/pyload/systemCheck.py") do
+describe command("echo '\n' | python /opt/pyload/systemCheck.py") do
   its('stdout') { should_not match(/missing/) }
 end
