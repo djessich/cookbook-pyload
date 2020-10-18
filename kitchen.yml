@@ -5,59 +5,22 @@ driver:
 provisioner:
   name: chef_zero
   deprecations_as_errors: true
-  product_name: chef
-  product_version: <%= ENV['CHEF_VERSION'] || 'latest' %>
+  chef_license: accept-no-persist
 
 verifier:
   name: inspec
 
 platforms:
-  - name: centos-6
-    run_list:
-      - recipe[yum]
-      - recipe[yum-epel]
   - name: centos-7
-    run_list:
-      - recipe[yum]
-      - recipe[yum-epel]
-  - name: debian-8
-    run_list:
-      - recipe[apt]
+  - name: centos-8
   - name: debian-9
-    run_list:
-      - recipe[apt]
-  - name: fedora-28
-    run_list:
-      - recipe[yum::dnf_yum_compat]
-  - name: fedora-29
-    run_list:
-      - recipe[yum::dnf_yum_compat]
-  - name: freebsd-10
-    run_list:
-      - recipe[freebsd::portsnap]
-  - name: freebsd-11
-    run_list:
-      - recipe[freebsd::portsnap]
-  - name: opensuse-leap-42
-    run_list:
-      - recipe[zypper]
-  - name: oracle-6
-    run_list:
-      - recipe[yum]
-      - recipe[yum-epel]
+  - name: debian-10
+  - name: fedora-latest
   - name: oracle-7
-    run_list:
-      - recipe[yum]
-      - recipe[yum-epel]
-  - name: ubuntu-14.04
-    run_list:
-      - recipe[apt]
+  - name: oracle-8
   - name: ubuntu-16.04
-    run_list:
-      - recipe[apt]
   - name: ubuntu-18.04
-    run_list:
-    - recipe[apt]
+  - name: ubuntu-20.04
 
 suites:
   - name: default
