@@ -1,0 +1,52 @@
+---
+name: kitchen
+
+on:
+  pull_request:
+  push:
+    branches:
+      - master
+
+jobs:
+  dokken:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        os:
+          - 'centos-6'
+          - 'centos-7'
+          - 'debian-8'
+          - 'debian-9'
+          - 'fedora-latest'
+          - 'opensuse-leap-42'
+          - 'oracle-6'
+          - 'oracle-7'
+          - 'ubuntu-1404'
+          - 'ubuntu-1604'
+          - 'ubuntu-1804'
+        suite:
+          - 'default'
+          - 'git'
+          - 'tarball'
+          - 'debian-packages'
+          - 'fedora-packages'
+          - 'rhel-packages'
+          - 'suse-packages'
+          - 'service-init'
+          - 'service-systemd'
+          - 'service-upstart'
+      fail-fast: false
+
+    steps:
+      - name: Check out cookbook code
+        uses: actions/checkout@master
+      - name: Install Chef Infra Client
+        uses: actionshub/chef-install@master
+      - name: Dokken
+        uses: actionshub/kitchen-dokken@master
+        env:
+          CHEF_LICENSE: accept-no-persist
+          KITCHEN_LOCAL_YAML: kitchen.dokken.yml
+        with:
+          suite: ${{ matrix.suite }}
+          os: ${{ matrix.os }}
