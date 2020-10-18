@@ -8,7 +8,7 @@ version '1.4.0'
 source_url 'https://github.com/djessich/cookbook-pyload'
 issues_url 'https://github.com/djessich/cookbook-pyload/issues'
 
-%w(ubuntu debian redhat centos fedora suse opensuse opensuseleap oracle).each do |os|
+%w(redhat centos fedora oracle debian ubuntu).each do |os|
   supports os
 end
 
