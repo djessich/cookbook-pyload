@@ -1,8 +1,9 @@
 # Pyload Cookbook
 
-[![Build Status](https://travis-ci.org/djessich/cookbook-pyload.svg?branch=master)](https://travis-ci.org/djessich/cookbook-pyload)
-[![License](https://img.shields.io/badge/license-Apache_2-blue.svg)](https://www.apache.org/licenses/LICENSE-2.0)
 [![Cookbook Version](https://img.shields.io/cookbook/v/pyload.svg)](https://supermarket.chef.io/cookbooks/pyload)
+[![Build](https://github.com/djessich/cookbook-pyload/workflows/kitchen/badge.svg)](https://github.com/djessich/cookbook-pyload/actions?query=workflow%3Akitchen)
+[![Delivery](https://github.com/djessich/cookbook-pyload/workflows/delivery/badge.svg)](https://github.com/djessich/cookbook-pyload/actions?query=workflow%3Adelivery)
+[![License](https://img.shields.io/badge/license-Apache_2-blue.svg)](https://www.apache.org/licenses/LICENSE-2.0)
 
 This cookbook is used to install and configure [Pyload](https://github.com/pyload/pyload) on a system. Just put it in your nodes `run_list` or include the default recipe using `include_recipe`. This cookbook installs Pyload from its Git repository regarding the version tag or branch you've configured, installs all required dependencies for Pyload, prepares configuration folder and files and installs the appropriate configuration for your platform's init system.
 
