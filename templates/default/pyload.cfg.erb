@@ -1,0 +1,71 @@
+version: <%= @version %>
+
+download - "Download":
+	int chunks : "Max connections for one download" = <%= @chunks %>
+	time end_time : "End" = <%= @end_time %>
+	ip interface : "Download interface to bind (IP Address)" = <%= @interface %>
+	bool ipv6 : "Allow IPv6" = <%= @ipv6 %>
+	bool limit_speed : "Limit Download Speed" = <%= @limit_speed %>
+	int max_downloads : "Max Parallel Downloads" = <%= @max_downloads %>
+	int max_speed : "Max Download Speed in KiB/s" = <%= @max_speed %>
+	bool skip_existing : "Skip already existing files" = <%= @skip_existing %>
+	time start_time : "Start" = <%= @start_time %>
+
+general - "General":
+	debug;trace;stack debug_level : "Debug Level" = <%= @debug_level %>
+	bool debug_mode : "Debug Mode" = <%= @debug_mode %>
+	bool folder_per_package : "Create folder for each package" = <%= @folder_per_package %>
+	en; language : "Language" = <%= @language %>
+	int min_free_space : "Min Free Space in MiB" = <%= @min_free_space %>
+	folder storage_folder : "Download Folder" = <%= @download_dir %>
+
+log - "Log":
+	bool console : "Print log to console" = <%= @console %>
+	bool console_color : "Colorize console" = <%= @console_color %>
+	bool filelog : "Save log to file" = <%= @log %>
+	int filelog_entries : "Max log files" = <%= @log_entries %>
+	folder filelog_folder : "File folder" = <%= @log_dir %>
+	bool filelog_rotate : "Log rotate" = <%= @log_rotate %>
+	int filelog_size : "Max file size (in KiB)" = <%= @log_size %>
+	bool syslog : "Sent log to syslog" = <%= @syslog %>
+	folder syslog_folder : "Syslog local folder" = <%= @syslog_dir %>
+	ip syslog_host : "Syslog remote IP Address" = <%= @syslog_host %>
+	local;remote syslog_location : "Syslog location" = <%= @syslog_location %>
+	int syslog_port : "Syslog remote Port" = <%= @syslog_port %>
+
+permission - "Permissions":
+	bool change_dl : "Change Group and User of Downloads" = <%= @change_downloads %>
+	bool change_file : "Change file mode of downloads" = <%= @change_file %>
+	bool change_group : "Change group of running process" = <%= @change_group %>
+	bool change_user : "Change user of running process" = <%= @change_user %>
+	str file : "Filemode for Downloads" = <%= @file_mode %>
+	str folder : "Folder Permission mode" = <%= @folder_mode %>
+	str group : "Groupname" = <%= @group %>
+	str user : "Username" = <%= @user %>
+
+proxy - "Proxy":
+	bool enabled : "Activated" = <%= @proxy %>
+	ip host : "IP Address" = <%= @proxy_host %>
+	password password : "Password" = <%= @proxy_password %>
+	int port : "Port" = <%= @proxy_port %>
+	http;socks4;socks5 type : "Protocol" = <%= @proxy_protocol %>
+	str username : "Username" = <%= @proxy_username %>
+
+reconnect - "Reconnection":
+	bool enabled : "Activated" = <%= @reconnect %>
+	time end_time : "End" = <%= @reconnect_end_time %>
+	str script : "Script" = <%= @reconnect_script %>
+	time start_time : "Start" = <%= @reconnect_start_time %>
+
+webui - "Web Interface":
+	bool autologin : "Skip login if single user" = <%= @auto_login %>
+	bool develop : "Development mode" = <%= @development_mode %>
+	bool enabled : "Activated" = <%= @web %>
+	ip host : "IP Address" = <%= @listen_address %>
+	int port : "Port" = <%= @port %>
+	str prefix : "Path Prefix" = <%= @prefix %>
+	file ssl_certchain : "CA's intermediate certificate bundle (optional)" = <%= @ssl_chain %>
+	file ssl_certfile : "SSL Certificate" = <%= @ssl_cert %>
+	file ssl_keyfile : "SSL Key" = <%= @ssl_key %>
+	Default;PyPlex theme : "Theme" = <%= @theme %>
+	bool use_ssl : "Use HTTPS" = <%= @ssl %>

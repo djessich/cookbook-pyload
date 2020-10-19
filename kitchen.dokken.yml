@@ -80,54 +80,13 @@ platforms:
 suites:
   - name: default
     run_list:
-      - recipe[pyload::default]
+      - recipe[test-default::default]
     attributes:
-  - name: git
+  - name: tarball-pip
     run_list:
-      - recipe[pyload::default]
+      - recipe[test-tarball-pip::default]
     attributes:
-      pyload:
-        version: 0.4.9
-        install_method: git
-  - name: tarball
+  - name: pip
     run_list:
-      - recipe[pyload::default]
+      - recipe[test-pip::default]
     attributes:
-      pyload:
-        version: 0.4.9
-        install_method: tarball
-  - name: debian-packages
-    run_list:
-      - recipe[pyload::packages]
-    attributes:
-    includes: [ 'debian-8', 'debian-9', 'ubuntu-14.04', 'ubuntu-16.04', 'ubuntu-18.04' ]
-  - name: fedora-packages
-    run_list:
-      - recipe[pyload::packages]
-    attributes:
-    includes: [ 'fedora-latest' ]
-  - name: rhel-packages
-    run_list:
-      - recipe[pyload::packages]
-    attributes:
-    includes: [ 'centos-6', 'centos-7', 'oracle-6', 'oracle-7' ]
-  - name: suse-packages
-    run_list:
-      - recipe[pyload::packages]
-    attributes:
-    includes: [ 'opensuse-leap-42' ]
-  - name: service-init
-    run_list:
-      - recipe[pyload::default]
-    attributes:
-    includes: [ 'centos-6', 'oracle-6', 'ubuntu-14.04' ]
-  - name: service-systemd
-    run_list:
-      - recipe[pyload::default]
-    attributes:
-    includes: [ 'centos-7', 'debian-8', 'debian-9', 'fedora-latest', 'opensuse-leap-42', 'oracle-7', 'ubuntu-16.04', 'ubuntu-18.04' ]
-  - name: service-upstart
-    run_list:
-      - recipe[pyload::default]
-    attributes:
-    includes: [ 'ubuntu-14.04' ]

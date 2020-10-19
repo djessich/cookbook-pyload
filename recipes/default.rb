@@ -1,5 +1,8 @@
 #
-# Copyright 2019 Dominik Jessich
+# Cookbook:: pyload
+# Recipe:: default
+#
+# Copyright:: 2020, Dominik Jessich
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -14,8 +17,4 @@
 # limitations under the License.
 #
 
-include_recipe 'pyload::user'
-include_recipe 'pyload::packages'
-include_recipe 'pyload::install'
-include_recipe 'pyload::config'
-include_recipe 'pyload::service'
+Chef::Log.warn('The default pyload recipe does nothing. See the readme for information on using the pyload resources')

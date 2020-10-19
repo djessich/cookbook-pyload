@@ -26,15 +26,8 @@ jobs:
           - 'ubuntu-1804'
         suite:
           - 'default'
-          - 'git'
-          - 'tarball'
-          - 'debian-packages'
-          - 'fedora-packages'
-          - 'rhel-packages'
-          - 'suse-packages'
-          - 'service-init'
-          - 'service-systemd'
-          - 'service-upstart'
+          - 'tarball-pip'
+          - 'pip'
       fail-fast: false
 
     steps:

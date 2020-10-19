@@ -1,5 +1,8 @@
 #
-# Copyright 2019 Dominik Jessich
+# Cookbook:: pyload
+# Resource:: service_systemd
+#
+# Copyright:: 2020, Dominik Jessich
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -14,21 +17,26 @@
 # limitations under the License.
 #
 
+include PyloadCookbook::Helpers
+
 provides :pyload_service_systemd
 
 provides :pyload_service, os: 'linux' do
   Chef::Platform::ServiceHelpers.service_resource_providers.include?(:systemd)
 end
 
-property :service_name, String, name_property: true
-property :install_dir, String, default: lazy { node['pyload']['install_dir'] }
-property :conf_dir, String, default: lazy { node['pyload']['conf_dir'] }
-property :pid_dir, String, default: lazy { node['pyload']['pid_dir'] }
-property :user, String, default: lazy { node['pyload']['user'] }
-property :group, String, default: lazy { node['pyload']['group'] }
+property :instance_name, String, name_property: true
+property :version, [String, Integer], default: lazy { default_pyload_version }
+property :service_name, String, default: lazy { default_pyload_service_name }
+property :install_dir, String, default: lazy { default_pyload_install_dir }
+property :data_dir, String, default: lazy { default_pyload_data_dir }
+property :download_dir, String, default: lazy { default_pyload_download_dir }
+property :tmp_dir, String, default: lazy { default_pyload_tmp_dir }
+property :user, String, default: lazy { default_pyload_user }
+property :group, String, default: lazy { default_pyload_group }
 
 action :start do
-  create_init
+  action_create
 
   service new_resource.service_name do
     provider Chef::Provider::Service::Systemd
@@ -47,12 +55,13 @@ action :stop do
 end
 
 action :enable do
-  create_init
+  action_create
 
   service new_resource.service_name do
     provider Chef::Provider::Service::Systemd
     supports status: true, restart: true
     action :enable
+    only_if { ::File.exist?("/etc/systemd/system/#{new_resource.service_name}.service") }
   end
 end
 
@@ -70,53 +79,45 @@ action :restart do
     provider Chef::Provider::Service::Systemd
     supports status: true, restart: true
     action :restart
+    only_if { ::File.exist?("/etc/systemd/system/#{new_resource.service_name}.service") }
+  end
+end
+
+action :create do
+  systemd_unit "#{new_resource.service_name}.service" do
+    content(
+      'Unit' => {
+        'Description' => 'Pyload - The free and open-source Download Manager written in pure Python',
+        'After' => 'local-fs.target remote-fs.target network.target network-online.target',
+      },
+      'Service' => {
+        'Type' => 'simple',
+        'ExecStart' => start_command,
+        'User' => new_resource.user,
+        'Group' => new_resource.group,
+        'KillSignal' => 'SIGQINT',
+        'Restart' => 'always',
+      },
+      'Install' => {
+        'WantedBy' => 'multi-user.target',
+      }
+    )
+    action :create
   end
 end
 
 action_class do
-  # Creates the configuration for the init system.
-  def create_init
-    template "/etc/systemd/system/#{new_resource.service_name}.service" do
-      source 'systemd_unit.erb'
-      owner 'root'
-      group root_group
-      mode '0644'
-      variables(
-        install_dir: new_resource.install_dir,
-        conf_dir: new_resource.conf_dir,
-        pid_dir: new_resource.pid_dir,
-        user: new_resource.user,
-        group: new_resource.group
-      )
-      notifies :run, 'execute[Load systemd unit file]', :immediately
-      notifies :restart, "service[#{new_resource.service_name}]", :delayed
-      notifies :run, 'bash[journalctl]', :delayed
-    end
-
-    execute 'Load systemd unit file' do
-      command 'systemctl daemon-reload'
-      action :nothing
-    end
-
-    bash 'journalctl' do
-      code <<-EOH
-        journalctl -xe &> /tmp/journalctl
-      EOH
-      action :nothing
-      notifies :run, 'ruby_block[print results]', :delayed
-    end
-
-    ruby_block 'print results' do
-      block do
-        print "\n"
-        ::File.open('/tmp/journalctl', 'r') do |f|
-          f.each_line do |line|
-            print line
-          end
-        end
-      end
-      action :nothing
-      only_if { ::File.exist?('/tmp/journalctl') }
+  # Returns the command to start pyload for specified pyload version.
+  def start_command
+    cmd = "#{new_resource.install_dir}/bin/python "
+    if pyload_next?(new_resource.version)
+      cmd << "#{new_resource.install_dir}/bin/pyload"
+      cmd << " --userdir #{new_resource.data_dir}"
+      cmd << " --storagedir #{new_resource.download_dir}"
+      cmd << " --tempdir #{new_resource.tmp_dir}"
+    else
+      cmd << "#{new_resource.install_dir}/bin/pyLoadCore"
+      cmd << " --configdir=#{new_resource.data_dir}"
     end
   end
 end
