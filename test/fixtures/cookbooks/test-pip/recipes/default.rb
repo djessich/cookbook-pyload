@@ -22,11 +22,9 @@ pyload_install_pip 'default' do
 end
 
 pyload_config 'default' do
-  version '0.5.0a9.dev655'
   notifies :restart, 'pyload_service[default]', :delayed
 end
 
 pyload_service 'default' do
-  version '0.5.0a9.dev655'
   action [:start, :enable]
 end

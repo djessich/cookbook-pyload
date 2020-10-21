@@ -1,6 +1,6 @@
 #
 # Cookbook:: pyload
-# Resource:: install
+# Resource:: install_pip
 #
 # Copyright:: 2020, Dominik Jessich
 #

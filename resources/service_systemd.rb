@@ -26,14 +26,9 @@ provides :pyload_service, os: 'linux' do
 end
 
 property :instance_name, String, name_property: true
-property :version, [String, Integer], default: lazy { default_pyload_version }
 property :service_name, String, default: lazy { default_pyload_service_name }
-property :install_dir, String, default: lazy { default_pyload_install_dir }
-property :data_dir, String, default: lazy { default_pyload_data_dir }
-property :download_dir, String, default: lazy { default_pyload_download_dir }
-property :tmp_dir, String, default: lazy { default_pyload_tmp_dir }
-property :user, String, default: lazy { default_pyload_user }
-property :group, String, default: lazy { default_pyload_group }
+property :kill_signal, String, default: lazy { default_pyload_kill_signal }
+property :restart_policy, String, default: lazy { default_pyload_restart_policy }
 
 action :start do
   action_create
@@ -84,6 +79,8 @@ action :restart do
 end
 
 action :create do
+  pyload_install_resource = find_pyload_install_resource!(new_resource)
+
   systemd_unit "#{new_resource.service_name}.service" do
     content(
       'Unit' => {
@@ -92,11 +89,11 @@ action :create do
       },
       'Service' => {
         'Type' => 'simple',
-        'ExecStart' => start_command,
-        'User' => new_resource.user,
-        'Group' => new_resource.group,
-        'KillSignal' => 'SIGQINT',
-        'Restart' => 'always',
+        'ExecStart' => start_command(pyload_install_resource.version, pyload_install_resource.install_dir, pyload_install_resource.data_dir, pyload_install_resource.download_dir, pyload_install_resource.tmp_dir),
+        'User' => pyload_install_resource.user,
+        'Group' => pyload_install_resource.group,
+        'KillSignal' => new_resource.kill_signal,
+        'Restart' => new_resource.restart_policy,
       },
       'Install' => {
         'WantedBy' => 'multi-user.target',
@@ -108,16 +105,16 @@ end
 
 action_class do
   # Returns the command to start pyload for specified pyload version.
-  def start_command
-    cmd = "#{new_resource.install_dir}/bin/python "
-    if pyload_next?(new_resource.version)
-      cmd << "#{new_resource.install_dir}/bin/pyload"
-      cmd << " --userdir #{new_resource.data_dir}"
-      cmd << " --storagedir #{new_resource.download_dir}"
-      cmd << " --tempdir #{new_resource.tmp_dir}"
+  def start_command(version, install_dir, data_dir, download_dir, tmp_dir)
+    cmd = "#{install_dir}/bin/python "
+    if pyload_next?(version)
+      cmd << "#{install_dir}/bin/pyload"
+      cmd << " --userdir #{data_dir}"
+      cmd << " --storagedir #{download_dir}"
+      cmd << " --tempdir #{tmp_dir}"
     else
-      cmd << "#{new_resource.install_dir}/bin/pyLoadCore"
-      cmd << " --configdir=#{new_resource.data_dir}"
+      cmd << "#{install_dir}/bin/pyLoadCore"
+      cmd << " --configdir=#{data_dir}"
     end
   end
 end

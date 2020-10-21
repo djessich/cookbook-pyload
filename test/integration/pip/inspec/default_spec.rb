@@ -1,6 +1,6 @@
 #
 # Cookbook:: pyload
-# Test:: default
+# Test:: pip/default_spec
 #
 # Copyright:: 2020, Dominik Jessich
 #

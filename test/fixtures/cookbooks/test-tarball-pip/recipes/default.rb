@@ -1,5 +1,5 @@
 #
-# Cookbook:: test-pip
+# Cookbook:: test-tarball-pip
 # Recipe:: default
 #
 # Copyright:: 2020, Dominik Jessich
@@ -22,11 +22,9 @@ pyload_install_tarball_pip 'default' do
 end
 
 pyload_config 'default' do
-  version '0.4.20'
   notifies :restart, 'pyload_service[default]', :delayed
 end
 
 pyload_service 'default' do
-  version '0.4.20'
   action [:start, :enable]
 end

@@ -20,8 +20,8 @@
 include PyloadCookbook::Helpers
 
 property :instance_name, String, name_property: true
-property :version, [String, Integer], default: lazy { default_pyload_version }
-property :install_method, String, equal_to: %w(pip tarball_pip), default: 'tarball_pip'
+property :version, String, default: lazy { default_pyload_version }
+property :install_method, String, equal_to: %w(pip tarball_pip), default: lazy { default_pyload_install_method }
 property :install_dir, String, default: lazy { default_pyload_install_dir }
 property :data_dir, String, default: lazy { default_pyload_data_dir }
 property :log_dir, String, default: lazy { default_pyload_log_dir }

@@ -20,13 +20,7 @@
 include PyloadCookbook::Helpers
 
 property :instance_name, String, name_property: true
-property :version, [String, Integer], default: lazy { default_pyload_version }
-property :data_dir, String, default: lazy { default_pyload_data_dir }
-property :log_dir, String, default: lazy { default_pyload_log_dir }
-property :download_dir, String, default: lazy { default_pyload_download_dir }
-property :user, String, default: lazy { default_pyload_user }
-property :group, String, default: lazy { default_pyload_group }
-property :source, String, default: lazy { default_pyload_config_source(version) }
+property :source, String
 property :cookbook, String, default: 'pyload'
 property :auto_login, [true, false], default: false
 property :basic_auth, [true, false], default: false
@@ -39,7 +33,7 @@ property :chunks, [String, Integer], default: 3
 property :console, [true, false], default: true
 property :console_color, [true, false], default: false
 property :debug_level, String, equal_to: %w(debug trace stack), default: 'trace'
-property :debug_mode, [true, false], default: lazy { pyload_next?(version) }
+property :debug_mode, [true, false]
 property :development_mode, [true, false], default: false
 property :end_time, String, default: '0:00'
 property :file_mode, String, default: '0644'
@@ -87,15 +81,17 @@ property :syslog_dir, String
 property :syslog_host, String, default: 'localhost'
 property :syslog_location, String, equal_to: %w(local remote), default: 'local'
 property :syslog_port, [String, Integer], default: 514
-property :theme, String, equal_to: %w(classic modern pyplex Default PyPlex), default: lazy { default_pyload_config_value_theme(version) }
+property :theme, String, equal_to: %w(classic modern pyplex Default PyPlex)
 property :web, [true, false], default: true
 
 action :create do
-  template config_path do
-    source new_resource.source
+  pyload_install_resource = find_pyload_install_resource!(new_resource)
+
+  template config_path(pyload_install_resource.version, pyload_install_resource.data_dir) do
+    source new_resource.source ? new_resource.source : default_pyload_config_source(pyload_install_resource.version)
     cookbook new_resource.cookbook
-    owner new_resource.user
-    group new_resource.group
+    owner pyload_install_resource.user
+    group pyload_install_resource.group
     mode '0600'
     sensitive new_resource.sensitive
     variables(
@@ -110,21 +106,21 @@ action :create do
       console: python_bool_value(new_resource.console),
       console_color: python_bool_value(new_resource.console_color),
       debug_level: new_resource.debug_level,
-      debug_mode: python_bool_value(new_resource.debug_mode),
+      debug_mode: new_resource.debug_mode ? new_resource.debug_mode : python_bool_value(pyload_next?(pyload_install_resource.version)),
       development_mode: python_bool_value(new_resource.development_mode),
-      download_dir: new_resource.download_dir,
+      download_dir: pyload_install_resource.download_dir,
       end_time: new_resource.end_time,
       file_mode: new_resource.file_mode,
       folder_mode: new_resource.folder_mode,
       folder_per_package: python_bool_value(new_resource.folder_per_package),
-      group: new_resource.group,
+      group: pyload_install_resource.group,
       interface: new_resource.interface,
       ipv6: python_bool_value(new_resource.ipv6),
       language: new_resource.language,
       limit_speed: python_bool_value(new_resource.limit_speed),
       listen_address: new_resource.listen_address,
       log: python_bool_value(new_resource.log),
-      log_dir: new_resource.log_dir,
+      log_dir: pyload_install_resource.log_dir,
       log_entries: new_resource.log_entries,
       log_rotate: python_bool_value(new_resource.log_rotate),
       log_size: new_resource.log_size,
@@ -161,9 +157,9 @@ action :create do
       syslog_host: new_resource.syslog_host,
       syslog_location: new_resource.syslog_location,
       syslog_port: new_resource.syslog_port,
-      theme: new_resource.theme,
-      user: new_resource.user,
-      version: config_version,
+      theme: new_resource.theme ? new_resource.theme : default_pyload_config_value_theme(pyload_install_resource.version),
+      user: pyload_install_resource.user,
+      version: config_version(pyload_install_resource.version),
       web: python_bool_value(new_resource.web)
     )
   end
@@ -171,17 +167,17 @@ end
 
 action_class do
   # Returns the config file path for given pyload version.
-  def config_path
-    if pyload_next?(new_resource.version)
-      "#{new_resource.data_dir}/settings/pyload.cfg"
+  def config_path(version, data_dir)
+    if pyload_next?(version)
+      "#{data_dir}/settings/pyload.cfg"
     else
-      "#{new_resource.data_dir}/pyload.conf"
+      "#{data_dir}/pyload.conf"
     end
   end
 
   # Returns the config version for specified pyload version.
-  def config_version
-    v = pyload_next?(new_resource.version) ? 2 : 1
+  def config_version(version)
+    v = pyload_next?(version) ? 2 : 1
     "#{v} "
   end
 

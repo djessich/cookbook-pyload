@@ -1,6 +1,6 @@
 #
 # Cookbook:: pyload
-# Resource:: install
+# Resource:: install_tarball_pip
 #
 # Copyright:: 2020, Dominik Jessich
 #
@@ -25,6 +25,7 @@ property :install_dir, String, default: lazy { default_pyload_install_dir }
 property :data_dir, String, default: lazy { default_pyload_data_dir }
 property :log_dir, String, default: lazy { default_pyload_log_dir }
 property :download_dir, String, default: lazy { default_pyload_download_dir }
+property :tmp_dir, String, default: lazy { default_pyload_tmp_dir }
 property :user, String, default: lazy { default_pyload_user }
 property :group, String, default: lazy { default_pyload_group }
 property :tarball_path, String, default: lazy { default_pyload_tarball_path(version) }, desired_state: false
