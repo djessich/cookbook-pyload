@@ -88,7 +88,7 @@ action :create do
   pyload_install_resource = find_pyload_install_resource!(new_resource)
 
   template config_path(pyload_install_resource.version, pyload_install_resource.data_dir) do
-    source new_resource.source ? new_resource.source : default_pyload_config_source(pyload_install_resource.version)
+    source new_resource.source || default_pyload_config_source(pyload_install_resource.version)
     cookbook new_resource.cookbook
     owner pyload_install_resource.user
     group pyload_install_resource.group
@@ -106,7 +106,7 @@ action :create do
       console: python_bool_value(new_resource.console),
       console_color: python_bool_value(new_resource.console_color),
       debug_level: new_resource.debug_level,
-      debug_mode: new_resource.debug_mode ? new_resource.debug_mode : python_bool_value(pyload_next?(pyload_install_resource.version)),
+      debug_mode: new_resource.debug_mode || python_bool_value(pyload_next?(pyload_install_resource.version)),
       development_mode: python_bool_value(new_resource.development_mode),
       download_dir: pyload_install_resource.download_dir,
       end_time: new_resource.end_time,
@@ -157,7 +157,7 @@ action :create do
       syslog_host: new_resource.syslog_host,
       syslog_location: new_resource.syslog_location,
       syslog_port: new_resource.syslog_port,
-      theme: new_resource.theme ? new_resource.theme : default_pyload_config_value_theme(pyload_install_resource.version),
+      theme: new_resource.theme || default_pyload_config_value_theme(pyload_install_resource.version),
       user: pyload_install_resource.user,
       version: config_version(pyload_install_resource.version),
       web: python_bool_value(new_resource.web)

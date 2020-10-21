@@ -21,13 +21,13 @@ include PyloadCookbook::Helpers
 
 property :instance_name, String, name_property: true
 property :version, String, default: '0.5.0a9.dev655'
-property :install_dir, String, default: lazy { default_pyload_install_dir }
-property :data_dir, String, default: lazy { default_pyload_data_dir }
-property :log_dir, String, default: lazy { default_pyload_log_dir }
-property :download_dir, String, default: lazy { default_pyload_download_dir }
-property :tmp_dir, String, default: lazy { default_pyload_tmp_dir }
-property :user, String, default: lazy { default_pyload_user }
-property :group, String, default: lazy { default_pyload_group }
+property :install_dir, String, default: lazy { default_pyload_install_dir(instance_name) }
+property :data_dir, String, default: lazy { default_pyload_data_dir(instance_name) }
+property :log_dir, String, default: lazy { default_pyload_log_dir(instance_name) }
+property :download_dir, String, default: lazy { default_pyload_download_dir(instance_name) }
+property :tmp_dir, String, default: lazy { default_pyload_tmp_dir(instance_name) }
+property :user, String, default: lazy { default_pyload_user(instance_name) }
+property :group, String, default: lazy { default_pyload_group(instance_name) }
 property :create_user, [true, false], default: true, desired_state: false
 property :create_group, [true, false], default: true, desired_state: false
 property :create_download_dir, [true, false], default: true, desired_state: false
@@ -125,7 +125,12 @@ action_class do
   # Returns the absolute path to full install directory for specified pyload
   # version.
   def full_install_path
-    "#{::File.dirname(new_resource.install_dir)}/pyload-#{new_resource.version}"
+    dir = if default_instance?(new_resource.instance_name)
+            "pyload-#{new_resource.version}"
+          else
+            "pyload_#{new_resource.instance_name}-#{new_resource.version}"
+          end
+    "#{::File.dirname(new_resource.install_dir)}/#{dir}"
   end
 
   # Returns the command to create a python virtual environment in full install

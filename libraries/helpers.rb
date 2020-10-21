@@ -19,6 +19,10 @@
 
 module PyloadCookbook
   module Helpers
+    def default_instance?(instance_name)
+      %w(default pyload).include?(instance_name)
+    end
+
     # Returns the default pyload version.
     def default_pyload_version
       '0.4.20'
@@ -30,38 +34,38 @@ module PyloadCookbook
     end
 
     # Returns the absolute path to default pyload install directory.
-    def default_pyload_install_dir
-      '/opt/pyload'
+    def default_pyload_install_dir(instance_name)
+      default_instance?(instance_name) ? '/opt/pyload' : "/opt/pyload_#{instance_name}"
     end
 
     # Returns the absolute path to default pyload data directory.
-    def default_pyload_data_dir
-      '/var/lib/pyload'
+    def default_pyload_data_dir(instance_name)
+      default_instance?(instance_name) ? '/var/lib/pyload' : "/var/lib/pyload_#{instance_name}"
     end
 
     # Returns the absolute path to default pyload log directory.
-    def default_pyload_log_dir
-      '/var/log/pyload'
+    def default_pyload_log_dir(instance_name)
+      default_instance?(instance_name) ? '/var/log/pyload' : "/var/log/pyload_#{instance_name}"
     end
 
     # Returns the absolute path to default pyload storage directory.
-    def default_pyload_download_dir
-      '/tmp/downloads'
+    def default_pyload_download_dir(instance_name)
+      default_instance?(instance_name) ? '/tmp/downloads' : "/tmp/downloads_#{instance_name}"
     end
 
     # Returns the absolute path to default pyload tmp directory.
-    def default_pyload_tmp_dir
-      '/tmp/pyload'
+    def default_pyload_tmp_dir(instance_name)
+      default_instance?(instance_name) ? '/tmp/pyload' : "/tmp/pyload_#{instance_name}"
     end
 
     # Returns the default pyload user name.
-    def default_pyload_user
-      'pyload'
+    def default_pyload_user(instance_name)
+      default_instance?(instance_name) ? 'pyload' : "pyload_#{instance_name}"
     end
 
     # Returns the default pyload group name.
-    def default_pyload_group
-      'pyload'
+    def default_pyload_group(instance_name)
+      default_instance?(instance_name) ? 'pyload' : "pyload_#{instance_name}"
     end
 
     # Returns the absolute path to default pyload distribution tarball path for
@@ -100,8 +104,8 @@ module PyloadCookbook
     end
 
     # Returns the default pyload service name.
-    def default_pyload_service_name
-      'pyload'
+    def default_pyload_service_name(instance_name)
+      default_instance?(instance_name) ? 'pyload' : "pyload_#{instance_name}"
     end
 
     # Returns the default pyload service kill signal.

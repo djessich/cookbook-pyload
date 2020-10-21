@@ -26,7 +26,7 @@ provides :pyload_service, os: 'linux' do
 end
 
 property :instance_name, String, name_property: true
-property :service_name, String, default: lazy { default_pyload_service_name }
+property :service_name, String, default: lazy { default_pyload_service_name(instance_name) }
 property :kill_signal, String, default: lazy { default_pyload_kill_signal }
 property :restart_policy, String, default: lazy { default_pyload_restart_policy }
 

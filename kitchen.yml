@@ -35,3 +35,7 @@ suites:
     run_list:
       - recipe[test-pip::default]
     attributes:
+  - name: multiple
+    run_list:
+      - recipe[test-multiple::default]
+    attributes:
