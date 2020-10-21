@@ -13,17 +13,16 @@ jobs:
     strategy:
       matrix:
         os:
-          - 'centos-6'
           - 'centos-7'
           - 'debian-8'
           - 'debian-9'
+          - 'debian-10'
           - 'fedora-latest'
-          - 'opensuse-leap-42'
-          - 'oracle-6'
           - 'oracle-7'
-          - 'ubuntu-1404'
+          - 'oracle-8'
           - 'ubuntu-1604'
           - 'ubuntu-1804'
+          - 'ubuntu-2004'
         suite:
           - 'default'
           - 'tarball-pip'
