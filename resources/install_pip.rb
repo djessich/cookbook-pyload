@@ -139,7 +139,7 @@ action_class do
     if pyload_next?(new_resource.version)
       "/usr/bin/python3 -m venv #{full_install_path}"
     else
-      "virtualenv #{full_install_path}"
+      "virtualenv -p /usr/bin/python2 #{full_install_path}"
     end
   end
 end

@@ -123,25 +123,29 @@ module PyloadCookbook
       version >= '0.5.0'
     end
 
-    # Returns python2 packages regarding the nodes platform family.
+    # Returns Python 2 packages regarding the nodes platform.
     def python2_packages
       case node['platform_family']
       when 'debian'
-        %w(python python-pip virtualenv python-dev)
+        %w(python python-dev virtualenv)
       when 'rhel', 'fedora'
-        %w(python python-pip python-virtualenv python-devel)
+        if node['platform_version'] < 8
+          %w(python python-devel python-virtualenv)
+        else
+          %w(python2 python2-devel virtualenv)
+        end
       else
         raise "Unsupported platform family #{node['platform_family']}. Is it supported by this cookbook?"
       end
     end
 
-    # Returns python3 packages regarding the nodes platform family.
+    # Returns Python 3 packages regarding the nodes platform.
     def python3_packages
       case node['platform_family']
       when 'debian'
-        %w(python3 python3-pip python3-venv python3-dev)
+        %w(python3 python3-dev python3-venv)
       when 'rhel', 'fedora'
-        %w(python3 python3-pip python3-devel)
+        %w(python3 python3-devel)
       else
         raise "Unsupported platform family #{node['platform_family']}. Is it supported by this cookbook?"
       end

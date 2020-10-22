@@ -19,13 +19,23 @@
 
 case os.family
 when 'debian'
-  %w(python python-pip virtualenv python-dev tar gzip curl libcurl4-openssl-dev libssl-dev tesseract-ocr tesseract-ocr-eng).each do |pkg|
+  if os.release == '20.04'
+    packages = %w(python-is-python2 python-dev-is-python2 virtualenv tar gzip curl libcurl4-openssl-dev libssl-dev tesseract-ocr tesseract-ocr-eng)
+  else
+    packages = %w(python python-dev virtualenv tar gzip curl libcurl4-openssl-dev libssl-dev tesseract-ocr tesseract-ocr-eng)
+  end
+  packages.each do |pkg|
     describe package(pkg) do
       it { should be_installed }
     end
   end
 when 'redhat', 'fedora'
-  %w(python python2-pip python-virtualenv python-devel tar gzip curl libcurl-devel openssl-devel tesseract).each do |pkg|
+  if os.release.to_i < 8
+    packages = %w(python python-devel python-virtualenv tar gzip curl libcurl-devel openssl-devel tesseract)
+  else
+    packages = %w(python2 python2-devel virtualenv tar gzip curl libcurl-devel openssl-devel tesseract)
+  end
+  packages.each do |pkg|
     describe package(pkg) do
       it { should be_installed }
     end
@@ -65,6 +75,46 @@ describe file('/opt/pyload') do
   it { should exist }
   it { should be_symlink }
   its('link_path') { should eq '/opt/pyload-0.4.20' }
+end
+
+describe file('/opt/pyload/bin/activate') do
+  it { should exist }
+  it { should be_file }
+  its('owner') { should eq 'root' }
+  its('group') { should eq 'root' }
+  its('mode') { should cmp '0644' }
+end
+
+describe file('/opt/pyload/bin/python') do
+  it { should exist }
+  it { should be_file }
+  its('owner') { should eq 'root' }
+  its('group') { should eq 'root' }
+  its('mode') { should cmp '0755' }
+end
+
+describe file('/opt/pyload/bin/python2') do
+  it { should exist }
+  it { should be_file }
+  its('owner') { should eq 'root' }
+  its('group') { should eq 'root' }
+  its('mode') { should cmp '0755' }
+end
+
+describe file('/opt/pyload/bin/pip') do
+  it { should exist }
+  it { should be_file }
+  its('owner') { should eq 'root' }
+  its('group') { should eq 'root' }
+  its('mode') { should cmp '0755' }
+end
+
+describe file('/opt/pyload/bin/pip2') do
+  it { should exist }
+  it { should be_file }
+  its('owner') { should eq 'root' }
+  its('group') { should eq 'root' }
+  its('mode') { should cmp '0755' }
 end
 
 %w(beaker bs4 flup html5lib jinja2 js2py PIL Crypto OpenSSL pytesseract thrift).each do |pip_pkg|

@@ -19,13 +19,13 @@
 
 case os.family
 when 'debian'
-  %w(python3 python3-pip python3-venv python3-dev curl libcurl4-openssl-dev libssl-dev).each do |pkg|
+  %w(python3 python3-dev python3-venv curl libcurl4-openssl-dev libssl-dev).each do |pkg|
     describe package(pkg) do
       it { should be_installed }
     end
   end
 when 'redhat', 'fedora'
-  %w(python3 python3-pip python3-devel curl libcurl-devel openssl-devel).each do |pkg|
+  %w(python3 python3-devel curl libcurl-devel openssl-devel).each do |pkg|
     describe package(pkg) do
       it { should be_installed }
     end
@@ -65,6 +65,46 @@ describe file('/opt/pyload') do
   it { should exist }
   it { should be_symlink }
   its('link_path') { should eq '/opt/pyload-0.5.0a9.dev655' }
+end
+
+describe file('/opt/pyload/bin/activate') do
+  it { should exist }
+  it { should be_file }
+  its('owner') { should eq 'root' }
+  its('group') { should eq 'root' }
+  its('mode') { should cmp '0644' }
+end
+
+describe file('/opt/pyload/bin/python') do
+  it { should exist }
+  it { should be_file }
+  its('owner') { should eq 'root' }
+  its('group') { should eq 'root' }
+  its('mode') { should cmp '0755' }
+end
+
+describe file('/opt/pyload/bin/python3') do
+  it { should exist }
+  it { should be_file }
+  its('owner') { should eq 'root' }
+  its('group') { should eq 'root' }
+  its('mode') { should cmp '0755' }
+end
+
+describe file('/opt/pyload/bin/pip') do
+  it { should exist }
+  it { should be_file }
+  its('owner') { should eq 'root' }
+  its('group') { should eq 'root' }
+  its('mode') { should cmp '0755' }
+end
+
+describe file('/opt/pyload/bin/pip3') do
+  it { should exist }
+  it { should be_file }
+  its('owner') { should eq 'root' }
+  its('group') { should eq 'root' }
+  its('mode') { should cmp '0755' }
 end
 
 describe file('/opt/pyload/bin/pyload') do
