@@ -139,7 +139,7 @@ module PyloadCookbook
     def python3_packages
       case node['platform_family']
       when 'debian'
-        %w(python3 python3-pip python3-dev)
+        %w(python3 python3-pip python3-venv python3-dev)
       when 'rhel', 'fedora'
         %w(python3 python3-pip python3-devel)
       else

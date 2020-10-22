@@ -19,7 +19,7 @@
 
 case os.family
 when 'debian'
-  %w(python3 python3-pip python3-dev curl libcurl4-openssl-dev libssl-dev).each do |pkg|
+  %w(python3 python3-pip python3-venv python3-dev curl libcurl4-openssl-dev libssl-dev).each do |pkg|
     describe package(pkg) do
       it { should be_installed }
     end
