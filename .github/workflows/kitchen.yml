@@ -27,6 +27,7 @@ jobs:
           - 'default'
           - 'tarball-pip'
           - 'pip'
+          - 'multiple'
       fail-fast: false
 
     steps:

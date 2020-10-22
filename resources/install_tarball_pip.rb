@@ -37,8 +37,8 @@ property :create_download_dir, [true, false], default: true, desired_state: fals
 property :create_symlink, [true, false], default: true, desired_state: false
 
 action :install do
-  # Setup EPEL repository on RHEL and Fedora to install required packages
-  include_recipe 'yum-epel' if rhel? || fedora?
+  # Setup EPEL repository on RHEL to install required packages
+  include_recipe 'yum-epel' if rhel?
 
   build_essential 'install build packages'
 
