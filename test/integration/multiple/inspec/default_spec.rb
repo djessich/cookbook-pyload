@@ -25,7 +25,7 @@ when 'debian'
                %w(python python-dev virtualenv tar gzip curl libcurl4-openssl-dev libssl-dev tesseract-ocr tesseract-ocr-eng)
              end
 when 'fedora'
-  packages = %w(python2 python2-devel virtualenv tar gzip curl libcurl-devel openssl-devel tesseract)
+  packages = %w(python27 python3-virtualenv tar gzip curl libcurl-devel openssl-devel tesseract)
 when 'redhat'
   packages = if os.release.to_i >= 8
                %w(python2 python2-devel virtualenv tar gzip curl libcurl-devel openssl-devel tesseract)
