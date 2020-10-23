@@ -83,11 +83,7 @@ action :install do
   end
 
   execute 'install pip package pycurl' do
-    if rhel?
-      command "#{full_install_path}/bin/pip install pycurl --global-option='--with-nss'"
-    else
-      command "#{full_install_path}/bin/pip install pycurl"
-    end
+    command "#{full_install_path}/bin/pip install pycurl #{package_pycurl_install_options}"
     not_if "#{full_install_path}/bin/pip show pycurl"
   end
 
@@ -157,6 +153,18 @@ action_class do
     else
       raise "Unsupported platform family #{node['platform_family']}. Is it supported by this cookbook?"
     end
+  end
+
+  # Returns the install options for pycurl pip package install
+  def package_pycurl_install_options
+    options = ''
+    case node['platform_family']
+    when 'fedora'
+      options << "--global-option='--with-openssl'"
+    when 'rhel'
+      options << "--global-option='--with-nss'"
+    end
+    options
   end
 
   # Returns the absolute path to full install directory for specified pyload

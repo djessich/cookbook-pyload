@@ -19,26 +19,24 @@
 
 case os.family
 when 'debian'
-  if os.release == '20.04'
-    packages = %w(python-is-python2 python-dev-is-python2 virtualenv tar gzip curl libcurl4-openssl-dev libssl-dev tesseract-ocr tesseract-ocr-eng)
-  else
-    packages = %w(python python-dev virtualenv tar gzip curl libcurl4-openssl-dev libssl-dev tesseract-ocr tesseract-ocr-eng)
-  end
-  packages.each do |pkg|
-    describe package(pkg) do
-      it { should be_installed }
-    end
-  end
-when 'redhat', 'fedora'
-  if os.release.to_i < 8
-    packages = %w(python python-devel python-virtualenv tar gzip curl libcurl-devel openssl-devel tesseract)
-  else
-    packages = %w(python2 python2-devel virtualenv tar gzip curl libcurl-devel openssl-devel tesseract)
-  end
-  packages.each do |pkg|
-    describe package(pkg) do
-      it { should be_installed }
-    end
+  packages = if os.release == '20.04'
+               %w(python-is-python2 python-dev-is-python2 virtualenv tar gzip curl libcurl4-openssl-dev libssl-dev tesseract-ocr tesseract-ocr-eng)
+             else
+               %w(python python-dev virtualenv tar gzip curl libcurl4-openssl-dev libssl-dev tesseract-ocr tesseract-ocr-eng)
+             end
+when 'fedora'
+  packages = %w(python27 python3-virtualenv tar gzip curl libcurl-devel openssl-devel tesseract)
+when 'redhat'
+  packages = if os.release.to_i >= 8
+               %w(python2 python2-devel virtualenv tar gzip curl libcurl-devel openssl-devel tesseract)
+             else
+               %w(python python-devel python-virtualenv tar gzip curl libcurl-devel openssl-devel tesseract)
+             end
+end
+
+packages.each do |pkg|
+  describe package(pkg) do
+    it { should be_installed }
   end
 end
 
