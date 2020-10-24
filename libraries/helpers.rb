@@ -196,7 +196,7 @@ module PyloadCookbook
 
     # Returns the ssl library backend for pycurl pip package.
     def pycurl_ssl_library_backend
-      return 'nss' if platform_family?('rhel')
+      return 'nss' if platform_family?('rhel') && platform_version.to_i < 8
       'openssl'
     end
 

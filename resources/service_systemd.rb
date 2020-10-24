@@ -97,10 +97,10 @@ action :create do
     },
     'Install' => {
       'WantedBy' => 'multi-user.target',
-    }
+    },
   }
 
-  new_resource.env_vars.each do |k,v|
+  new_resource.env_vars.each do |k, v|
     service_unit_content['Service']['Environment'] = "#{k}=#{v}"
   end
 
