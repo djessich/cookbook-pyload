@@ -17,6 +17,12 @@
 # limitations under the License.
 #
 
+# Dokken images don't have all locales available so this is a workaround
+locale = value_for_platform(
+  centos: { default: node['platform_version'].to_i < 8 ? 'en_US.UTF-8' : 'C.UTF-8' },
+  default: 'C.UTF-8'
+)
+
 pyload_install 'instance1' do
   notifies :restart, 'pyload_service[instance1]', :delayed
 end
@@ -27,6 +33,9 @@ pyload_config 'instance1' do
 end
 
 pyload_service 'instance1' do
+  env_vars(
+    'LANG' => locale
+  )
   action [:start, :enable]
 end
 
@@ -40,5 +49,8 @@ pyload_config 'instance2' do
 end
 
 pyload_service 'instance2' do
+  env_vars(
+    'LANG' => locale
+  )
   action [:start, :enable]
 end

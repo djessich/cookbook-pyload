@@ -27,6 +27,7 @@ end
 
 property :instance_name, String, name_property: true
 property :service_name, String, default: lazy { default_pyload_service_name(instance_name) }
+property :env_vars, Hash, default: {}
 property :kill_signal, String, default: lazy { default_pyload_kill_signal }
 property :restart_policy, String, default: lazy { default_pyload_restart_policy }
 
@@ -81,24 +82,30 @@ end
 action :create do
   pyload_install_resource = find_pyload_install_resource!(new_resource)
 
+  service_unit_content = {
+    'Unit' => {
+      'Description' => 'Pyload - The free and open-source Download Manager written in pure Python',
+      'After' => 'local-fs.target remote-fs.target network.target network-online.target',
+    },
+    'Service' => {
+      'Type' => 'simple',
+      'ExecStart' => start_command(pyload_install_resource.version, pyload_install_resource.install_dir, pyload_install_resource.data_dir, pyload_install_resource.download_dir, pyload_install_resource.tmp_dir),
+      'User' => pyload_install_resource.user,
+      'Group' => pyload_install_resource.group,
+      'KillSignal' => new_resource.kill_signal,
+      'Restart' => new_resource.restart_policy,
+    },
+    'Install' => {
+      'WantedBy' => 'multi-user.target',
+    }
+  }
+
+  new_resource.env_vars.each do |k,v|
+    service_unit_content['Service']['Environment'] = "#{k}=#{v}"
+  end
+
   systemd_unit "#{new_resource.service_name}.service" do
-    content(
-      'Unit' => {
-        'Description' => 'Pyload - The free and open-source Download Manager written in pure Python',
-        'After' => 'local-fs.target remote-fs.target network.target network-online.target',
-      },
-      'Service' => {
-        'Type' => 'simple',
-        'ExecStart' => start_command(pyload_install_resource.version, pyload_install_resource.install_dir, pyload_install_resource.data_dir, pyload_install_resource.download_dir, pyload_install_resource.tmp_dir),
-        'User' => pyload_install_resource.user,
-        'Group' => pyload_install_resource.group,
-        'KillSignal' => new_resource.kill_signal,
-        'Restart' => new_resource.restart_policy,
-      },
-      'Install' => {
-        'WantedBy' => 'multi-user.target',
-      }
-    )
+    content service_unit_content
     action :create
   end
 end
