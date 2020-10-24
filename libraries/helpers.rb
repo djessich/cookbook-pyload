@@ -141,6 +141,10 @@ module PyloadCookbook
 
     # Returns Python 3 packages regarding the nodes platform.
     def python3_packages
+      # Some Ubuntu versions lack support of Python 3 in their minimal install,
+      # so set package names from deadsnakes Ubuntu PPA
+      return %w(python3.6 python3.6-dev python3.6-venv) if platform?('ubuntu') && node['platform_version'] <= '16.04'
+
       case node['platform_family']
       when 'debian'
         %w(python3 python3-dev python3-venv)
@@ -149,6 +153,26 @@ module PyloadCookbook
       else
         raise "Unsupported platform family #{node['platform_family']}. Is it supported by this cookbook?"
       end
+    end
+
+    # Returns the Python 2 virtual environment command regarding the nodes
+    # platform.
+    def python2_virtualenv_command(path)
+      "virtualenv -p /usr/bin/python2 #{path}"
+    end
+
+    # Returns the Python 3 virtual environment command regarding the nodes
+    # platform.
+    def python3_virtualenv_command(path)
+      # Some Ubuntu versions lack support of Python 3 in their minimal install,
+      # so refer to binary from deadsnakes Ubuntu PPA, otherwise use a default
+      cmd = if platform?('ubuntu') && node['platform_version'] <= '16.04'
+              '/usr/bin/python3.6'
+            else
+              '/usr/bin/python3'
+            end
+      cmd << " -m venv #{path}"
+      cmd
     end
 
     # Return resource with type :pyload_install matching given resource.

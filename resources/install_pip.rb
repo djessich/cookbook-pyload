@@ -34,6 +34,14 @@ property :create_download_dir, [true, false], default: true, desired_state: fals
 property :create_symlink, [true, false], default: true, desired_state: false
 
 action :install do
+  # Some Ubuntu versions lack support of Python 3 in their minimal install, so
+  # add deadsnakes Ubuntu PPA
+  if platform?('ubuntu') && node['platform_version'] <= '16.04'
+    apt_repository 'deadsnakes-ubuntu-ppa' do
+      uri 'ppa:deadsnakes/ppa'
+    end
+  end
+
   build_essential 'install build packages'
 
   package 'install python packages' do
@@ -59,7 +67,7 @@ action :install do
   end
 
   execute 'create virtual environment' do
-    command virtualenv_command
+    command python3_virtualenv_command(full_install_path)
     creates full_install_path
     notifies :run, 'execute[upgrade pip to latest version]', :immediately
   end
@@ -131,15 +139,5 @@ action_class do
             "pyload_#{new_resource.instance_name}-#{new_resource.version}"
           end
     "#{::File.dirname(new_resource.install_dir)}/#{dir}"
-  end
-
-  # Returns the command to create a python virtual environment in full install
-  # directory for specified pyload version.
-  def virtualenv_command
-    if pyload_next?(new_resource.version)
-      "/usr/bin/python3 -m venv #{full_install_path}"
-    else
-      "virtualenv -p /usr/bin/python2 #{full_install_path}"
-    end
   end
 end

@@ -65,7 +65,7 @@ action :install do
   end
 
   execute 'create virtual environment' do
-    command virtualenv_command
+    command python2_virtualenv_command(full_install_path)
     creates full_install_path
     notifies :run, 'execute[upgrade pip to latest version]', :immediately
   end
@@ -169,15 +169,5 @@ action_class do
   # be stripped.
   def extract_command
     "tar -xzf #{new_resource.tarball_path} -C #{full_install_path}/dist --strip-components=1"
-  end
-
-  # Returns the command to create a python virtual environment in full install
-  # directory for specified pyload version.
-  def virtualenv_command
-    if pyload_next?(new_resource.version)
-      "/usr/bin/python3 -m venv #{full_install_path}"
-    else
-      "virtualenv -p /usr/bin/python2 #{full_install_path}"
-    end
   end
 end

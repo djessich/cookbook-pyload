@@ -19,7 +19,11 @@
 
 case os.family
 when 'debian'
-  packages = %w(python3 python3-dev python3-venv curl libcurl4-openssl-dev libssl-dev)
+  packages = if os.release == '16.04'
+               %w(python3.6 python3.6-dev python3.6-venv curl libcurl4-openssl-dev libssl-dev)
+             else
+               %w(python3 python3-dev python3-venv curl libcurl4-openssl-dev libssl-dev)
+             end
 when 'fedora'
   packages = %w(python3 python3-devel curl libcurl-devel openssl-devel)
 when 'redhat'
