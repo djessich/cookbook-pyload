@@ -34,9 +34,6 @@ property :create_download_dir, [true, false], default: true, desired_state: fals
 property :create_symlink, [true, false], default: true, desired_state: false
 
 action :install do
-  # Setup EPEL repository on RHEL to install required packages
-  include_recipe 'yum-epel' if rhel?
-
   build_essential 'install build packages'
 
   package 'install python packages' do
@@ -74,6 +71,9 @@ action :install do
 
   execute 'install pyload using pip' do
     command "#{full_install_path}/bin/pip install pyload-ng[all]==#{new_resource.version}"
+    environment(
+      'PYCURL_SSL_LIBRARY' => pycurl_ssl_library_backend
+    )
     creates "#{full_install_path}/bin/pyload"
   end
 

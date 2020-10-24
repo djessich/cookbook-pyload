@@ -38,7 +38,7 @@ property :create_symlink, [true, false], default: true, desired_state: false
 
 action :install do
   # Setup EPEL repository on RHEL to install required packages
-  include_recipe 'yum-epel' if rhel?
+  include_recipe 'yum-epel' if platform_family?('rhel')
 
   build_essential 'install build packages'
 
@@ -75,16 +75,14 @@ action :install do
     action :nothing
   end
 
-  %w(beaker beautifulsoup4 feedparser flup html5lib jinja2 js2py pillow pycrypto pyopenssl pytesseract thrift).each do |pip_pkg|
+  %w(beaker beautifulsoup4 feedparser flup html5lib jinja2 js2py pillow pycrypto pycurl pyopenssl pytesseract thrift).each do |pip_pkg|
     execute "install pip package #{pip_pkg}" do
       command "#{full_install_path}/bin/pip install #{pip_pkg}"
+      environment(
+        'PYCURL_SSL_LIBRARY' => pycurl_ssl_library_backend
+      )
       not_if "#{full_install_path}/bin/pip show #{pip_pkg}"
     end
-  end
-
-  execute 'install pip package pycurl' do
-    command "#{full_install_path}/bin/pip install pycurl #{package_pycurl_install_options}"
-    not_if "#{full_install_path}/bin/pip show pycurl"
   end
 
   directory 'create dist directory' do
@@ -153,18 +151,6 @@ action_class do
     else
       raise "Unsupported platform family #{node['platform_family']}. Is it supported by this cookbook?"
     end
-  end
-
-  # Returns the install options for pycurl pip package install
-  def package_pycurl_install_options
-    options = ''
-    case node['platform_family']
-    when 'fedora'
-      options << "--global-option='--with-openssl'"
-    when 'rhel'
-      options << "--global-option='--with-nss'"
-    end
-    options
   end
 
   # Returns the absolute path to full install directory for specified pyload

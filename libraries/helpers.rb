@@ -170,6 +170,12 @@ module PyloadCookbook
       find_pyload_resource!(run_context, :pyload_install, resource)
     end
 
+    # Returns the ssl library backend for pycurl pip package.
+    def pycurl_ssl_library_backend
+      return 'nss' if platform_family?('rhel')
+      'openssl'
+    end
+
     # Return resource with type :pyload_config matching given resource.
     def find_pyload_config_resource!(resource)
       find_pyload_resource!(run_context, :pyload_config, resource)
