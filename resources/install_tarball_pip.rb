@@ -70,8 +70,10 @@ action :install do
     notifies :run, 'execute[upgrade pip packages to latest version in virtual environment]', :immediately
   end
 
+  # On Ubuntu 16.04 the installed version of setuptools is 45.0.0 which does not
+  # support Python 2, so pin setuptools to version 44.1.1 which does support it
   execute 'upgrade pip packages to latest version in virtual environment' do
-    command "#{full_install_path}/bin/pip install --disable-pip-version-check --no-cache-dir --upgrade pip setuptools wheel"
+    command "#{full_install_path}/bin/pip install --disable-pip-version-check --no-cache-dir --upgrade pip setuptools==44.1.1 wheel"
     action :nothing
   end
 
