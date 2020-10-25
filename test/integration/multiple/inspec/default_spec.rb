@@ -17,6 +17,25 @@
 # limitations under the License.
 #
 
+if os.family == 'redhat' && os.release.to_i == 8
+  describe yum.repo('tesseract') do
+    it { should exist }
+    it { should be_enabled }
+    its('baseurl') { should eq "https://download.opensuse.org/repositories/home:/Alexander_Pozdnyakov/CentOS_#{os.release.to_i}/" }
+    its('mirrors') { should eq nil }
+  end
+
+  describe file('/etc/yum.repos.d/tesseract.repo') do
+    it { should exist }
+    it { should be_file }
+    its('owner') { should eq 'root' }
+    its('group') { should eq 'root' }
+    its('mode') { should cmp '0644' }
+    its('content') { should match(/^gpgcheck\=1$/) }
+    its('content') { should match(%r{^gpgkey\=https://download\.opensuse\.org/repositories/home:/Alexander_Pozdnyakov/CentOS_#{os.release.to_i}/repodata/repomd\.xml\.key$}) }
+  end
+end
+
 case os.family
 when 'debian'
   packages = if os.release == '20.04'

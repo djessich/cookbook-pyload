@@ -37,8 +37,21 @@ property :create_download_dir, [true, false], default: true, desired_state: fals
 property :create_symlink, [true, false], default: true, desired_state: false
 
 action :install do
-  # Setup EPEL repository on RHEL to install required packages
-  include_recipe 'yum-epel' if platform_family?('rhel')
+  if platform_family?('rhel')
+    # Setup EPEL repository on RHEL to install required packages
+    include_recipe 'yum-epel'
+
+    # Setup tesseract repository unless leptonica package is available
+    yum_repository 'tesseract' do
+      description "Tesseract Packages for #{node['platform_version'].to_i} - $basearch"
+      baseurl "https://download.opensuse.org/repositories/home:/Alexander_Pozdnyakov/CentOS_#{node['platform_version'].to_i}/"
+      enabled true
+      make_cache true
+      gpgcheck true
+      gpgkey "https://download.opensuse.org/repositories/home:/Alexander_Pozdnyakov/CentOS_#{node['platform_version'].to_i}/repodata/repomd.xml.key"
+      not_if 'yum whatprovides leptonica'
+    end
+  end
 
   # Some RHEL systems lack tar in their minimal install
   package %w(tar gzip)

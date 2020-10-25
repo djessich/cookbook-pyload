@@ -34,8 +34,24 @@ property :create_download_dir, [true, false], default: true, desired_state: fals
 property :create_symlink, [true, false], default: true, desired_state: false
 
 action :install do
-  # Some Ubuntu versions lack support of Python 3 in their minimal install, so
-  # add deadsnakes Ubuntu PPA
+  if platform_family?('rhel')
+    # Setup EPEL repository on RHEL to install required packages
+    include_recipe 'yum-epel'
+
+    # Setup tesseract repository unless leptonica package is available
+    yum_repository 'tesseract' do
+      description "Tesseract Packages for #{node['platform_version'].to_i} - $basearch"
+      baseurl "https://download.opensuse.org/repositories/home:/Alexander_Pozdnyakov/CentOS_#{node['platform_version'].to_i}/"
+      enabled true
+      make_cache true
+      gpgcheck true
+      gpgkey "https://download.opensuse.org/repositories/home:/Alexander_Pozdnyakov/CentOS_#{node['platform_version'].to_i}/repodata/repomd.xml.key"
+      not_if 'yum whatprovides leptonica'
+    end
+  end
+
+  # Some Ubuntu versions lack support of Python 3.6+ in their minimal install,
+  # so add deadsnakes Ubuntu PPA
   if platform?('ubuntu') && node['platform_version'] <= '16.04'
     apt_repository 'deadsnakes-ubuntu-ppa' do
       uri 'ppa:deadsnakes/ppa'
