@@ -71,7 +71,7 @@ action :install do
   end
 
   execute 'upgrade pip packages to latest version in virtual environment' do
-    command "#{full_install_path}/bin/pip install --disable-pip-version-check --no-cache-dir --upgrade pip"
+    command "#{full_install_path}/bin/pip install --disable-pip-version-check --no-cache-dir --upgrade pip setuptools wheel"
     action :nothing
   end
 
