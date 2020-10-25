@@ -181,6 +181,18 @@ module PyloadCookbook
       cmd
     end
 
+    # Returns dependency packages of pyload regarding nodes platform family.
+    def dependency_packages
+      case node['platform_family']
+      when 'debian'
+        %w(curl libcurl4-openssl-dev openssl libssl-dev sqlite3 tesseract-ocr tesseract-ocr-eng)
+      when 'rhel', 'fedora'
+        %w(curl libcurl-devel openssl openssl-devel sqlite tesseract)
+      else
+        raise "Unsupported platform family #{node['platform_family']}. Is it supported by this cookbook?"
+      end
+    end
+
     # Return resource with type :pyload_install matching given resource.
     def find_pyload_install_resource!(resource)
       install_pip_match = begin

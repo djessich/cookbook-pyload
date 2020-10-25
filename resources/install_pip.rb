@@ -119,18 +119,6 @@ action :install do
 end
 
 action_class do
-  # Returns dependency packages of pyload regarding nodes platform family.
-  def dependency_packages
-    case node['platform_family']
-    when 'debian'
-      %w(curl libcurl4-openssl-dev openssl libssl-dev)
-    when 'rhel', 'fedora'
-      %w(curl libcurl-devel openssl openssl-devel)
-    else
-      raise "Unsupported platform family #{node['platform_family']}. Is it supported by this cookbook?"
-    end
-  end
-
   # Returns the absolute path to full install directory for specified pyload
   # version.
   def full_install_path

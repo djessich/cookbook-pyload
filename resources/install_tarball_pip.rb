@@ -40,6 +40,9 @@ action :install do
   # Setup EPEL repository on RHEL to install required packages
   include_recipe 'yum-epel' if platform_family?('rhel')
 
+  # Some RHEL systems lack tar in their minimal install
+  package %w(tar gzip)
+
   build_essential 'install build packages'
 
   package 'install python packages' do
@@ -143,18 +146,6 @@ action :install do
 end
 
 action_class do
-  # Returns dependency packages of pyload regarding nodes platform family.
-  def dependency_packages
-    case node['platform_family']
-    when 'debian'
-      %w(tar gzip curl libcurl4-openssl-dev openssl libssl-dev tesseract-ocr tesseract-ocr-eng)
-    when 'rhel', 'fedora'
-      %w(tar gzip curl libcurl-devel openssl openssl-devel tesseract)
-    else
-      raise "Unsupported platform family #{node['platform_family']}. Is it supported by this cookbook?"
-    end
-  end
-
   # Returns the absolute path to full install directory for specified pyload
   # version.
   def full_install_path
