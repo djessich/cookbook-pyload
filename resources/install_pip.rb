@@ -70,7 +70,7 @@ action :install do
   execute 'create virtual environment' do
     command python3_virtualenv_command(full_install_path)
     creates full_install_path
-    notifies :run, 'execute[upgrade pip to latest version]', :immediately
+    notifies :run, 'execute[upgrade pip to latest version in virtual environment]', :immediately
   end
 
   execute 'upgrade pip to latest version in virtual environment' do
