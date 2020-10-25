@@ -70,16 +70,16 @@ action :install do
   execute 'create virtual environment' do
     command python3_virtualenv_command(full_install_path)
     creates full_install_path
-    notifies :run, 'execute[upgrade pip to latest version in virtual environment]', :immediately
+    notifies :run, 'execute[upgrade pip packages to latest version in virtual environment]', :immediately
   end
 
-  execute 'upgrade pip to latest version in virtual environment' do
-    command "#{full_install_path}/bin/pip install --upgrade pip"
+  execute 'upgrade pip packages to latest version in virtual environment' do
+    command "#{full_install_path}/bin/pip install --disable-pip-version-check --no-cache-dir --upgrade pip"
     action :nothing
   end
 
   execute 'install pyload using pip in virtual environment' do
-    command "#{full_install_path}/bin/pip install pyload-ng[all]==#{new_resource.version}"
+    command "#{full_install_path}/bin/pip install --disable-pip-version-check --no-cache-dir pyload-ng[all]==#{new_resource.version}"
     environment(
       'PYCURL_SSL_LIBRARY' => pycurl_ssl_library_backend
     )

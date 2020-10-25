@@ -67,17 +67,17 @@ action :install do
   execute 'create virtual environment' do
     command python2_virtualenv_command(full_install_path)
     creates full_install_path
-    notifies :run, 'execute[upgrade pip to latest version in virtual environment]', :immediately
+    notifies :run, 'execute[upgrade pip packages to latest version in virtual environment]', :immediately
   end
 
-  execute 'upgrade pip to latest version in virtual environment' do
-    command "#{full_install_path}/bin/pip install --upgrade pip"
+  execute 'upgrade pip packages to latest version in virtual environment' do
+    command "#{full_install_path}/bin/pip install --disable-pip-version-check --no-cache-dir --upgrade pip"
     action :nothing
   end
 
   %w(beaker beautifulsoup4 feedparser flup html5lib jinja2 js2py pillow pycrypto pycurl pyopenssl pytesseract thrift).each do |pip_pkg|
     execute "install pip package #{pip_pkg} in virtual environment" do
-      command "#{full_install_path}/bin/pip install #{pip_pkg}"
+      command "#{full_install_path}/bin/pip install --disable-pip-version-check --no-cache-dir #{pip_pkg}"
       environment(
         'PYCURL_SSL_LIBRARY' => pycurl_ssl_library_backend
       )
