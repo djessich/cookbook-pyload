@@ -46,6 +46,7 @@ action :install do
 
   package 'install python packages' do
     package_name python3_packages
+    options '--enablerepo=ol7_optional_latest' if platform?('oracle') && node['platform_version'].to_i == 7
   end
 
   package 'install dependency packages' do
@@ -72,12 +73,12 @@ action :install do
     notifies :run, 'execute[upgrade pip to latest version]', :immediately
   end
 
-  execute 'upgrade pip to latest version' do
+  execute 'upgrade pip to latest version in virtual environment' do
     command "#{full_install_path}/bin/pip install --upgrade pip"
     action :nothing
   end
 
-  execute 'install pyload using pip' do
+  execute 'install pyload using pip in virtual environment' do
     command "#{full_install_path}/bin/pip install pyload-ng[all]==#{new_resource.version}"
     environment(
       'PYCURL_SSL_LIBRARY' => pycurl_ssl_library_backend

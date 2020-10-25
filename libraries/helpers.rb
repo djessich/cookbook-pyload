@@ -131,7 +131,7 @@ module PyloadCookbook
       when 'fedora'
         %w(python2 python2-devel virtualenv)
       when 'rhel'
-        if node['platform_version'] < '8'
+        if node['platform_version'].to_i < 8
           %w(python python-devel python-virtualenv)
         else
           %w(python2 python2-devel virtualenv)
@@ -149,7 +149,7 @@ module PyloadCookbook
 
       # On Oracle 8+ the Python 3 package configured below, cannot be correctly
       # determined by system package manager, so specify direct Python 3 packages
-      return %w(python36 python36-devel) if platform?('oracle') && node['platform_version'] >= '8'
+      return %w(python36 python36-devel) if platform?('oracle') && node['platform_version'].to_i >= 8
 
       case node['platform_family']
       when 'debian'
@@ -202,7 +202,7 @@ module PyloadCookbook
 
     # Returns the ssl library backend for pycurl pip package.
     def pycurl_ssl_library_backend
-      return 'nss' if platform_family?('rhel') && platform_version < '8'
+      return 'nss' if platform_family?('rhel') && node['platform_version'].to_i < 8
       'openssl'
     end
 

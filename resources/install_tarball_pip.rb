@@ -70,13 +70,13 @@ action :install do
     notifies :run, 'execute[upgrade pip to latest version]', :immediately
   end
 
-  execute 'upgrade pip to latest version' do
+  execute 'upgrade pip to latest version in virtual environment' do
     command "#{full_install_path}/bin/pip install --upgrade pip"
     action :nothing
   end
 
   %w(beaker beautifulsoup4 feedparser flup html5lib jinja2 js2py pillow pycrypto pycurl pyopenssl pytesseract thrift).each do |pip_pkg|
-    execute "install pip package #{pip_pkg}" do
+    execute "install pip package #{pip_pkg} in virtual environment" do
       command "#{full_install_path}/bin/pip install #{pip_pkg}"
       environment(
         'PYCURL_SSL_LIBRARY' => pycurl_ssl_library_backend
@@ -102,7 +102,7 @@ action :install do
     mode '0644'
   end
 
-  execute 'extract pyload dist tarball' do
+  execute 'extract pyload dist tarball to virtual environment' do
     command extract_command
     creates "#{full_install_path}/dist/LICENSE.MD"
   end
