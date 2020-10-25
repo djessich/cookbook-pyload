@@ -123,9 +123,9 @@ action_class do
   def dependency_packages
     case node['platform_family']
     when 'debian'
-      %w(curl libcurl4-openssl-dev libssl-dev)
+      %w(curl libcurl4-openssl-dev openssl libssl-dev)
     when 'rhel', 'fedora'
-      %w(curl libcurl-devel openssl-devel)
+      %w(curl libcurl-devel openssl openssl-devel)
     else
       raise "Unsupported platform family #{node['platform_family']}. Is it supported by this cookbook?"
     end

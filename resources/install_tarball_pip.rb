@@ -147,9 +147,9 @@ action_class do
   def dependency_packages
     case node['platform_family']
     when 'debian'
-      %w(tar gzip curl libcurl4-openssl-dev libssl-dev tesseract-ocr tesseract-ocr-eng)
+      %w(tar gzip curl libcurl4-openssl-dev openssl libssl-dev tesseract-ocr tesseract-ocr-eng)
     when 'rhel', 'fedora'
-      %w(tar gzip curl libcurl-devel openssl-devel tesseract)
+      %w(tar gzip curl libcurl-devel openssl openssl-devel tesseract)
     else
       raise "Unsupported platform family #{node['platform_family']}. Is it supported by this cookbook?"
     end

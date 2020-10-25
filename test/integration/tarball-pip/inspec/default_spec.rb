@@ -20,17 +20,17 @@
 case os.family
 when 'debian'
   packages = if os.release == '20.04'
-               %w(python-is-python2 python-dev-is-python2 virtualenv tar gzip curl libcurl4-openssl-dev libssl-dev tesseract-ocr tesseract-ocr-eng)
+               %w(python-is-python2 python-dev-is-python2 virtualenv tar gzip curl libcurl4-openssl-dev openssl libssl-dev tesseract-ocr tesseract-ocr-eng)
              else
-               %w(python python-dev virtualenv tar gzip curl libcurl4-openssl-dev libssl-dev tesseract-ocr tesseract-ocr-eng)
+               %w(python python-dev virtualenv tar gzip curl libcurl4-openssl-dev openssl libssl-dev tesseract-ocr tesseract-ocr-eng)
              end
 when 'fedora'
-  packages = %w(python27 python3-virtualenv tar gzip curl libcurl-devel openssl-devel tesseract)
+  packages = %w(python27 python3-virtualenv tar gzip curl libcurl-devel openssl openssl-devel tesseract)
 when 'redhat'
   packages = if os.release.to_i >= 8
-               %w(python2 python2-devel virtualenv tar gzip curl libcurl-devel openssl-devel tesseract)
+               %w(python2 python2-devel virtualenv tar gzip curl libcurl-devel openssl openssl-devel tesseract)
              else
-               %w(python python-devel python-virtualenv tar gzip curl libcurl-devel openssl-devel tesseract)
+               %w(python python-devel python-virtualenv tar gzip curl libcurl-devel openssl openssl-devel tesseract)
              end
 end
 
