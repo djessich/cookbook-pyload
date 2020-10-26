@@ -44,7 +44,7 @@ when 'debian'
                %w(python python-dev virtualenv tar gzip curl libcurl4-openssl-dev openssl libssl-dev sqlite3 tesseract-ocr tesseract-ocr-eng)
              end
 when 'fedora'
-  packages = %w(python27 python3-virtualenv tar gzip curl libcurl-devel openssl openssl-devel sqlite tesseract)
+  packages = %w(python2.7 python3-virtualenv tar gzip curl libcurl-devel openssl openssl-devel sqlite tesseract)
 when 'redhat'
   packages = if os.release.to_i >= 8
                %w(python2 python2-devel python3-virtualenv tar gzip curl libcurl-devel openssl openssl-devel sqlite tesseract)
@@ -214,54 +214,18 @@ describe file('/opt/pyload_instance2/bin/pip2') do
   its('mode') { should cmp '0755' }
 end
 
-%w(beaker bs4 flup html5lib jinja2 js2py PIL Crypto OpenSSL pytesseract thrift).each do |pip_pkg|
-  describe file("/opt/pyload_instance1/lib/python2.7/site-packages/#{pip_pkg}") do
-    it { should exist }
-    it { should be_directory }
-    its('owner') { should eq 'root' }
-    its('group') { should eq 'root' }
-    its('mode') { should cmp '0755' }
+%w(Beaker beautifulsoup4 feedparser flup html5lib Jinja2 Js2Py Pillow pycrypto pycurl pyOpenSSL pytesseract thrift).each do |pip_pkg|
+  describe command("/opt/pyload_instance1/bin/pip show #{pip_pkg}") do
+    its('exit_status') { should eq 0 }
+    its('stdout') { should match(/Name\:\s#{pip_pkg}/) }
+    its('stdout') { should match(%r{Location\:\s/opt/pyload_instance1\-0\.4\.20/lib(?:64)?/python2\.7/site\-packages}) }
   end
 
-  describe file("/opt/pyload_instance2/lib/python2.7/site-packages/#{pip_pkg}") do
-    it { should exist }
-    it { should be_directory }
-    its('owner') { should eq 'root' }
-    its('group') { should eq 'root' }
-    its('mode') { should cmp '0755' }
+  describe command("/opt/pyload_instance2/bin/pip show #{pip_pkg}") do
+    its('exit_status') { should eq 0 }
+    its('stdout') { should match(/Name\:\s#{pip_pkg}/) }
+    its('stdout') { should match(%r{Location\:\s/opt/pyload_instance2\-0\.4\.20/lib(?:64)?/python2\.7/site\-packages}) }
   end
-end
-
-describe file('/opt/pyload_instance1/lib/python2.7/site-packages/feedparser.py') do
-  it { should exist }
-  it { should be_file }
-  its('owner') { should eq 'root' }
-  its('group') { should eq 'root' }
-  its('mode') { should cmp '0644' }
-end
-
-describe file('/opt/pyload_instance2/lib/python2.7/site-packages/feedparser.py') do
-  it { should exist }
-  it { should be_file }
-  its('owner') { should eq 'root' }
-  its('group') { should eq 'root' }
-  its('mode') { should cmp '0644' }
-end
-
-describe file('/opt/pyload_instance1/lib/python2.7/site-packages/pycurl.so') do
-  it { should exist }
-  it { should be_file }
-  its('owner') { should eq 'root' }
-  its('group') { should eq 'root' }
-  its('mode') { should cmp '0755' }
-end
-
-describe file('/opt/pyload_instance2/lib/python2.7/site-packages/pycurl.so') do
-  it { should exist }
-  it { should be_file }
-  its('owner') { should eq 'root' }
-  its('group') { should eq 'root' }
-  its('mode') { should cmp '0755' }
 end
 
 describe file('/opt/pyload_instance1/dist') do

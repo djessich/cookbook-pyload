@@ -203,10 +203,10 @@ module PyloadCookbook
       return install_pip_match if install_pip_match
 
       install_source_match = begin
-                                    find_pyload_resource!(run_context, :pyload_install_source, resource)
-                                  rescue
-                                    nil
-                                  end
+                               find_pyload_resource!(run_context, :pyload_install_source, resource)
+                             rescue
+                               nil
+                             end
       return install_source_match if install_source_match
 
       find_pyload_resource!(run_context, :pyload_install, resource)
