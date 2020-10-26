@@ -42,6 +42,8 @@ All the resources of this cookbook use the following search order in Chefs run c
 3. Resources named either *default* or *pyload* (fails if resources with both *default* or *pyload* as name exist)
 4. Resources with `instance_name` set to either *default* or *pyload* (fails if resources with both *default* or *pyload* as value for `instance_name` exist)
 
+In case the `instance_name` of any resource is set to a value not a reserved default (*default* or *pyload*), the instance name will be appended to the resource properties default values. This is required to avoid conflicts for multi instance configurations. As an example, properties specifying a directory will have their default value automatically changed to a directory with the instance name included (`/opt/pyload` -> `/opt/pyload_INSTANCE_NAME`).
+
 ### Notifications
 
 The resources provided in this cookbook do not automatically execute any actions on instance resources when changes have occurred. You must supply your desired notifications for an instance when using resources of this cookbook if you want Chef to automatically restart services. See below for an example how to do this.
@@ -83,13 +85,13 @@ Installs an instance of Pyload regarding configured install method.
 * `instance_name` - Specifies a unique name for the instance to be installed. Reserved default instance names are `default` and `pyload`. This is the name property.
 * `version` - Specifies the version to be installed. By default, this is set to `0.4.20`.
 * `install_method` - Specifies the install method used to install the instance. Supported methods are `pip` and `tarball_pip`. By default, this is set to `tarball_pip`.
-* `install_dir` - Specifies the full path to the install directory. By default, this is set to `/opt/pyload`. Specified `instance_name` will be appended to directory base name unless default instance.
-* `data_dir` - Specifies the full path to the data directory. By default, this is set to `/var/lib/pyload`. Specified `instance_name` will be appended to directory base name unless default instance.
-* `log_dir` - Specifies the full path to the logging directory. By default, this is set to `/var/log/pyload`. Specified `instance_name` will be appended to directory base name unless default instance.
-* `download_dir` - Specifies the full path to the download directory. By default, this is set to `/tmp/downloads`. Specified `instance_name` will be appended to directory base name unless default instance.
-* `tmp_dir` - Specifies the full path to the temp directory. By default, this is set to `/tmp/pyload`. Specified `instance_name` will be appended to directory base name unless default instance.
-* `user` - Specifies the user to run the instance. By default, this is set to `pyload`. Specified `instance_name` will be appended unless default instance.
-* `group` - Specifies the group to run the instance. By default, this is set to `pyload`. Specified `instance_name` will be appended unless default instance.
+* `install_dir` - Specifies the full path to the install directory. By default, this is set to `/opt/pyload`.
+* `data_dir` - Specifies the full path to the data directory. By default, this is set to `/var/lib/pyload`.
+* `log_dir` - Specifies the full path to the logging directory. By default, this is set to `/var/log/pyload`.
+* `download_dir` - Specifies the full path to the download directory. By default, this is set to `/tmp/downloads`.
+* `tmp_dir` - Specifies the full path to the temp directory. By default, this is set to `/tmp/pyload`.
+* `user` - Specifies the user to run the instance. By default, this is set to `pyload`.
+* `group` - Specifies the group to run the instance. By default, this is set to `pyload`.
 * `tarball_path` - Specifies the full path to the distribution tarball. If the file does not exist, it will be downloaded from `tarball_url`. Only used if install method is set to `tarball_pip`. By default, this depends on specified version.
 * `tarball_url` - Specifies the download URL to the distribution tarball. Only used if install method is set to `tarball_pip`. By default, this depends on specified version.
 * `tarball_checksum` - Specifies a checksum for the distribution tarball downloaded from `tarball_url`. Only used if install method is set to `tarball_pip`. This must be a valid SHA256 hash. By default, this depends on specified version.
@@ -118,7 +120,7 @@ end
 
 ### pyload_config
 
-Configures an instance of Pyload. Some required properties, such as its version, are determined by the corresponding `pyload_install` resource of this instance.
+Configures an instance of Pyload. Not all properties available to this resource apply to all versions of a configuration file. Some required properties, such as the instance version, are determined by the corresponding `pyload_install` resource of this instance.
 
 #### Actions
 
@@ -129,19 +131,19 @@ Configures an instance of Pyload. Some required properties, such as its version,
 * `instance_name` - Specifies a unique name for the instance to be configured. Reserved default instance names are `default` and `pyload`. This is the name property.
 * `source` - Specifies the config file template source. By default, this depends on the instance version.
 * `cookbook` - Specifies the cookbook from which to load the config file source. By default, this is set to `pyload`.
-* `auto_login` - Specifies if login should be skipped if single user. Applies only to config version 2. By default, this is set to `false`.
-* `basic_auth` - Specifies if basic authentication should be enabled for web interface. Applies only to config version 1. By default, this is set to `false`.
+* `auto_login` - Specifies if login should be skipped if single user. By default, this is set to `false`.
+* `basic_auth` - Specifies if basic authentication should be enabled for web interface. By default, this is set to `false`.
 * `change_downloads` - Specifies if owner and group of downloaded files should be changed. By default, this is set to `false`.
 * `change_file` - Specifies if mode of downloaded files should be changed. By default, this is set to `false`.
 * `change_group` - Specifies if group of running process should be changed. By default, this is set to `false`.
 * `change_user` - Specifies if user of running process should be changed. By default, this is set to `false`.
-* `checksums` - Specifies if checksums should be checked. Applies only to config version 1. By default, this is set to `false`.
+* `checksums` - Specifies if checksums should be checked. By default, this is set to `false`.
 * `chunks` - Specifies the maximum connections for one download. By default, this is set to `3`.
-* `console` - Specifies if logging to console should be enabled. Applies only to config version 2. By default, this is set to `true`.
-* `console_color` - Specifies if console log should be colored if logging to console is enabled. Applies only to config version 2. By default, this is set to `false`.
-* `debug_level` - Specifies the debug level. Applies only to config version 2. Must be one of `debug`, `trace` or `stack`. By default, this is set to `trace`.
+* `console` - Specifies if logging to console should be enabled. By default, this is set to `true`.
+* `console_color` - Specifies if console log should be colored if logging to console is enabled. By default, this is set to `false`.
+* `debug_level` - Specifies the debug level. Must be one of `debug`, `trace` or `stack`. By default, this is set to `trace`.
 * `debug_mode` - Specifies if debug mode should be enabled. By default, this is set to `false`.
-* `development_mode` - Specifies if web interface development mode should be enabled. Applies only to config version 2. By default, this is set to `false`.
+* `development_mode` - Specifies if web interface development mode should be enabled. By default, this is set to `false`.
 * `end_time` - Specifies the time downloads should be stopped automatically. By default, this is set to `0:00`.
 * `file_mode` - Specifies the mode for created files. By default, this is set to `0644`.
 * `folder_mode` - Specifies the mode for created folders. By default, this is set to `0755`.
@@ -171,23 +173,23 @@ Configures an instance of Pyload. Some required properties, such as its version,
 * `reconnect_method` - Specifies the reconnect method if reconnect is enabled. Applies only to config version 1.
 * `reconnect_script` - Specifies the reconnect script if reconnect is enabled. Applies only to config version 2.
 * `reconnect_start_time` - Specifies the reconnect start time if reconnect is enabled. By default, this is set to `0:00`.
-* `remote` - Specifies if remote interface should be enabled. Applies only to config version 1. By default, this is set to `false`.
-* `remote_listen_address` - Specifies the listen address for the remote interface if remote is enabled. Applies only to config version 1. By default, this is set to `0.0.0.0`.
-* `remote_no_local_auth` - Specifies if local connections require authentication if remote is enabled. Applies only to config version 1. By default, this is set to `true`.
-* `remote_port` - Specifies the port the remote interface should listen on if remote is enabled. Applies only to config version 1. By default, this is set to `7227`.
-* `renice` - Specifies the CPU priority. Applies only to config version 1. By default, this is set to `0`.
-* `server_type` - Specifies the server type of the web interface. Must be one of `builtin`, `threaded`, `fastcgi` or `lightweight`. Applies only to config version 1. By default, this is set to `builtin`.
+* `remote` - Specifies if remote interface should be enabled. By default, this is set to `false`.
+* `remote_listen_address` - Specifies the listen address for the remote interface if remote is enabled. By default, this is set to `0.0.0.0`.
+* `remote_no_local_auth` - Specifies if local connections require authentication if remote is enabled. By default, this is set to `true`.
+* `remote_port` - Specifies the port the remote interface should listen on if remote is enabled. By default, this is set to `7227`.
+* `renice` - Specifies the CPU priority. By default, this is set to `0`.
+* `server_type` - Specifies the server type of the web interface. Must be one of `builtin`, `threaded`, `fastcgi` or `lightweight`. By default, this is set to `builtin`.
 * `skip_existing` - Specifies if files previously downloaded should be skipped. By default, this is set to `false`.
 * `ssl` - Specifies if web interface should be served via SSL/TLS. By default, this is set to `false`.
 * `ssl_cert` - Specifies the SSL/TLS certificate.
 * `ssl_chain` - Specifies the SSL/TLS certificate chain.
 * `ssl_key` - Specifies the SSL/TLS  certificate key.
 * `start_time` - Specifies the time downloads should be started automatically. By default, this is set to `0:00`.
-* `syslog` - Specifies if logging to syslog should be enabled. Applies only to config version 2. By default, this is set to `false`.
+* `syslog` - Specifies if logging to syslog should be enabled. By default, this is set to `false`.
 * `syslog_dir` - Specifies the syslog folder to log to if syslog is enabled. Applies only to config version 2.
-* `syslog_host` - Specifies the syslog host address if syslog is enabled. Applies only to config version 2. By default, this is set to `localhost`.
-* `syslog_location` - Specifies the syslog location if syslog is enabled. ust be one of `local` or `remote`. Applies only to config version 2. By default, this is set to `locale`.
-* `syslog_port` - Specifies the syslog host port if syslog is enabled. Applies only to config version 2. By default, this is set to `514`.
+* `syslog_host` - Specifies the syslog host address if syslog is enabled. By default, this is set to `localhost`.
+* `syslog_location` - Specifies the syslog location if syslog is enabled. ust be one of `local` or `remote`. By default, this is set to `locale`.
+* `syslog_port` - Specifies the syslog host port if syslog is enabled. By default, this is set to `514`.
 * `theme` - Specifies the theme of the web interface. Must be one of `classic`, `pyplex` or `modern` for version 1 and `Default` or `PyPlex` for version 2. By default, this is set to `classic` for config version 1 and `Default` for config version 2.
 * `web` - Specifies if web interface should be enabled. By default, this is set to `true`.
 
@@ -211,7 +213,7 @@ end
 
 ### pyload_service
 
-Creates a service configuration for an instance of Pyload to run using the appropriate init system.
+Creates a service configuration for an instance of Pyload to run using the appropriate init system. Some required properties, such as the instance version, are determined by the corresponding `pyload_install` resource of this instance.
 
 #### Actions
 
@@ -225,10 +227,10 @@ Creates a service configuration for an instance of Pyload to run using the appro
 #### Properties
 
 * `instance_name` - Specifies a unique name for the instance service configuration to be created. Reserved default instance names are `default` and `pyload`. This is the name property.
-* `service_name` - Specifies the service name. By default, this is set to `pyload`. Specified `instance_name` will be appended unless default instance.
-* `env_vars` - Specifies a hash of additional environment variables to be applied. By default, this is set to an empty hash.
-* `kill_signal` - Specifies the kill signal used to stop the running service for this instance. By default, this is set to `SIGINT`.
-* `restart_policy` - Specifies the restart policy of the service for this instance. By default, this is set to `always`.
+* `service_name` - Specifies the service name. By default, this is set to `pyload`.
+* `env_vars` - Specifies a hash of environment variables to be applied. By default, this is set to an empty hash.
+* `kill_signal` - Specifies the kill signal used to stop a running service. By default, this is set to `SIGINT`.
+* `restart_policy` - Specifies the restart policy of a service. By default, this is set to `always`.
 
 #### Examples
 
@@ -250,8 +252,8 @@ end
 
 ## License
 
-Author: Dominik Jessich ([dominik.jessich@gmail.com](mailto:dominik.jessich@gmail.com))
-Copyright: 2016-2020, Dominik Jessich
+* Author: Dominik Jessich ([dominik.jessich@gmail.com](mailto:dominik.jessich@gmail.com))
+* Copyright: 2016-2020, Dominik Jessich
 
 ```
 Licensed under the Apache License, Version 2.0 (the "License");
