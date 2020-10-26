@@ -1,6 +1,6 @@
 name 'pyload'
 maintainer 'Dominik Jessich'
-maintainer_email 'dominik.jessich@chello.at'
+maintainer_email 'dominik.jessich@gmail.com'
 license 'Apache-2.0'
 description 'Installs/Configures Pyload'
 version '1.4.0'
