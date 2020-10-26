@@ -39,19 +39,27 @@ property :create_symlink, [true, false], default: true, desired_state: false
 
 action :install do
   case new_resource.install_method
-  when 'tarball_pip'
-    raise "Install method #{new_resource.install_method} is only supported for version < 0.5.0." if pyload_next?(new_resource.version)
-
-    pyload_install_tarball_pip new_resource.instance_name do
-      copy_properties_from(new_resource, :version, :install_dir, :data_dir, :log_dir, :download_dir, :tmp_dir, :user, :group, :tarball_path, :tarball_url, :tarball_checksum, :create_user, :create_group, :create_download_dir, :create_symlink, :sensitive)
-    end
   when 'pip'
-    raise "Install method #{new_resource.install_method} is only supported for version >= 0.5.0." unless pyload_next?(new_resource.version)
-
-    pyload_install_pip new_resource.instance_name do
-      copy_properties_from(new_resource, :version, :install_dir, :data_dir, :log_dir, :download_dir, :tmp_dir, :user, :group, :create_user, :create_group, :create_download_dir, :create_symlink, :sensitive)
-    end
+    action_install_pip
+  when 'tarball_pip'
+    action_install_tarball_pip
   else
     raise "Invalid install method #{new_resource.install_method} specified."
+  end
+end
+
+action :install_pip do
+  raise "Install method #{new_resource.install_method} is only supported for version >= 0.5.0." unless pyload_next?(new_resource.version)
+
+  pyload_install_pip new_resource.instance_name do
+    copy_properties_from(new_resource, :version, :install_dir, :data_dir, :log_dir, :download_dir, :tmp_dir, :user, :group, :create_user, :create_group, :create_download_dir, :create_symlink, :sensitive)
+  end
+end
+
+action :install_tarball_pip do
+  raise "Install method #{new_resource.install_method} is only supported for version < 0.5.0." if pyload_next?(new_resource.version)
+
+  pyload_install_tarball_pip new_resource.instance_name do
+    copy_properties_from(new_resource, :version, :install_dir, :data_dir, :log_dir, :download_dir, :tmp_dir, :user, :group, :tarball_path, :tarball_url, :tarball_checksum, :create_user, :create_group, :create_download_dir, :create_symlink, :sensitive)
   end
 end
