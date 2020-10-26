@@ -13,7 +13,6 @@ verifier:
 platforms:
   - name: centos-7
   - name: centos-8
-  - name: debian-9
   - name: debian-10
   - name: fedora-latest
   - name: oracle-7
