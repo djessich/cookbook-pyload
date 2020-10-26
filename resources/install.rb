@@ -21,7 +21,7 @@ include PyloadCookbook::Helpers
 
 property :instance_name, String, name_property: true
 property :version, String, default: lazy { default_pyload_version }
-property :install_method, String, equal_to: %w(pip tarball_pip), default: lazy { default_pyload_install_method }
+property :install_method, String, equal_to: %w(pip source), default: lazy { default_pyload_install_method }
 property :install_dir, String, default: lazy { default_pyload_install_dir(instance_name) }
 property :data_dir, String, default: lazy { default_pyload_data_dir(instance_name) }
 property :log_dir, String, default: lazy { default_pyload_log_dir(instance_name) }
@@ -29,9 +29,9 @@ property :download_dir, String, default: lazy { default_pyload_download_dir(inst
 property :tmp_dir, String, default: lazy { default_pyload_tmp_dir(instance_name) }
 property :user, String, default: lazy { default_pyload_user(instance_name) }
 property :group, String, default: lazy { default_pyload_group(instance_name) }
-property :tarball_path, String, default: lazy { default_pyload_tarball_path(version) }, desired_state: false
-property :tarball_url, String, default: lazy { default_pyload_tarball_url(version) }, desired_state: false
-property :tarball_checksum, String, regex: /^[a-zA-Z0-9]{64}$/, default: lazy { default_pyload_tarball_checksum(version) }, desired_state: false
+property :source_path, String, default: lazy { default_pyload_source_path(version) }, desired_state: false
+property :source_url, String, default: lazy { default_pyload_source_url(version) }, desired_state: false
+property :source_checksum, String, regex: /^[a-zA-Z0-9]{64}$/, default: lazy { default_pyload_source_checksum(version) }, desired_state: false
 property :create_user, [true, false], default: true, desired_state: false
 property :create_group, [true, false], default: true, desired_state: false
 property :create_download_dir, [true, false], default: true, desired_state: false
@@ -41,8 +41,8 @@ action :install do
   case new_resource.install_method
   when 'pip'
     action_install_pip
-  when 'tarball_pip'
-    action_install_tarball_pip
+  when 'source'
+    action_install_source
   else
     raise "Invalid install method #{new_resource.install_method} specified."
   end
@@ -56,10 +56,10 @@ action :install_pip do
   end
 end
 
-action :install_tarball_pip do
+action :install_source do
   raise "Install method #{new_resource.install_method} is only supported for version < 0.5.0." if pyload_next?(new_resource.version)
 
-  pyload_install_tarball_pip new_resource.instance_name do
-    copy_properties_from(new_resource, :version, :install_dir, :data_dir, :log_dir, :download_dir, :tmp_dir, :user, :group, :tarball_path, :tarball_url, :tarball_checksum, :create_user, :create_group, :create_download_dir, :create_symlink, :sensitive)
+  pyload_install_source new_resource.instance_name do
+    copy_properties_from(new_resource, :version, :install_dir, :data_dir, :log_dir, :download_dir, :tmp_dir, :user, :group, :source_path, :source_url, :source_checksum, :create_user, :create_group, :create_download_dir, :create_symlink, :sensitive)
   end
 end

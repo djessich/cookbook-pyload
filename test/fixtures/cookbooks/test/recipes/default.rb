@@ -1,5 +1,5 @@
 #
-# Cookbook:: test-default
+# Cookbook:: test
 # Recipe:: default
 #
 # Copyright:: 2020, Dominik Jessich

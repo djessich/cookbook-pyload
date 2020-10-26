@@ -30,7 +30,7 @@ module PyloadCookbook
 
     # Returns the default pyload install method.
     def default_pyload_install_method
-      'tarball_pip'
+      'source'
     end
 
     # Returns the absolute path to default pyload install directory.
@@ -68,24 +68,24 @@ module PyloadCookbook
       default_instance?(instance_name) ? 'pyload' : "pyload_#{instance_name}"
     end
 
-    # Returns the absolute path to default pyload distribution tarball path for
-    # given pyload version.
-    def default_pyload_tarball_path(version)
+    # Returns the absolute path to default pyload distribution path for given
+    # pyload version.
+    def default_pyload_source_path(version)
       "#{Chef::Config['file_cache_path']}/pyload-#{version}"
     end
 
-    # Returns the default download URL to pyload distribution tarball for given
-    # pyload version.
-    def default_pyload_tarball_url(version)
+    # Returns the default download URL to pyload distribution for given pyload
+    # version.
+    def default_pyload_source_url(version)
       urls = {
         '0.4.20' => 'https://github.com/pyload/pyload/archive/0.4.20.tar.gz',
       }
       urls[version]
     end
 
-    # Returns the default checksum of pyload distribution tarball for given
-    # pyload version.
-    def default_pyload_tarball_checksum(version)
+    # Returns the default checksum of pyload distribution for given pyload
+    # version.
+    def default_pyload_source_checksum(version)
       checksums = {
         '0.4.20' => '438f9a2fc8ecb13b75f55b00192a2192c96a0a08ec1ae842cea17c7c49aab500',
       }
@@ -202,12 +202,12 @@ module PyloadCookbook
                           end
       return install_pip_match if install_pip_match
 
-      install_tarball_pip_match = begin
-                                    find_pyload_resource!(run_context, :pyload_install_tarball_pip, resource)
+      install_source_match = begin
+                                    find_pyload_resource!(run_context, :pyload_install_source, resource)
                                   rescue
                                     nil
                                   end
-      return install_tarball_pip_match if install_tarball_pip_match
+      return install_source_match if install_source_match
 
       find_pyload_resource!(run_context, :pyload_install, resource)
     end

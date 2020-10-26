@@ -1,6 +1,6 @@
 #
 # Cookbook:: pyload
-# Resource:: install_tarball_pip
+# Resource:: install_source
 #
 # Copyright:: 2020, Dominik Jessich
 #
@@ -28,9 +28,9 @@ property :download_dir, String, default: lazy { default_pyload_download_dir(inst
 property :tmp_dir, String, default: lazy { default_pyload_tmp_dir(instance_name) }
 property :user, String, default: lazy { default_pyload_user(instance_name) }
 property :group, String, default: lazy { default_pyload_group(instance_name) }
-property :tarball_path, String, default: lazy { default_pyload_tarball_path(version) }, desired_state: false
-property :tarball_url, String, default: lazy { default_pyload_tarball_url(version) }, desired_state: false
-property :tarball_checksum, String, regex: /^[a-zA-Z0-9]{64}$/, default: lazy { default_pyload_tarball_checksum(version) }, desired_state: false
+property :source_path, String, default: lazy { default_pyload_source_path(version) }, desired_state: false
+property :source_url, String, default: lazy { default_pyload_source_url(version) }, desired_state: false
+property :source_checksum, String, regex: /^[a-zA-Z0-9]{64}$/, default: lazy { default_pyload_source_checksum(version) }, desired_state: false
 property :create_user, [true, false], default: true, desired_state: false
 property :create_group, [true, false], default: true, desired_state: false
 property :create_download_dir, [true, false], default: true, desired_state: false
@@ -103,7 +103,7 @@ action :install do
     end
   end
 
-  directory 'create dist directory' do
+  directory 'create distribution directory' do
     path "#{full_install_path}/dist"
     owner 'root'
     group node['root_group']
@@ -111,16 +111,16 @@ action :install do
     recursive true
   end
 
-  remote_file 'download pyload distribution tarball' do
-    path new_resource.tarball_path
-    source new_resource.tarball_url
-    checksum new_resource.tarball_checksum
+  remote_file 'download pyload distribution source' do
+    path new_resource.source_path
+    source new_resource.source_url
+    checksum new_resource.source_checksum
     owner 'root'
     group node['root_group']
     mode '0644'
   end
 
-  execute 'extract pyload dist tarball to virtual environment' do
+  execute 'extract pyload distribution source to virtual environment' do
     command extract_command
     creates "#{full_install_path}/dist/LICENSE.MD"
   end
@@ -170,10 +170,9 @@ action_class do
     "#{::File.dirname(new_resource.install_dir)}/#{dir}"
   end
 
-  # Returns the command to extract pyload distribution tarball to full install
-  # directory for specified pyload version. Thereby the first component will
-  # be stripped.
+  # Returns the command to extract pyload distribution to full install directory
+  # for specified pyload version. Thereby the first component will# be stripped.
   def extract_command
-    "tar -xzf #{new_resource.tarball_path} -C #{full_install_path}/dist --strip-components=1"
+    "tar -xzf #{new_resource.source_path} -C #{full_install_path}/dist --strip-components=1"
   end
 end

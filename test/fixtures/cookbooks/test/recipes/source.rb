@@ -1,6 +1,6 @@
 #
-# Cookbook:: test-tarball-pip
-# Recipe:: default
+# Cookbook:: test
+# Recipe:: source
 #
 # Copyright:: 2020, Dominik Jessich
 #
@@ -23,7 +23,7 @@ locale = value_for_platform(
   default: 'C.UTF-8'
 )
 
-pyload_install_tarball_pip 'default' do
+pyload_install_source 'default' do
   notifies :restart, 'pyload_service[default]', :delayed
 end
 

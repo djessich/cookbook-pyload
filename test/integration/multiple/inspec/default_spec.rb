@@ -1,6 +1,6 @@
 #
 # Cookbook:: pyload
-# Test:: tarball-pip/default_spec
+# Test:: multiple/default_spec
 #
 # Copyright:: 2020, Dominik Jessich
 #

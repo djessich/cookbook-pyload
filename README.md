@@ -77,14 +77,14 @@ Installs an instance of Pyload regarding configured install method.
 #### Actions
 
 * `install` - Default. Installs an instance of Pyload with configured installed method.
-* `install_pip` - Installs an instance of Pyload with installed method `pip`. This install method requires version to be `>= 0.5.0`
-* `install_tarball_pip` - Installs an instance of Pyload with installed method `tarball_pip`. This install method requires version to be `< 0.5.0`.
+* `install_pip` - Installs an instance of Pyload with install method `pip`. This install method requires version to be `>= 0.5.0`
+* `install_source` - Installs an instance of Pyload with install method `source`. This install method requires version to be `< 0.5.0`.
 
 #### Properties
 
 * `instance_name` - Specifies a unique name for the instance to be installed. Reserved default instance names are `default` and `pyload`. This is the name property.
 * `version` - Specifies the version to be installed. By default, this is set to `0.4.20`.
-* `install_method` - Specifies the install method used to install the instance. Supported methods are `pip` and `tarball_pip`. By default, this is set to `tarball_pip`.
+* `install_method` - Specifies the install method used to install the instance. Supported methods are `pip` and `source`. By default, this is set to `source`.
 * `install_dir` - Specifies the full path to the install directory. By default, this is set to `/opt/pyload`.
 * `data_dir` - Specifies the full path to the data directory. By default, this is set to `/var/lib/pyload`.
 * `log_dir` - Specifies the full path to the logging directory. By default, this is set to `/var/log/pyload`.
@@ -92,9 +92,9 @@ Installs an instance of Pyload regarding configured install method.
 * `tmp_dir` - Specifies the full path to the temp directory. By default, this is set to `/tmp/pyload`.
 * `user` - Specifies the user to run the instance. By default, this is set to `pyload`.
 * `group` - Specifies the group to run the instance. By default, this is set to `pyload`.
-* `tarball_path` - Specifies the full path to the distribution tarball. If the file does not exist, it will be downloaded from `tarball_url`. Only used if install method is set to `tarball_pip`. By default, this depends on specified version.
-* `tarball_url` - Specifies the download URL to the distribution tarball. Only used if install method is set to `tarball_pip`. By default, this depends on specified version.
-* `tarball_checksum` - Specifies a checksum for the distribution tarball downloaded from `tarball_url`. Only used if install method is set to `tarball_pip`. This must be a valid SHA256 hash. By default, this depends on specified version.
+* `source_path` - Specifies the full path to the distribution source. If the file does not exist, it will be downloaded from `source_url`. Only used if install method is set to `source`. By default, this depends on specified version.
+* `source_url` - Specifies the download URL to the distribution source. Only used if install method is set to `source`. By default, this depends on specified version.
+* `source_checksum` - Specifies a checksum for the distribution source downloaded from `source_url`. Only used if install method is set to `source`. This must be a valid SHA256 hash. By default, this depends on specified version.
 * `create_user` - Specifies if the user should be created. By default, this is set to `true`.
 * `create_group` - Specifies if the group should be created. By default, this is set to `true`.
 * `create_download_dir` - Specifies if the download directory should be created.  By default, this is set to `true`.
@@ -102,7 +102,7 @@ Installs an instance of Pyload regarding configured install method.
 
 #### Examples
 
-Installs an Pyload 0.4.20 instance named with reserved default instance name *default*. The instance is installed to default directories using instance method `tarball_pip`. It will be created at `/opt/pyload-0.4.20` with a symbolic link at `/opt/pyload`. All directories will owned by user `pyload` and group `pyload`.
+Installs an Pyload 0.4.20 instance named with reserved default instance name *default*. The instance is installed to default directories using instance method `source`. It will be created at `/opt/pyload-0.4.20` with a symbolic link at `/opt/pyload`. All directories will owned by user `pyload` and group `pyload`.
 
 ```ruby
 pyload_install 'default' do
@@ -110,7 +110,7 @@ pyload_install 'default' do
 end
 ```
 
-Installs an Pyload 0.4.20 instance named *helloworld*. The instance is installed to default directories using instance method `tarball_pip`. It will be created at `/opt/pyload_helloworld-0.4.20` with a symbolic link at `/opt/pyload_helloworld`. All directories will owned by user `pyload_helloworld` and group `pyload_helloworld`.
+Installs an Pyload 0.4.20 instance named *helloworld*. The instance is installed to default directories using instance method `source`. It will be created at `/opt/pyload_helloworld-0.4.20` with a symbolic link at `/opt/pyload_helloworld`. All directories will owned by user `pyload_helloworld` and group `pyload_helloworld`.
 
 ```ruby
 pyload_install 'helloworld' do

@@ -24,9 +24,9 @@ jobs:
           - 'ubuntu-2004'
         suite:
           - 'default'
-          - 'tarball-pip'
-          - 'pip'
           - 'multiple'
+          - 'pip'
+          - 'source'
       fail-fast: false
 
     steps:

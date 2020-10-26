@@ -26,15 +26,15 @@ suites:
     run_list:
       - recipe[test::default]
     attributes:
-  - name: tarball-pip
+  - name: multiple
     run_list:
-      - recipe[test::tarball_pip]
+      - recipe[test::multiple]
     attributes:
   - name: pip
     run_list:
       - recipe[test::pip]
     attributes:
-  - name: multiple
+  - name: source
     run_list:
-      - recipe[test::multiple]
+      - recipe[test::source]
     attributes:
