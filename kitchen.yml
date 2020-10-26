@@ -24,17 +24,17 @@ platforms:
 suites:
   - name: default
     run_list:
-      - recipe[test-default::default]
+      - recipe[test::default]
     attributes:
   - name: tarball-pip
     run_list:
-      - recipe[test-tarball-pip::default]
+      - recipe[test::tarball_pip]
     attributes:
   - name: pip
     run_list:
-      - recipe[test-pip::default]
+      - recipe[test::pip]
     attributes:
   - name: multiple
     run_list:
-      - recipe[test-multiple::default]
+      - recipe[test::multiple]
     attributes:

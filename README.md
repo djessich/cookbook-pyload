@@ -66,7 +66,7 @@ pyload_service 'default' do
 end
 ```
 
-More examples on how this cookbook could be used, can be found at `test/fixtures/cookbooks`.
+More examples on how this cookbook could be used, can be found at `test/fixtures/cookbooks/test`.
 
 ## Resources
 
@@ -77,8 +77,8 @@ Installs an instance of Pyload regarding configured install method.
 #### Actions
 
 * `install` - Default. Installs an instance of Pyload with configured installed method.
-* `install_pip` - Installs an instance of Pyload with installed method `pip`. This install method requires version to be >= `0.5.0`
-* `install_tarball_pip` - Installs an instance of Pyload with installed method `tarball_pip`. This install method requires version to be < `0.5.0`.
+* `install_pip` - Installs an instance of Pyload with installed method `pip`. This install method requires version to be `>= 0.5.0`
+* `install_tarball_pip` - Installs an instance of Pyload with installed method `tarball_pip`. This install method requires version to be `< 0.5.0`.
 
 #### Properties
 

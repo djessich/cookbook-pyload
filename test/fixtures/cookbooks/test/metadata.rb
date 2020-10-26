@@ -1,3 +1,3 @@
-name 'test-tarball-pip'
+name 'test'
 version '0.1.0'
 depends 'pyload'
