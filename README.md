@@ -13,7 +13,7 @@ This cookbook provides resources for installing and configuring [Pyload](https:/
 
 * CentOS 7+
 * Debian 10+
-* Fedora 32+
+* Fedora 30+
 * Oracle 7+
 * RHEL 7+
 * Ubuntu 16.04+

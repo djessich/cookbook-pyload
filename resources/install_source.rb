@@ -103,10 +103,10 @@ action :install do
     end
   end
 
-  directory 'create distribution directory' do
+  directory 'create distribution directory in virtual environment' do
     path "#{full_install_path}/dist"
-    owner 'root'
-    group node['root_group']
+    owner new_resource.user
+    group new_resource.group
     mode '0755'
     recursive true
   end
@@ -123,6 +123,12 @@ action :install do
   execute 'extract pyload distribution source to virtual environment' do
     command extract_command
     creates "#{full_install_path}/dist/LICENSE.MD"
+  end
+
+  # Ensure the instance user owns the distribution directory
+  execute 'ensure permissions of distribution directory contents in virtual environment' do
+    command "chown -R #{new_resource.user}:#{new_resource.group} #{full_install_path}/dist"
+    not_if { ::Etc.getpwuid(::File.stat("#{full_install_path}/dist/LICENSE.MD").uid).name == new_resource.user }
   end
 
   %w(pyLoadCli pyLoadCore pyLoadGui).each do |bin|

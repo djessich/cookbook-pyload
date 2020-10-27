@@ -145,14 +145,17 @@ end
 describe file('/opt/pyload/dist') do
   it { should exist }
   it { should be_directory }
-  its('owner') { should eq 'root' }
-  its('group') { should eq 'root' }
+  its('owner') { should eq 'pyload' }
+  its('group') { should eq 'pyload' }
   its('mode') { should cmp '0755' }
 end
 
 describe file('/opt/pyload/dist/LICENSE.MD') do
   it { should exist }
   it { should be_file }
+  its('owner') { should eq 'pyload' }
+  its('group') { should eq 'pyload' }
+  its('mode') { should cmp '0664' }
 end
 
 describe file('/opt/pyload/bin/pyLoadCli') do

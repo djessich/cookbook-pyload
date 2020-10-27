@@ -231,27 +231,33 @@ end
 describe file('/opt/pyload_instance1/dist') do
   it { should exist }
   it { should be_directory }
-  its('owner') { should eq 'root' }
-  its('group') { should eq 'root' }
+  its('owner') { should eq 'pyload_instance1' }
+  its('group') { should eq 'pyload_instance1' }
   its('mode') { should cmp '0755' }
 end
 
 describe file('/opt/pyload_instance2/dist') do
   it { should exist }
   it { should be_directory }
-  its('owner') { should eq 'root' }
-  its('group') { should eq 'root' }
+  its('owner') { should eq 'pyload_instance2' }
+  its('group') { should eq 'pyload_instance2' }
   its('mode') { should cmp '0755' }
 end
 
 describe file('/opt/pyload_instance1/dist/LICENSE.MD') do
   it { should exist }
   it { should be_file }
+  its('owner') { should eq 'pyload_instance1' }
+  its('group') { should eq 'pyload_instance1' }
+  its('mode') { should cmp '0664' }
 end
 
 describe file('/opt/pyload_instance2/dist/LICENSE.MD') do
   it { should exist }
   it { should be_file }
+  its('owner') { should eq 'pyload_instance2' }
+  its('group') { should eq 'pyload_instance2' }
+  its('mode') { should cmp '0664' }
 end
 
 describe file('/opt/pyload_instance1/bin/pyLoadCli') do
