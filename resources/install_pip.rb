@@ -34,6 +34,8 @@ property :create_download_dir, [true, false], default: true, desired_state: fals
 property :create_symlink, [true, false], default: true, desired_state: false
 
 action :install do
+  raise 'Install method pip is only supported for version >= 0.5.0.' unless pyload_next?(new_resource.version)
+
   if platform_family?('rhel')
     # Setup EPEL repository on RHEL to install required packages
     include_recipe 'yum-epel'
@@ -61,7 +63,7 @@ action :install do
   build_essential 'install build packages'
 
   package 'install python packages' do
-    package_name python3_packages
+    package_name python_packages(new_resource.version)
     options '--enablerepo=ol7_optional_latest' if platform?('oracle') && node['platform_version'].to_i == 7
   end
 
@@ -84,13 +86,13 @@ action :install do
   end
 
   execute 'create virtual environment' do
-    command python3_virtualenv_command(full_install_path)
+    command python_virtualenv_command(new_resource.version, full_install_path)
     creates full_install_path
     notifies :run, 'execute[upgrade pip packages to latest version in virtual environment]', :immediately
   end
 
   execute 'upgrade pip packages to latest version in virtual environment' do
-    command "#{full_install_path}/bin/pip install --disable-pip-version-check --no-cache-dir --upgrade pip setuptools wheel"
+    command pip_virtualenv_upgrade_command(new_resource.version, full_install_path)
     action :nothing
   end
 

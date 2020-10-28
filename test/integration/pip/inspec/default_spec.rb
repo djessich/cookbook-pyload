@@ -134,6 +134,12 @@ describe file('/opt/pyload/bin/pip3') do
   its('mode') { should cmp '0755' }
 end
 
+describe command('/opt/pyload/bin/pip show pyload-ng') do
+  its('exit_status') { should eq 0 }
+  its('stdout') { should match(/Name\:\spyload-ng/) }
+  its('stdout') { should match(%r{Location\:\s/opt/pyload\-0\.5\.0a9\.dev655/lib(?:64)?/python3\.\d/site\-packages}) }
+end
+
 describe file('/opt/pyload/bin/pyload') do
   it { should exist }
   it { should be_file }

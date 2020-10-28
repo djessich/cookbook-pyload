@@ -49,16 +49,12 @@ action :install do
 end
 
 action :install_pip do
-  raise "Install method #{new_resource.install_method} is only supported for version >= 0.5.0." unless pyload_next?(new_resource.version)
-
   pyload_install_pip new_resource.instance_name do
     copy_properties_from(new_resource, :version, :install_dir, :data_dir, :log_dir, :download_dir, :tmp_dir, :user, :group, :create_user, :create_group, :create_download_dir, :create_symlink, :sensitive)
   end
 end
 
 action :install_source do
-  raise "Install method #{new_resource.install_method} is only supported for version < 0.5.0." if pyload_next?(new_resource.version)
-
   pyload_install_source new_resource.instance_name do
     copy_properties_from(new_resource, :version, :install_dir, :data_dir, :log_dir, :download_dir, :tmp_dir, :user, :group, :source_path, :source_url, :source_checksum, :create_user, :create_group, :create_download_dir, :create_symlink, :sensitive)
   end

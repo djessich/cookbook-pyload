@@ -78,7 +78,7 @@ Installs an instance of Pyload regarding configured install method.
 
 * `install` - Default. Installs an instance of Pyload with configured installed method.
 * `install_pip` - Installs an instance of Pyload with install method `pip`. This install method requires version to be `>= 0.5.0`.
-* `install_source` - Installs an instance of Pyload with install method `source`. This install method requires version to be `< 0.5.0`.
+* `install_source` - Installs an instance of Pyload with install method `source`.
 
 #### Properties
 

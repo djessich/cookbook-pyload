@@ -53,13 +53,22 @@ action :install do
     end
   end
 
+  # Some Ubuntu versions lack support of Python 3.6+ in their minimal install,
+  # so add deadsnakes Ubuntu PPA
+  if platform?('ubuntu') && node['platform_version'] <= '16.04'
+    apt_repository 'deadsnakes-ubuntu-ppa' do
+      uri 'ppa:deadsnakes/ppa'
+    end
+  end
+
   # Some RHEL systems lack tar in their minimal install
-  package %w(tar gzip)
+  package %w(tar unzip)
 
   build_essential 'install build packages'
 
   package 'install python packages' do
-    package_name python2_packages
+    package_name python_packages(new_resource.version)
+    options '--enablerepo=ol7_optional_latest' if platform?('oracle') && node['platform_version'].to_i == 7
   end
 
   package 'install dependency packages' do
@@ -81,19 +90,17 @@ action :install do
   end
 
   execute 'create virtual environment' do
-    command python2_virtualenv_command(full_install_path)
+    command python_virtualenv_command(new_resource.version, full_install_path)
     creates full_install_path
     notifies :run, 'execute[upgrade pip packages to latest version in virtual environment]', :immediately
   end
 
-  # On Ubuntu 16.04 the installed version of setuptools is 45.0.0 which does not
-  # support Python 2, so pin setuptools to version 44.1.1 which does support it
   execute 'upgrade pip packages to latest version in virtual environment' do
-    command "#{full_install_path}/bin/pip install --disable-pip-version-check --no-cache-dir --upgrade pip setuptools==44.1.1 wheel"
+    command pip_virtualenv_upgrade_command(new_resource.version, full_install_path)
     action :nothing
   end
 
-  %w(beaker beautifulsoup4 feedparser flup html5lib jinja2 js2py pillow pycrypto pycurl pyopenssl pytesseract thrift).each do |pip_pkg|
+  pip_packages.each do |pip_pkg|
     execute "install pip package #{pip_pkg} in virtual environment" do
       command "#{full_install_path}/bin/pip install --disable-pip-version-check --no-cache-dir #{pip_pkg}"
       environment(
@@ -122,25 +129,35 @@ action :install do
 
   execute 'extract pyload distribution source to virtual environment' do
     command extract_command
-    creates "#{full_install_path}/dist/LICENSE.MD"
+    creates license_path
   end
 
-  # Ensure the instance user owns the distribution directory
-  execute 'ensure permissions of distribution directory contents in virtual environment' do
-    command "chown -R #{new_resource.user}:#{new_resource.group} #{full_install_path}/dist"
-    not_if { ::Etc.getpwuid(::File.stat("#{full_install_path}/dist/LICENSE.MD").uid).name == new_resource.user }
-  end
+  if pyload_next?(new_resource.version)
+    execute 'build locale files for pyload in virtual environment' do
+      cwd "#{full_install_path}/dist"
+      command "#{full_install_path}/bin/python setup.py build_locale"
+      creates "#{full_install_path}/src/pyload/locale/pyload.pot"
+    end
 
-  %w(pyLoadCli pyLoadCore pyLoadGui).each do |bin|
-    link "#{full_install_path}/bin/#{bin}" do
-      to "#{full_install_path}/dist/#{bin}.py"
+    execute 'install pyload distribution in virtual environment' do
+      cwd "#{full_install_path}/dist"
+      command "#{full_install_path}/bin/python setup.py install"
+      creates "#{full_install_path}/bin/pyload"
+    end
+  else
+    %w(pyLoadCli pyLoadCore pyLoadGui).each do |bin|
+      link "#{full_install_path}/bin/#{bin}" do
+        to "#{full_install_path}/dist/#{bin}.py"
+      end
     end
   end
 
-  %W(
-    #{new_resource.data_dir}
-    #{new_resource.log_dir}
-  ).each do |dir|
+  execute 'ensure permissions of distribution directory contents in virtual environment' do
+    command "chown -R #{new_resource.user}:#{new_resource.group} #{full_install_path}/dist"
+    not_if { ::Etc.getpwuid(::File.stat(license_path).uid).name == new_resource.user }
+  end
+
+  required_directories.each do |dir|
     directory dir do
       owner new_resource.user
       group new_resource.group
@@ -165,6 +182,43 @@ action :install do
 end
 
 action_class do
+  # Returns the packages to be installed with Python PIP for specified pyload
+  # version.
+  def pip_packages
+    if pyload_next?(new_resource.version)
+      %w(
+        Babel beautifulsoup4 bitmath cheroot colorlog cryptography filetype
+        Flask Flask-Babel Flask-Caching Flask-Themes2 Jinja2 Js2Py Pillow
+        pycryptodomex pycurl pyOpenSSL pyxmpp2 semver Send2Trash
+      )
+    else
+      %w(
+        Beaker beautifulsoup4 feedparser flup html5lib Jinja2 Js2Py Pillow
+        pycrypto pycurl pyOpenSSL pytesseract thrift
+      )
+    end
+  end
+
+  # Returns the required directories to be created for specified pyload version.
+  def required_directories
+    if pyload_next?(new_resource.version)
+      %W(
+        #{new_resource.tmp_dir}
+        #{new_resource.data_dir}
+        #{new_resource.data_dir}/data
+        #{new_resource.data_dir}/plugins
+        #{new_resource.data_dir}/scripts
+        #{new_resource.data_dir}/settings
+        #{new_resource.log_dir}
+      )
+    else
+      %W(
+        #{new_resource.data_dir}
+        #{new_resource.log_dir}
+      )
+    end
+  end
+
   # Returns the absolute path to full install directory for specified pyload
   # version.
   def full_install_path
@@ -176,9 +230,22 @@ action_class do
     "#{::File.dirname(new_resource.install_dir)}/#{dir}"
   end
 
-  # Returns the command to extract pyload distribution to full install directory
-  # for specified pyload version. Thereby the first component will# be stripped.
+  # Returns the absolute path to license file of pyload distribution for
+  # specified pyload version.
+  def license_path
+    pyload_next?(new_resource.version) ? "#{full_install_path}/dist/LICENSE.md" : "#{full_install_path}/dist/LICENSE.MD"
+  end
+
+  # Returns the command to extract pyload distribution to full install directory.
+  # The command will be specific to the distribution archive and the first
+  # component will be stripped from archive.
   def extract_command
-    "tar -xzf #{new_resource.source_path} -C #{full_install_path}/dist --strip-components=1"
+    if ::File.basename(new_resource.source_url).end_with?('zip')
+      require 'tmpdir'
+      tmpdir = ::Dir.mktmpdir
+      "unzip -q -o #{new_resource.source_path} -d #{tmpdir} && cp -R #{tmpdir}/*/* #{full_install_path}/dist && rm -rf #{tmpdir}"
+    else
+      "tar -xzf #{new_resource.source_path} -C #{full_install_path}/dist --strip-components=1"
+    end
   end
 end

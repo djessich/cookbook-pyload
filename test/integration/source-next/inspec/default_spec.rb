@@ -1,6 +1,6 @@
 #
 # Cookbook:: pyload
-# Test:: default/default_spec
+# Test:: pip/default_spec
 #
 # Copyright:: 2020, Dominik Jessich
 #
@@ -38,18 +38,18 @@ end
 
 case os.family
 when 'debian'
-  packages = if os.release == '20.04'
-               %w(python-is-python2 python-dev-is-python2 virtualenv tar unzip curl libcurl4-openssl-dev openssl libssl-dev sqlite3 tesseract-ocr tesseract-ocr-eng)
+  packages = if os.release == '16.04'
+               %w(python3.6 python3.6-dev python3.6-venv tar unzip curl libcurl4-openssl-dev openssl libssl-dev sqlite3 tesseract-ocr tesseract-ocr-eng)
              else
-               %w(python python-dev virtualenv tar unzip curl libcurl4-openssl-dev openssl libssl-dev sqlite3 tesseract-ocr tesseract-ocr-eng)
+               %w(python3 python3-dev python3-venv tar unzip curl libcurl4-openssl-dev openssl libssl-dev sqlite3 tesseract-ocr tesseract-ocr-eng)
              end
 when 'fedora'
-  packages = %w(python2.7 python3-virtualenv tar unzip curl libcurl-devel openssl openssl-devel sqlite tesseract)
+  packages = %w(python3 python3-devel tar unzip curl libcurl-devel openssl openssl-devel sqlite tesseract)
 when 'redhat'
   packages = if os.release.to_i >= 8
-               %w(python2 python2-devel python3-virtualenv tar unzip curl libcurl-devel openssl openssl-devel sqlite tesseract)
+               %w(python36 python36-devel tar unzip curl libcurl-devel openssl openssl-devel sqlite tesseract)
              else
-               %w(python python-devel python-virtualenv tar unzip curl libcurl-devel openssl openssl-devel sqlite tesseract)
+               %w(python3 python3-devel tar unzip curl libcurl-devel openssl openssl-devel sqlite tesseract)
              end
 end
 
@@ -80,7 +80,7 @@ describe etc_group.where(name: 'pyload') do
   its('users') { should eq [] }
 end
 
-describe file('/opt/pyload-0.4.20') do
+describe file('/opt/pyload-0.5.0a9.dev655') do
   it { should exist }
   it { should be_directory }
   its('owner') { should eq 'root' }
@@ -91,7 +91,7 @@ end
 describe file('/opt/pyload') do
   it { should exist }
   it { should be_symlink }
-  its('link_path') { should eq '/opt/pyload-0.4.20' }
+  its('link_path') { should eq '/opt/pyload-0.5.0a9.dev655' }
 end
 
 describe file('/opt/pyload/bin/activate') do
@@ -110,7 +110,7 @@ describe file('/opt/pyload/bin/python') do
   its('mode') { should cmp '0755' }
 end
 
-describe file('/opt/pyload/bin/python2') do
+describe file('/opt/pyload/bin/python3') do
   it { should exist }
   it { should be_file }
   its('owner') { should eq 'root' }
@@ -126,7 +126,7 @@ describe file('/opt/pyload/bin/pip') do
   its('mode') { should cmp '0755' }
 end
 
-describe file('/opt/pyload/bin/pip2') do
+describe file('/opt/pyload/bin/pip3') do
   it { should exist }
   it { should be_file }
   its('owner') { should eq 'root' }
@@ -135,13 +135,14 @@ describe file('/opt/pyload/bin/pip2') do
 end
 
 %w(
-  Beaker beautifulsoup4 feedparser flup html5lib Jinja2 Js2Py Pillow pycrypto
-  pycurl pyOpenSSL pytesseract thrift
+  Babel beautifulsoup4 bitmath cheroot colorlog cryptography filetype Flask
+  Flask-Babel Flask-Caching Flask-Themes2 Jinja2 Js2Py Pillow pycryptodomex
+  pycurl pyOpenSSL pyxmpp2 semver Send2Trash
 ).each do |pip_pkg|
   describe command("/opt/pyload/bin/pip show #{pip_pkg}") do
     its('exit_status') { should eq 0 }
     its('stdout') { should match(/Name\:\s#{pip_pkg}/) }
-    its('stdout') { should match(%r{Location\:\s/opt/pyload\-0\.4\.20/lib(?:64)?/python2\.\d/site\-packages}) }
+    its('stdout') { should match(%r{Location\:\s/opt/pyload\-0\.5\.0a9\.dev655/lib(?:64)?/python3\.\d/site\-packages}) }
   end
 end
 
@@ -153,33 +154,55 @@ describe file('/opt/pyload/dist') do
   its('mode') { should cmp '0755' }
 end
 
-describe file('/opt/pyload/dist/LICENSE.MD') do
+describe file('/opt/pyload/dist/LICENSE.md') do
   it { should exist }
   it { should be_file }
   its('owner') { should eq 'pyload' }
   its('group') { should eq 'pyload' }
-  its('mode') { should cmp '0664' }
+  its('mode') { should cmp '0644' }
 end
 
-describe file('/opt/pyload/bin/pyLoadCli') do
+describe file('/opt/pyload/bin/pyload') do
   it { should exist }
-  it { should be_symlink }
-  its('link_path') { should eq '/opt/pyload-0.4.20/dist/pyLoadCli.py' }
-end
-
-describe file('/opt/pyload/bin/pyLoadCore') do
-  it { should exist }
-  it { should be_symlink }
-  its('link_path') { should eq '/opt/pyload-0.4.20/dist/pyLoadCore.py' }
-end
-
-describe file('/opt/pyload/bin/pyLoadGui') do
-  it { should exist }
-  it { should be_symlink }
-  its('link_path') { should eq '/opt/pyload-0.4.20/dist/pyLoadGui.py' }
+  it { should be_file }
+  its('owner') { should eq 'root' }
+  its('group') { should eq 'root' }
+  its('mode') { should cmp '0755' }
 end
 
 describe file('/var/lib/pyload') do
+  it { should exist }
+  it { should be_directory }
+  its('owner') { should eq 'pyload' }
+  its('group') { should eq 'pyload' }
+  its('mode') { should cmp '0755' }
+end
+
+describe file('/var/lib/pyload/data') do
+  it { should exist }
+  it { should be_directory }
+  its('owner') { should eq 'pyload' }
+  its('group') { should eq 'pyload' }
+  its('mode') { should cmp '0755' }
+end
+
+describe file('/var/lib/pyload/plugins') do
+  it { should exist }
+  it { should be_directory }
+  its('owner') { should eq 'pyload' }
+  its('group') { should eq 'pyload' }
+  its('mode') { should cmp '0755' }
+end
+
+describe file('/var/lib/pyload/scripts') do
+  it { should exist }
+  it { should be_directory }
+  its('owner') { should eq 'pyload' }
+  its('group') { should eq 'pyload' }
+  its('mode') { should cmp '0755' }
+end
+
+describe file('/var/lib/pyload/settings') do
   it { should exist }
   it { should be_directory }
   its('owner') { should eq 'pyload' }
@@ -203,7 +226,15 @@ describe file('/tmp/downloads') do
   its('mode') { should cmp '0755' }
 end
 
-describe file('/var/lib/pyload/accounts.conf') do
+describe file('/tmp/pyload') do
+  it { should exist }
+  it { should be_directory }
+  its('owner') { should eq 'pyload' }
+  its('group') { should eq 'pyload' }
+  its('mode') { should cmp '0755' }
+end
+
+describe file('/var/lib/pyload/settings/accounts.conf') do
   it { should exist }
   it { should be_file }
   its('owner') { should eq 'pyload' }
@@ -211,7 +242,7 @@ describe file('/var/lib/pyload/accounts.conf') do
   its('mode') { should cmp '0600' }
 end
 
-describe file('/var/lib/pyload/plugin.conf') do
+describe file('/var/lib/pyload/settings/plugins.cfg') do
   it { should exist }
   it { should be_file }
   its('owner') { should eq 'pyload' }
@@ -219,34 +250,40 @@ describe file('/var/lib/pyload/plugin.conf') do
   its('mode') { should cmp '0600' }
 end
 
-describe file('/var/lib/pyload/pyload.conf') do
+describe file('/var/lib/pyload/settings/pyload.cfg') do
   it { should exist }
   it { should be_file }
   its('owner') { should eq 'pyload' }
   its('group') { should eq 'pyload' }
   its('mode') { should cmp '0600' }
-  its('content') { should match(/version\:\s1\s/) }
+  its('content') { should match(/version\:\s2\s/) }
   its('content') { should match(%r{download\s[a-zA-Z0-9\-\."\:;_='\(\)/\n\s]*int\schunks\s\:\s"Max\sconnections\sfor\sone\sdownload"\s\=\s3}) }
-  its('content') { should match(%r{download\s[a-zA-Z0-9\-\."\:;_='\(\)/\n\s]*str\sinterface\s:\s"Download\sinterface\sto\sbind\s\(ip\sor\sName\)"\s\=\s}) }
+  its('content') { should match(%r{download\s[a-zA-Z0-9\-\."\:;_='\(\)/\n\s]*time\send_time\s\:\s"End"\s\=\s0\:00}) }
+  its('content') { should match(%r{download\s[a-zA-Z0-9\-\."\:;_='\(\)/\n\s]*ip\sinterface\s:\s"Download\sinterface\sto\sbind\s\(IP\sAddress\)"\s\=\s}) }
   its('content') { should match(%r{download\s[a-zA-Z0-9\-\."\:;_='\(\)/\n\s]*bool\sipv6\s\:\s"Allow\sIPv6"\s=\sFalse}) }
   its('content') { should match(%r{download\s[a-zA-Z0-9\-\."\:;_='\(\)/\n\s]*bool\slimit_speed\s:\s"Limit\sDownload\sSpeed"\s\=\sFalse}) }
   its('content') { should match(%r{download\s[a-zA-Z0-9\-\."\:;_='\(\)/\n\s]*int\smax_downloads\s:\s"Max\sParallel\sDownloads"\s\=\s3}) }
-  its('content') { should match(%r{download\s[a-zA-Z0-9\-\."\:;_='\(\)/\n\s]*int\smax_speed\s:\s"Max\sDownload\sSpeed\sin\skb/s"\s\=\s-1}) }
+  its('content') { should match(%r{download\s[a-zA-Z0-9\-\."\:;_='\(\)/\n\s]*int\smax_speed\s:\s"Max\sDownload\sSpeed\sin\sKiB/s"\s\=\s-1}) }
   its('content') { should match(%r{download\s[a-zA-Z0-9\-\."\:;_='\(\)/\n\s]*bool\sskip_existing\s:\s"Skip\salready\sexisting\sfiles"\s\=\sFalse}) }
-  its('content') { should match(%r{downloadTime\s[a-zA-Z0-9\-\."\:;_='\(\)/\n\s]*time\send\s\:\s"End"\s\=\s0\:00}) }
-  its('content') { should match(%r{downloadTime\s[a-zA-Z0-9\-\."\:;_='\(\)/\n\s]*time\sstart\s:\s"Start"\s\=\s0\:00}) }
-  its('content') { should match(%r{general\s[a-zA-Z0-9\-\."\:;_='\(\)/\n\s]*bool\schecksum\s:\s"Use\sChecksum"\s\=\sFalse}) }
-  its('content') { should match(%r{general\s[a-zA-Z0-9\-\."\:;_='\(\)/\n\s]*bool\sdebug_mode\s:\s"Debug\sMode"\s\=\sFalse}) }
-  its('content') { should match(%r{general\s[a-zA-Z0-9\-\."\:;_='\(\)/\n\s]*folder\sdownload_folder\s:\s"Download\sFolder"\s\=\s/tmp/downloads}) }
+  its('content') { should match(%r{download\s[a-zA-Z0-9\-\."\:;_='\(\)/\n\s]*time\sstart_time\s:\s"Start"\s\=\s0\:00}) }
+  its('content') { should match(%r{general\s[a-zA-Z0-9\-\."\:;_='\(\)/\n\s]*debug;trace;stack\sdebug_level\s:\s"Debug\sLevel"\s\=\strace}) }
+  its('content') { should match(%r{general\s[a-zA-Z0-9\-\."\:;_='\(\)/\n\s]*bool\sdebug_mode\s:\s"Debug\sMode"\s\=\sTrue}) }
   its('content') { should match(%r{general\s[a-zA-Z0-9\-\."\:;_='\(\)/\n\s]*bool\sfolder_per_package\s:\s"Create\sfolder\sfor\seach\spackage"\s\=\sTrue}) }
-  its('content') { should match(%r{general\s[a-zA-Z0-9\-\."\:;_='\(\)/\n\s]*en;de;fr;it;es;nl;sv;ru;pl;cs;sr;pt_BR\slanguage\s:\s"Language"\s\=\sen}) }
-  its('content') { should match(%r{general\s[a-zA-Z0-9\-\."\:;_='\(\)/\n\s]*int\smin_free_space\s:\s"Min\sFree\sSpace\s\(MB\)"\s\=\s1024}) }
-  its('content') { should match(%r{general\s[a-zA-Z0-9\-\."\:;_='\(\)/\n\s]*int\srenice\s:\s"CPU\sPriority"\s\=\s0}) }
-  its('content') { should match(%r{log\s[a-zA-Z0-9\-\."\:;_='\(\)/\n\s]*bool\sfile_log\s:\s"File\sLog"\s\=\sTrue}) }
-  its('content') { should match(%r{log\s[a-zA-Z0-9\-\."\:;_='\(\)/\n\s]*int\slog_count\s:\s"Count"\s\=\s10}) }
-  its('content') { should match(%r{log\s[a-zA-Z0-9\-\."\:;_='\(\)/\n\s]*folder\slog_folder\s:\s"Folder"\s\=\s/var/log/pyload}) }
-  its('content') { should match(%r{log\s[a-zA-Z0-9\-\."\:;_='\(\)/\n\s]*bool\slog_rotate\s:\s"Log\sRotate"\s\=\sTrue}) }
-  its('content') { should match(%r{log\s[a-zA-Z0-9\-\."\:;_='\(\)/\n\s]*int\slog_size\s:\s"Size\sin\skb"\s\=\s100}) }
+  its('content') { should match(%r{general\s[a-zA-Z0-9\-\."\:;_='\(\)/\n\s]*en;\slanguage\s:\s"Language"\s\=\sen}) }
+  its('content') { should match(%r{general\s[a-zA-Z0-9\-\."\:;_='\(\)/\n\s]*int\smin_free_space\s:\s"Min\sFree\sSpace\sin\sMiB"\s\=\s1024}) }
+  its('content') { should match(%r{general\s[a-zA-Z0-9\-\."\:;_='\(\)/\n\s]*folder\sstorage_folder\s:\s"Download\sFolder"\s\=\s/tmp/downloads}) }
+  its('content') { should match(%r{log\s[a-zA-Z0-9\-\."\:;_='\(\)/\n\s]*bool\sconsole\s:\s"Print\slog\sto\sconsole"\s\=\sTrue}) }
+  its('content') { should match(%r{log\s[a-zA-Z0-9\-\."\:;_='\(\)/\n\s]*bool\sconsole_color\s:\s"Colorize\sconsole"\s\=\sFalse}) }
+  its('content') { should match(%r{log\s[a-zA-Z0-9\-\."\:;_='\(\)/\n\s]*bool\sfilelog\s:\s"Save\slog\sto\sfile"\s\=\sTrue}) }
+  its('content') { should match(%r{log\s[a-zA-Z0-9\-\."\:;_='\(\)/\n\s]*int\sfilelog_entries\s:\s"Max\slog\sfiles"\s\=\s10}) }
+  its('content') { should match(%r{log\s[a-zA-Z0-9\-\."\:;_='\(\)/\n\s]*folder\sfilelog_folder\s:\s"File\sfolder"\s\=\s/var/log/pyload}) }
+  its('content') { should match(%r{log\s[a-zA-Z0-9\-\."\:;_='\(\)/\n\s]*bool\sfilelog_rotate\s:\s"Log\srotate"\s\=\sTrue}) }
+  its('content') { should match(%r{log\s[a-zA-Z0-9\-\."\:;_='\(\)/\n\s]*int\sfilelog_size\s:\s"Max\sfile\ssize\s\(in\sKiB\)"\s\=\s100}) }
+  its('content') { should match(%r{log\s[a-zA-Z0-9\-\."\:;_='\(\)/\n\s]*bool\ssyslog\s:\s"Sent\slog\sto\ssyslog"\s\=\sFalse}) }
+  its('content') { should match(%r{log\s[a-zA-Z0-9\-\."\:;_='\(\)/\n\s]*folder\ssyslog_folder\s:\s"Syslog\slocal\sfolder"\s\=\s}) }
+  its('content') { should match(%r{log\s[a-zA-Z0-9\-\."\:;_='\(\)/\n\s]*ip\ssyslog_host\s:\s"Syslog\sremote\sIP\sAddress"\s\=\slocalhost}) }
+  its('content') { should match(%r{log\s[a-zA-Z0-9\-\."\:;_='\(\)/\n\s]*local;remote\ssyslog_location\s:\s"Syslog\slocation"\s\=\slocal}) }
+  its('content') { should match(%r{log\s[a-zA-Z0-9\-\."\:;_='\(\)/\n\s]*int\ssyslog_port\s:\s"Syslog\sremote\sPort"\s\=\s514}) }
   its('content') { should match(%r{permission\s[a-zA-Z0-9\-\."\:;_='\(\)/\n\s]*bool\schange_dl\s:\s"Change\sGroup\sand\sUser\sof\sDownloads"\s\=\sFalse}) }
   its('content') { should match(%r{permission\s[a-zA-Z0-9\-\."\:;_='\(\)/\n\s]*bool\schange_file\s:\s"Change\sfile\smode\sof\sdownloads"\s\=\sFalse}) }
   its('content') { should match(%r{permission\s[a-zA-Z0-9\-\."\:;_='\(\)/\n\s]*bool\schange_group\s:\s"Change\sgroup\sof\srunning\sprocess"\s\=\sFalse}) }
@@ -255,31 +292,27 @@ describe file('/var/lib/pyload/pyload.conf') do
   its('content') { should match(%r{permission\s[a-zA-Z0-9\-\."\:;_='\(\)/\n\s]*str\sfolder\s:\s"Folder\sPermission\smode"\s\=\s0755}) }
   its('content') { should match(%r{permission\s[a-zA-Z0-9\-\."\:;_='\(\)/\n\s]*str\sgroup\s:\s"Groupname"\s\=\spyload}) }
   its('content') { should match(%r{permission\s[a-zA-Z0-9\-\."\:;_='\(\)/\n\s]*str\suser\s:\s"Username"\s\=\spyload}) }
-  its('content') { should match(%r{proxy\s[a-zA-Z0-9\-\."\:;_='\(\)/\n\s]*str\saddress\s:\s"Address"\s\=\slocalhost}) }
+  its('content') { should match(%r{proxy\s[a-zA-Z0-9\-\."\:;_='\(\)/\n\s]*bool\senabled\s:\s"Activated"\s\=\sFalse}) }
+  its('content') { should match(%r{proxy\s[a-zA-Z0-9\-\."\:;_='\(\)/\n\s]*ip\shost\s:\s"IP\sAddress"\s\=\slocalhost}) }
   its('content') { should match(%r{proxy\s[a-zA-Z0-9\-\."\:;_='\(\)/\n\s]*password\spassword\s:\s"Password"\s\=\s}) }
   its('content') { should match(%r{proxy\s[a-zA-Z0-9\-\."\:;_='\(\)/\n\s]*int\sport\s:\s"Port"\s\=\s7070}) }
-  its('content') { should match(%r{proxy\s[a-zA-Z0-9\-\."\:;_='\(\)/\n\s]*bool\sproxy\s:\s"Use\sProxy"\s\=\sFalse}) }
   its('content') { should match(%r{proxy\s[a-zA-Z0-9\-\."\:;_='\(\)/\n\s]*http;socks4;socks5\stype\s:\s"Protocol"\s\=\shttp}) }
   its('content') { should match(%r{proxy\s[a-zA-Z0-9\-\."\:;_='\(\)/\n\s]*str\susername\s:\s"Username"\s\=\s}) }
-  its('content') { should match(%r{reconnect\s[a-zA-Z0-9\-\."\:;_='\(\)/\n\s]*bool\sactivated\s:\s"Use\sReconnect"\s\=\sFalse}) }
-  its('content') { should match(%r{reconnect\s[a-zA-Z0-9\-\."\:;_='\(\)/\n\s]*time\sendTime\s:\s"End"\s\=\s0\:00}) }
-  its('content') { should match(%r{reconnect\s[a-zA-Z0-9\-\."\:;_='\(\)/\n\s]*str\smethod\s:\s"Method"\s\=\s}) }
-  its('content') { should match(%r{reconnect\s[a-zA-Z0-9\-\."\:;_='\(\)/\n\s]*time\sstartTime\s:\s"Start"\s\=\s0\:00}) }
-  its('content') { should match(%r{remote\s[a-zA-Z0-9\-\."\:;_='\(\)/\n\s]*bool\sactivated\s:\s"Activated"\s=\sFalse}) }
-  its('content') { should match(%r{remote\s[a-zA-Z0-9\-\."\:;_='\(\)/\n\s]*ip\slistenaddr\s:\s"Adress"\s=\s0\.0\.0\.0}) }
-  its('content') { should match(%r{remote\s[a-zA-Z0-9\-\."\:;_='\(\)/\n\s]*bool\snolocalauth\s:\s"No\sauthentication\son\slocal\sconnections"\s=\sTrue}) }
-  its('content') { should match(%r{remote\s[a-zA-Z0-9\-\."\:;_='\(\)/\n\s]*int\sport\s:\s"Port"\s=\s7227}) }
-  its('content') { should match(%r{ssl\s[a-zA-Z0-9\-\."\:;_='\(\)/\n\s]*bool\sactivated\s:\s"Activated"\s\=\sFalse}) }
-  its('content') { should match(%r{ssl\s[a-zA-Z0-9\-\."\:;_='\(\)/\n\s]*file\scert\s:\s"SSL\sCertificate"\s\=\s}) }
-  its('content') { should match(%r{ssl\s[a-zA-Z0-9\-\."\:;_='\(\)/\n\s]*file\skey\s:\s"SSL\sKey"\s\=\s}) }
-  its('content') { should match(%r{webinterface\s[a-zA-Z0-9\-\."\:;_='\(\)/\n\s]*bool\sactivated\s:\s"Activated"\s\=\sTrue}) }
-  its('content') { should match(%r{webinterface\s[a-zA-Z0-9\-\."\:;_='\(\)/\n\s]*bool\sbasicauth\s:\s"Use\sbasic\sauth"\s\=\sFalse}) }
-  its('content') { should match(%r{webinterface\s[a-zA-Z0-9\-\."\:;_='\(\)/\n\s]*ip\shost\s:\s"IP"\s\=\s0.0.0.0}) }
-  its('content') { should match(%r{webinterface\s[a-zA-Z0-9\-\."\:;_='\(\)/\n\s]*bool\shttps\s:\s"Use\sHTTPS"\s\=\sFalse}) }
-  its('content') { should match(%r{webinterface\s[a-zA-Z0-9\-\."\:;_='\(\)/\n\s]*int\sport\s:\s"Port"\s\=\s8000}) }
-  its('content') { should match(%r{webinterface\s[a-zA-Z0-9\-\."\:;_='\(\)/\n\s]*str\sprefix\s:\s"Path\sPrefix"\s\=\s}) }
-  its('content') { should match(%r{webinterface\s[a-zA-Z0-9\-\."\:;_='\(\)/\n\s]*builtin;threaded;fastcgi;lightweight\sserver\s:\s"Server"\s=\sbuiltin}) }
-  its('content') { should match(%r{webinterface\s[a-zA-Z0-9\-\."\:;_='\(\)/\n\s]*classic;pyplex;modern\stemplate\s:\s"Template"\s=\sclassic}) }
+  its('content') { should match(%r{reconnect\s[a-zA-Z0-9\-\."\:;_='\(\)/\n\s]*bool\senabled\s:\s"Activated"\s\=\sFalse}) }
+  its('content') { should match(%r{reconnect\s[a-zA-Z0-9\-\."\:;_='\(\)/\n\s]*time\send_time\s:\s"End"\s\=\s0\:00}) }
+  its('content') { should match(%r{reconnect\s[a-zA-Z0-9\-\."\:;_='\(\)/\n\s]*str\sscript\s:\s"Script"\s\=\s}) }
+  its('content') { should match(%r{reconnect\s[a-zA-Z0-9\-\."\:;_='\(\)/\n\s]*time\sstart_time\s:\s"Start"\s\=\s0\:00}) }
+  its('content') { should match(%r{webui\s[a-zA-Z0-9\-\."\:;_='\(\)/\n\s]*bool\sautologin\s:\s"Skip\slogin\sif\ssingle\suser"\s\=\sFalse}) }
+  its('content') { should match(%r{webui\s[a-zA-Z0-9\-\."\:;_='\(\)/\n\s]*bool\sdevelop\s:\s"Development\smode"\s\=\sFalse}) }
+  its('content') { should match(%r{webui\s[a-zA-Z0-9\-\."\:;_='\(\)/\n\s]*bool\senabled\s:\s"Activated"\s\=\sTrue}) }
+  its('content') { should match(%r{webui\s[a-zA-Z0-9\-\."\:;_='\(\)/\n\s]*ip\shost\s:\s"IP\sAddress"\s\=\s0\.0\.0\.0}) }
+  its('content') { should match(%r{webui\s[a-zA-Z0-9\-\."\:;_='\(\)/\n\s]*int\sport\s:\s"Port"\s\=\s8000}) }
+  its('content') { should match(%r{webui\s[a-zA-Z0-9\-\."\:;_='\(\)/\n\s]*str\sprefix\s:\s"Path\sPrefix"\s\=\s}) }
+  its('content') { should match(%r{webui\s[a-zA-Z0-9\-\."\:;_='\(\)/\n\s]*file\sssl_certchain\s:\s"CA's\sintermediate\scertificate\sbundle\s\(optional\)"\s\=\s}) }
+  its('content') { should match(%r{webui\s[a-zA-Z0-9\-\."\:;_='\(\)/\n\s]*file\sssl_certfile\s:\s"SSL\sCertificate"\s\=\s}) }
+  its('content') { should match(%r{webui\s[a-zA-Z0-9\-\."\:;_='\(\)/\n\s]*file\sssl_keyfile\s:\s"SSL\sKey"\s\=\s}) }
+  its('content') { should match(%r{webui\s[a-zA-Z0-9\-\."\:;_='\(\)/\n\s]*Default;PyPlex\stheme\s:\s"Theme"\s\=\sDefault}) }
+  its('content') { should match(%r{webui\s[a-zA-Z0-9\-\."\:;_='\(\)/\n\s]*bool\suse_ssl\s:\s"Use\sHTTPS"\s\=\sFalse}) }
 end
 
 describe service('pyload') do
@@ -294,7 +327,7 @@ describe file('/etc/systemd/system/pyload.service') do
   its('owner') { should eq 'root' }
   its('group') { should eq 'root' }
   its('mode') { should cmp '0644' }
-  its('content') { should match(%r{/opt/pyload/bin/python /opt/pyload/bin/pyLoadCore --configdir=/var/lib/pyload}) }
+  its('content') { should match(%r{/opt/pyload/bin/python /opt/pyload/bin/pyload --userdir /var/lib/pyload --storagedir /tmp/downloads --tempdir /tmp/pyload}) }
 end
 
 describe processes('pyload') do

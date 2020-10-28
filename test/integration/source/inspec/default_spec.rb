@@ -39,17 +39,17 @@ end
 case os.family
 when 'debian'
   packages = if os.release == '20.04'
-               %w(python-is-python2 python-dev-is-python2 virtualenv tar gzip curl libcurl4-openssl-dev openssl libssl-dev sqlite3 tesseract-ocr tesseract-ocr-eng)
+               %w(python-is-python2 python-dev-is-python2 virtualenv tar unzip curl libcurl4-openssl-dev openssl libssl-dev sqlite3 tesseract-ocr tesseract-ocr-eng)
              else
-               %w(python python-dev virtualenv tar gzip curl libcurl4-openssl-dev openssl libssl-dev sqlite3 tesseract-ocr tesseract-ocr-eng)
+               %w(python python-dev virtualenv tar unzip curl libcurl4-openssl-dev openssl libssl-dev sqlite3 tesseract-ocr tesseract-ocr-eng)
              end
 when 'fedora'
-  packages = %w(python2.7 python3-virtualenv tar gzip curl libcurl-devel openssl openssl-devel sqlite tesseract)
+  packages = %w(python2.7 python3-virtualenv tar unzip curl libcurl-devel openssl openssl-devel sqlite tesseract)
 when 'redhat'
   packages = if os.release.to_i >= 8
-               %w(python2 python2-devel python3-virtualenv tar gzip curl libcurl-devel openssl openssl-devel sqlite tesseract)
+               %w(python2 python2-devel python3-virtualenv tar unzip curl libcurl-devel openssl openssl-devel sqlite tesseract)
              else
-               %w(python python-devel python-virtualenv tar gzip curl libcurl-devel openssl openssl-devel sqlite tesseract)
+               %w(python python-devel python-virtualenv tar unzip curl libcurl-devel openssl openssl-devel sqlite tesseract)
              end
 end
 
@@ -134,11 +134,14 @@ describe file('/opt/pyload/bin/pip2') do
   its('mode') { should cmp '0755' }
 end
 
-%w(Beaker beautifulsoup4 feedparser flup html5lib Jinja2 Js2Py Pillow pycrypto pycurl pyOpenSSL pytesseract thrift).each do |pip_pkg|
+%w(
+  Beaker beautifulsoup4 feedparser flup html5lib Jinja2 Js2Py Pillow pycrypto
+  pycurl pyOpenSSL pytesseract thrift
+).each do |pip_pkg|
   describe command("/opt/pyload/bin/pip show #{pip_pkg}") do
     its('exit_status') { should eq 0 }
     its('stdout') { should match(/Name\:\s#{pip_pkg}/) }
-    its('stdout') { should match(%r{Location\:\s/opt/pyload\-0\.4\.20/lib(?:64)?/python2\.7/site\-packages}) }
+    its('stdout') { should match(%r{Location\:\s/opt/pyload\-0\.4\.20/lib(?:64)?/python2\.\d/site\-packages}) }
   end
 end
 

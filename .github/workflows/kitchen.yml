@@ -27,6 +27,7 @@ jobs:
           - 'multiple'
           - 'pip'
           - 'source'
+          - 'source-next'
       fail-fast: false
 
     steps:

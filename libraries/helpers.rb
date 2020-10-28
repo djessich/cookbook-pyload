@@ -79,6 +79,7 @@ module PyloadCookbook
     def default_pyload_source_url(version)
       urls = {
         '0.4.20' => 'https://github.com/pyload/pyload/archive/0.4.20.tar.gz',
+        '0.5.0a9.dev655' => 'https://files.pythonhosted.org/packages/d3/5e/a9be976a751574133fa58ebdbd0373cc733985fb68b1d9c1be83d554fdf4/pyload-ng-0.5.0a9.dev655.zip',
       }
       urls[version]
     end
@@ -88,6 +89,7 @@ module PyloadCookbook
     def default_pyload_source_checksum(version)
       checksums = {
         '0.4.20' => '438f9a2fc8ecb13b75f55b00192a2192c96a0a08ec1ae842cea17c7c49aab500',
+        '0.5.0a9.dev655' => 'be06c5996ea2b7e82e65b3b3b97d18eeb0741ab9a3d8360991b8a5c54640558f',
       }
       checksums[version]
     end
@@ -121,6 +123,12 @@ module PyloadCookbook
     # Checks if given version refers to pyload next (pyload-ng).
     def pyload_next?(version)
       version >= '0.5.0'
+    end
+
+    # Returns required python packages regarding the specified pyload version
+    # and the nodes platform.
+    def python_packages(version)
+      pyload_next?(version) ? python3_packages : python2_packages
     end
 
     # Returns Python 2 packages regarding the nodes platform.
@@ -161,6 +169,12 @@ module PyloadCookbook
       end
     end
 
+    # Returns the Python virtual environment command regarding the specified
+    # pyload version and the nodes platform.
+    def python_virtualenv_command(version, path)
+      pyload_next?(version) ? python3_virtualenv_command(path) : python2_virtualenv_command(path)
+    end
+
     # Returns the Python 2 virtual environment command regarding the nodes
     # platform.
     def python2_virtualenv_command(path)
@@ -179,6 +193,24 @@ module PyloadCookbook
             end
       cmd << " -m venv #{path}"
       cmd
+    end
+
+    # Returns the PIP upgrade command for a virtual environment regarding the
+    # specified pyload version and the nodes platform.
+    def pip_virtualenv_upgrade_command(version, path)
+      pyload_next?(version) ? pip3_virtualenv_upgrade_command(path) : pip2_virtualenv_upgrade_command(path)
+    end
+
+    # Returns the PIP 2 upgrade command for a virtual environment regarding the
+    # nodes platform.
+    def pip2_virtualenv_upgrade_command(path)
+      "#{path}/bin/pip install --disable-pip-version-check --no-cache-dir --upgrade pip setuptools==44.1.1 wheel"
+    end
+
+    # Returns the PIP 3 upgrade command for a virtual environment regarding the
+    # nodes platform.
+    def pip3_virtualenv_upgrade_command(path)
+      "#{path}/bin/pip install --disable-pip-version-check --no-cache-dir --upgrade pip setuptools wheel"
     end
 
     # Returns dependency packages of pyload regarding nodes platform family.
