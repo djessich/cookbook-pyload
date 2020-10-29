@@ -11,12 +11,10 @@ This cookbook provides resources for installing and configuring [Pyload](https:/
 
 ### Platforms
 
-* CentOS 7+
-* Debian 10+
-* Fedora 30+
-* Oracle 7+
-* RHEL 7+
-* Ubuntu 16.04+
+* Debian / Ubuntu
+* RHEL / CentOS / Oracle
+* Fedora
+* openSUSE / SUSE Linux Enterprises
 
 ### Chef
 

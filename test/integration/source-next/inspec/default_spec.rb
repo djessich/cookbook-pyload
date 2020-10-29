@@ -51,6 +51,8 @@ when 'redhat'
              else
                %w(python3 python3-devel tar unzip curl libcurl-devel openssl openssl-devel sqlite tesseract)
              end
+when 'suse'
+  packages = %w(python3 python3-devel tar unzip curl libcurl-devel openssl libopenssl-devel sqlite3 tesseract-ocr)
 end
 
 packages.each do |pkg|

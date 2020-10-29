@@ -144,6 +144,8 @@ module PyloadCookbook
         else
           %w(python2 python2-devel virtualenv)
         end
+      when 'suse'
+        %w(python python-devel python2-virtualenv)
       else
         raise "Unsupported platform family #{node['platform_family']}. Is it supported by this cookbook?"
       end
@@ -162,7 +164,7 @@ module PyloadCookbook
       case node['platform_family']
       when 'debian'
         %w(python3 python3-dev python3-venv)
-      when 'rhel', 'fedora'
+      when 'rhel', 'fedora', 'suse'
         %w(python3 python3-devel)
       else
         raise "Unsupported platform family #{node['platform_family']}. Is it supported by this cookbook?"
@@ -220,6 +222,8 @@ module PyloadCookbook
         %w(curl libcurl4-openssl-dev openssl libssl-dev sqlite3 tesseract-ocr tesseract-ocr-eng)
       when 'rhel', 'fedora'
         %w(curl libcurl-devel openssl openssl-devel sqlite tesseract)
+      when 'suse'
+        %w(curl libcurl-devel openssl libopenssl-devel sqlite3 tesseract-ocr)
       else
         raise "Unsupported platform family #{node['platform_family']}. Is it supported by this cookbook?"
       end
