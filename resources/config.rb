@@ -167,7 +167,6 @@ action :create do
 end
 
 action_class do
-
   # Returns the config file path for given pyload version.
   def config_path(version, data_dir)
     if pyload_next?(version)
@@ -184,12 +183,13 @@ action_class do
   end
 
   # Checks if the line specifying the theme in Pyload configuration file is of
-  # default format.
+  # changed format.
   # See: https://github.com/pyload/pyload/issues/3841
   def config_theme_changed_line?(version, data_dir)
     config_file = config_path(version, data_dir)
     return false unless ::File.exist?(config_file)
-    ::File.readlines(config_file).grep(/classic;modern;pyplex/).size > 0
+    result = ::File.readlines(config_file).grep(/classic;modern;pyplex/)
+    !result.empty?
   end
 
   # Transforms the given boolean value to its python equivalent.
