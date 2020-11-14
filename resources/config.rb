@@ -158,6 +158,7 @@ action :create do
       syslog_location: new_resource.syslog_location,
       syslog_port: new_resource.syslog_port,
       theme: new_resource.theme || default_pyload_config_value_theme(pyload_install_resource.version),
+      theme_changed_line: config_theme_changed_line?(pyload_install_resource.version, pyload_install_resource.data_dir),
       user: pyload_install_resource.user,
       version: config_version(pyload_install_resource.version),
       web: python_bool_value(new_resource.web)
@@ -166,6 +167,7 @@ action :create do
 end
 
 action_class do
+
   # Returns the config file path for given pyload version.
   def config_path(version, data_dir)
     if pyload_next?(version)
@@ -179,6 +181,15 @@ action_class do
   def config_version(version)
     v = pyload_next?(version) ? 2 : 1
     "#{v} "
+  end
+
+  # Checks if the line specifying the theme in Pyload configuration file is of
+  # default format.
+  # See: https://github.com/pyload/pyload/issues/3841
+  def config_theme_changed_line?(version, data_dir)
+    config_file = config_path(version, data_dir)
+    return false unless ::File.exist?(config_file)
+    ::File.readlines(config_file).grep(/classic;modern;pyplex/).size > 0
   end
 
   # Transforms the given boolean value to its python equivalent.
