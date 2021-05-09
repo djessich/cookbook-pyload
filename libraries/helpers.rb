@@ -78,7 +78,7 @@ module PyloadCookbook
     # version.
     def default_pyload_source_url(version)
       urls = {
-        '0.4.20' => 'https://github.com/pyload/pyload/archive/0.4.20.tar.gz',
+        '0.4.20' => 'https://github.com/pyload/pyload/archive/refs/tags/v0.4.20.tar.gz',
         '0.5.0a9.dev655' => 'https://files.pythonhosted.org/packages/d3/5e/a9be976a751574133fa58ebdbd0373cc733985fb68b1d9c1be83d554fdf4/pyload-ng-0.5.0a9.dev655.zip',
       }
       urls[version]

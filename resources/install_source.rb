@@ -76,8 +76,8 @@ action :install do
   end
 
   group new_resource.group do
-    system true
     append true
+    system true
     only_if { new_resource.create_group }
   end
 
