@@ -251,7 +251,7 @@ end
 ## License
 
 * Author: Dominik Jessich ([dominik.jessich@gmail.com](mailto:dominik.jessich@gmail.com))
-* Copyright: 2016-2020, Dominik Jessich
+* Copyright: 2016-2021, Dominik Jessich
 
 ```
 Licensed under the Apache License, Version 2.0 (the "License");
