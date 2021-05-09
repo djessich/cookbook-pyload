@@ -177,6 +177,7 @@ Configures an instance of Pyload. Not all properties available to this resource 
 * `remote_port` - Specifies the port the remote interface should listen on if remote is enabled. By default, this is set to `7227`.
 * `renice` - Specifies the CPU priority. By default, this is set to `0`.
 * `server_type` - Specifies the server type of the web interface. Must be one of `builtin`, `threaded`, `fastcgi` or `lightweight`. By default, this is set to `builtin`.
+* `session_lifetime` - Specifies the session lifetime in web interface. The value specifies minutes. By default, this is set to `44640`.
 * `skip_existing` - Specifies if files previously downloaded should be skipped. By default, this is set to `false`.
 * `ssl` - Specifies if web interface should be served via SSL/TLS. By default, this is set to `false`.
 * `ssl_cert` - Specifies the SSL/TLS certificate.
