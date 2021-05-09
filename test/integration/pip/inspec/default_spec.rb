@@ -82,7 +82,7 @@ describe etc_group.where(name: 'pyload') do
   its('users') { should eq [] }
 end
 
-describe file('/opt/pyload-0.5.0a9.dev655') do
+describe file('/opt/pyload-0.5.0b1.dev5') do
   it { should exist }
   it { should be_directory }
   its('owner') { should eq 'root' }
@@ -93,7 +93,7 @@ end
 describe file('/opt/pyload') do
   it { should exist }
   it { should be_symlink }
-  its('link_path') { should eq '/opt/pyload-0.5.0a9.dev655' }
+  its('link_path') { should eq '/opt/pyload-0.5.0b1.dev5' }
 end
 
 describe file('/opt/pyload/bin/activate') do
@@ -139,7 +139,7 @@ end
 describe command('/opt/pyload/bin/pip show pyload-ng') do
   its('exit_status') { should eq 0 }
   its('stdout') { should match(/Name\:\spyload-ng/) }
-  its('stdout') { should match(%r{Location\:\s/opt/pyload\-0\.5\.0a9\.dev655/lib(?:64)?/python3\.\d/site\-packages}) }
+  its('stdout') { should match(%r{Location\:\s/opt/pyload\-0\.5\.0b1\.dev5/lib(?:64)?/python3\.\d/site\-packages}) }
 end
 
 describe file('/opt/pyload/bin/pyload') do
@@ -214,7 +214,7 @@ describe file('/tmp/pyload') do
   its('mode') { should cmp '0755' }
 end
 
-describe file('/var/lib/pyload/settings/accounts.conf') do
+describe file('/var/lib/pyload/settings/accounts.cfg') do
   it { should exist }
   it { should be_file }
   its('owner') { should eq 'pyload' }
@@ -238,14 +238,14 @@ describe file('/var/lib/pyload/settings/pyload.cfg') do
   its('mode') { should cmp '0600' }
   its('content') { should match(/version\:\s2\s/) }
   its('content') { should match(%r{download\s[a-zA-Z0-9\-\."\:;_='\(\)/\n\s]*int\schunks\s\:\s"Max\sconnections\sfor\sone\sdownload"\s\=\s3}) }
-  its('content') { should match(%r{download\s[a-zA-Z0-9\-\."\:;_='\(\)/\n\s]*time\send_time\s\:\s"End"\s\=\s0\:00}) }
+  its('content') { should match(%r{download\s[a-zA-Z0-9\-\."\:;_='\(\)/\n\s]*time\send_time\s\:\s"End\stime"\s\=\s0\:00}) }
   its('content') { should match(%r{download\s[a-zA-Z0-9\-\."\:;_='\(\)/\n\s]*ip\sinterface\s:\s"Download\sinterface\sto\sbind\s\(IP\sAddress\)"\s\=\s}) }
   its('content') { should match(%r{download\s[a-zA-Z0-9\-\."\:;_='\(\)/\n\s]*bool\sipv6\s\:\s"Allow\sIPv6"\s=\sFalse}) }
   its('content') { should match(%r{download\s[a-zA-Z0-9\-\."\:;_='\(\)/\n\s]*bool\slimit_speed\s:\s"Limit\sDownload\sSpeed"\s\=\sFalse}) }
   its('content') { should match(%r{download\s[a-zA-Z0-9\-\."\:;_='\(\)/\n\s]*int\smax_downloads\s:\s"Max\sParallel\sDownloads"\s\=\s3}) }
   its('content') { should match(%r{download\s[a-zA-Z0-9\-\."\:;_='\(\)/\n\s]*int\smax_speed\s:\s"Max\sDownload\sSpeed\sin\sKiB/s"\s\=\s-1}) }
   its('content') { should match(%r{download\s[a-zA-Z0-9\-\."\:;_='\(\)/\n\s]*bool\sskip_existing\s:\s"Skip\salready\sexisting\sfiles"\s\=\sFalse}) }
-  its('content') { should match(%r{download\s[a-zA-Z0-9\-\."\:;_='\(\)/\n\s]*time\sstart_time\s:\s"Start"\s\=\s0\:00}) }
+  its('content') { should match(%r{download\s[a-zA-Z0-9\-\."\:;_='\(\)/\n\s]*time\sstart_time\s:\s"Start\stime"\s\=\s0\:00}) }
   its('content') { should match(%r{general\s[a-zA-Z0-9\-\."\:;_='\(\)/\n\s]*debug;trace;stack\sdebug_level\s:\s"Debug\sLevel"\s\=\strace}) }
   its('content') { should match(%r{general\s[a-zA-Z0-9\-\."\:;_='\(\)/\n\s]*bool\sdebug_mode\s:\s"Debug\sMode"\s\=\sTrue}) }
   its('content') { should match(%r{general\s[a-zA-Z0-9\-\."\:;_='\(\)/\n\s]*bool\sfolder_per_package\s:\s"Create\sfolder\sfor\seach\spackage"\s\=\sTrue}) }
@@ -279,19 +279,20 @@ describe file('/var/lib/pyload/settings/pyload.cfg') do
   its('content') { should match(%r{proxy\s[a-zA-Z0-9\-\."\:;_='\(\)/\n\s]*http;socks4;socks5\stype\s:\s"Protocol"\s\=\shttp}) }
   its('content') { should match(%r{proxy\s[a-zA-Z0-9\-\."\:;_='\(\)/\n\s]*str\susername\s:\s"Username"\s\=\s}) }
   its('content') { should match(%r{reconnect\s[a-zA-Z0-9\-\."\:;_='\(\)/\n\s]*bool\senabled\s:\s"Activated"\s\=\sFalse}) }
-  its('content') { should match(%r{reconnect\s[a-zA-Z0-9\-\."\:;_='\(\)/\n\s]*time\send_time\s:\s"End"\s\=\s0\:00}) }
+  its('content') { should match(%r{reconnect\s[a-zA-Z0-9\-\."\:;_='\(\)/\n\s]*time\send_time\s:\s"End\stime"\s\=\s0\:00}) }
   its('content') { should match(%r{reconnect\s[a-zA-Z0-9\-\."\:;_='\(\)/\n\s]*str\sscript\s:\s"Script"\s\=\s}) }
-  its('content') { should match(%r{reconnect\s[a-zA-Z0-9\-\."\:;_='\(\)/\n\s]*time\sstart_time\s:\s"Start"\s\=\s0\:00}) }
+  its('content') { should match(%r{reconnect\s[a-zA-Z0-9\-\."\:;_='\(\)/\n\s]*time\sstart_time\s:\s"Start\stime"\s\=\s0\:00}) }
   its('content') { should match(%r{webui\s[a-zA-Z0-9\-\."\:;_='\(\)/\n\s]*bool\sautologin\s:\s"Skip\slogin\sif\ssingle\suser"\s\=\sFalse}) }
   its('content') { should match(%r{webui\s[a-zA-Z0-9\-\."\:;_='\(\)/\n\s]*bool\sdevelop\s:\s"Development\smode"\s\=\sFalse}) }
   its('content') { should match(%r{webui\s[a-zA-Z0-9\-\."\:;_='\(\)/\n\s]*bool\senabled\s:\s"Activated"\s\=\sTrue}) }
   its('content') { should match(%r{webui\s[a-zA-Z0-9\-\."\:;_='\(\)/\n\s]*ip\shost\s:\s"IP\sAddress"\s\=\s0\.0\.0\.0}) }
   its('content') { should match(%r{webui\s[a-zA-Z0-9\-\."\:;_='\(\)/\n\s]*int\sport\s:\s"Port"\s\=\s8000}) }
   its('content') { should match(%r{webui\s[a-zA-Z0-9\-\."\:;_='\(\)/\n\s]*str\sprefix\s:\s"Path\sPrefix"\s\=\s}) }
+  its('content') { should match(%r{webui\s[a-zA-Z0-9\-\."\:;_='\(\)/\n\s]*int\ssession_lifetime\s:\s"Session\slifetime\s\(minutes\)"\s\=\s44640}) }
   its('content') { should match(%r{webui\s[a-zA-Z0-9\-\."\:;_='\(\)/\n\s]*file\sssl_certchain\s:\s"CA's\sintermediate\scertificate\sbundle\s\(optional\)"\s\=\s}) }
   its('content') { should match(%r{webui\s[a-zA-Z0-9\-\."\:;_='\(\)/\n\s]*file\sssl_certfile\s:\s"SSL\sCertificate"\s\=\s}) }
   its('content') { should match(%r{webui\s[a-zA-Z0-9\-\."\:;_='\(\)/\n\s]*file\sssl_keyfile\s:\s"SSL\sKey"\s\=\s}) }
-  its('content') { should match(%r{webui\s[a-zA-Z0-9\-\."\:;_='\(\)/\n\s]*Default;PyPlex\stheme\s:\s"Theme"\s\=\sDefault}) }
+  its('content') { should match(%r{webui\s[a-zA-Z0-9\-\."\:;_='\(\)/\n\s]*Default;modern;pyplex\stheme\s:\s"Theme"\s\=\sDefault}) }
   its('content') { should match(%r{webui\s[a-zA-Z0-9\-\."\:;_='\(\)/\n\s]*bool\suse_ssl\s:\s"Use\sHTTPS"\s\=\sFalse}) }
 end
 

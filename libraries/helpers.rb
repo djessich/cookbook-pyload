@@ -79,7 +79,7 @@ module PyloadCookbook
     def default_pyload_source_url(version)
       urls = {
         '0.4.20' => 'https://github.com/pyload/pyload/archive/refs/tags/v0.4.20.tar.gz',
-        '0.5.0a9.dev655' => 'https://files.pythonhosted.org/packages/d3/5e/a9be976a751574133fa58ebdbd0373cc733985fb68b1d9c1be83d554fdf4/pyload-ng-0.5.0a9.dev655.zip',
+        '0.5.0b1.dev5' => 'https://files.pythonhosted.org/packages/e5/7c/d46c122fa52b0394b789aef21085459dec2a0b9c97506dec6802f765bd2d/pyload-ng-0.5.0b1.dev5.tar.gz',
       }
       urls[version]
     end
@@ -89,7 +89,7 @@ module PyloadCookbook
     def default_pyload_source_checksum(version)
       checksums = {
         '0.4.20' => '438f9a2fc8ecb13b75f55b00192a2192c96a0a08ec1ae842cea17c7c49aab500',
-        '0.5.0a9.dev655' => 'be06c5996ea2b7e82e65b3b3b97d18eeb0741ab9a3d8360991b8a5c54640558f',
+        '0.5.0b1.dev5' => '131e53751e2aa3b4544c409f19bb4bd28976dfb813b3a59aa47caea203e24799',
       }
       checksums[version]
     end

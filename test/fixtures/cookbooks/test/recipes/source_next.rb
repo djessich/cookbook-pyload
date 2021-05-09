@@ -24,7 +24,7 @@ locale = value_for_platform(
 )
 
 pyload_install_source 'default' do
-  version '0.5.0a9.dev655'
+  version '0.5.0b1.dev5'
   notifies :restart, 'pyload_service[default]', :delayed
 end
 

@@ -20,7 +20,7 @@
 include PyloadCookbook::Helpers
 
 property :instance_name, String, name_property: true
-property :version, String, default: '0.5.0a9.dev655'
+property :version, String, default: '0.5.0b1.dev5'
 property :install_dir, String, default: lazy { default_pyload_install_dir(instance_name) }
 property :data_dir, String, default: lazy { default_pyload_data_dir(instance_name) }
 property :log_dir, String, default: lazy { default_pyload_log_dir(instance_name) }

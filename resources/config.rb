@@ -70,6 +70,7 @@ property :remote_no_local_auth, [true, false], default: true
 property :remote_port, [String, Integer], default: 7227
 property :renice, [String, Integer], default: 0
 property :server_type, String, equal_to: %w(builtin threaded fastcgi lightweight), default: 'builtin'
+property :session_lifetime, [String, Integer], default: 44640
 property :skip_existing, [true, false], default: false
 property :ssl, [true, false], default: false
 property :ssl_cert, String
@@ -152,6 +153,7 @@ action :create do
       ssl_chain: new_resource.ssl_chain,
       ssl_key: new_resource.ssl_key,
       start_time: new_resource.start_time,
+      session_lifetime: new_resource.session_lifetime,
       syslog: python_bool_value(new_resource.syslog),
       syslog_dir: new_resource.syslog_dir,
       syslog_host: new_resource.syslog_host,

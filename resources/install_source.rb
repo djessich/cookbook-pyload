@@ -154,7 +154,14 @@ action :install do
 
   execute 'ensure permissions of distribution directory contents in virtual environment' do
     command "chown -R #{new_resource.user}:#{new_resource.group} #{full_install_path}/dist"
-    not_if { ::Etc.getpwuid(::File.stat(license_path).uid).name == new_resource.user }
+    not_if do
+      value = begin
+                ::Etc.getpwuid(::File.stat(license_path).uid).name
+              rescue ArgumentError
+                nil
+              end
+      value == new_resource.user
+    end
   end
 
   required_directories.each do |dir|
@@ -188,8 +195,9 @@ action_class do
     if pyload_next?(new_resource.version)
       %w(
         Babel beautifulsoup4 bitmath cheroot colorlog cryptography filetype
-        Flask Flask-Babel Flask-Caching Flask-Themes2 Jinja2 Js2Py Pillow
-        pycryptodomex pycurl pyOpenSSL pyxmpp2 semver Send2Trash
+        Flask Flask-Babel Flask-Caching Flask-Compress Flask-Session
+        Flask-Themes2 Jinja2 Js2Py Pillow pycryptodomex pycurl pyOpenSSL pyxmpp2
+        semver slixmpp Send2Trash
       )
     else
       %w(

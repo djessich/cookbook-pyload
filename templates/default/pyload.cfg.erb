@@ -2,14 +2,14 @@ version: <%= @version %>
 
 download - "Download":
 	int chunks : "Max connections for one download" = <%= @chunks %>
-	time end_time : "End" = <%= @end_time %>
+	time end_time : "End time" = <%= @end_time %>
 	ip interface : "Download interface to bind (IP Address)" = <%= @interface %>
 	bool ipv6 : "Allow IPv6" = <%= @ipv6 %>
 	bool limit_speed : "Limit Download Speed" = <%= @limit_speed %>
 	int max_downloads : "Max Parallel Downloads" = <%= @max_downloads %>
 	int max_speed : "Max Download Speed in KiB/s" = <%= @max_speed %>
 	bool skip_existing : "Skip already existing files" = <%= @skip_existing %>
-	time start_time : "Start" = <%= @start_time %>
+	time start_time : "Start time" = <%= @start_time %>
 
 general - "General":
 	debug;trace;stack debug_level : "Debug Level" = <%= @debug_level %>
@@ -53,9 +53,9 @@ proxy - "Proxy":
 
 reconnect - "Reconnection":
 	bool enabled : "Activated" = <%= @reconnect %>
-	time end_time : "End" = <%= @reconnect_end_time %>
+	time end_time : "End time" = <%= @reconnect_end_time %>
 	str script : "Script" = <%= @reconnect_script %>
-	time start_time : "Start" = <%= @reconnect_start_time %>
+	time start_time : "Start time" = <%= @reconnect_start_time %>
 
 webui - "Web Interface":
 	bool autologin : "Skip login if single user" = <%= @auto_login %>
@@ -64,8 +64,9 @@ webui - "Web Interface":
 	ip host : "IP Address" = <%= @listen_address %>
 	int port : "Port" = <%= @port %>
 	str prefix : "Path Prefix" = <%= @prefix %>
+	int session_lifetime : "Session lifetime (minutes)" = <%= @session_lifetime %>
 	file ssl_certchain : "CA's intermediate certificate bundle (optional)" = <%= @ssl_chain %>
 	file ssl_certfile : "SSL Certificate" = <%= @ssl_cert %>
 	file ssl_keyfile : "SSL Key" = <%= @ssl_key %>
-	Default;PyPlex theme : "Theme" = <%= @theme %>
+	Default;modern;pyplex theme : "Theme" = <%= @theme %>
 	bool use_ssl : "Use HTTPS" = <%= @ssl %>
