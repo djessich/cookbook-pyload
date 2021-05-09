@@ -19,6 +19,8 @@
 
 include PyloadCookbook::Helpers
 
+unified_mode true
+
 property :instance_name, String, name_property: true
 property :version, String, default: '0.5.0b1.dev5'
 property :install_dir, String, default: lazy { default_pyload_install_dir(instance_name) }

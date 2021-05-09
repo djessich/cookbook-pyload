@@ -14,4 +14,4 @@ end
 
 depends 'yum-epel', '>= 3.3.0'
 
-chef_version '>= 15'
+chef_version '>= 15.3'

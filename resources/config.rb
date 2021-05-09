@@ -19,6 +19,8 @@
 
 include PyloadCookbook::Helpers
 
+unified_mode true
+
 property :instance_name, String, name_property: true
 property :source, String
 property :cookbook, String, default: 'pyload'

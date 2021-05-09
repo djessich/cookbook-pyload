@@ -25,6 +25,8 @@ provides :pyload_service, os: 'linux' do
   Chef::Platform::ServiceHelpers.service_resource_providers.include?(:systemd)
 end
 
+unified_mode true
+
 property :instance_name, String, name_property: true
 property :service_name, String, default: lazy { default_pyload_service_name(instance_name) }
 property :env_vars, Hash, default: {}

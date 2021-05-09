@@ -19,6 +19,8 @@
 
 include PyloadCookbook::Helpers
 
+unified_mode true
+
 property :instance_name, String, name_property: true
 property :version, String, default: lazy { default_pyload_version }
 property :install_method, String, equal_to: %w(pip source), default: lazy { default_pyload_install_method }
