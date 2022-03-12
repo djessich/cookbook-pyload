@@ -38,21 +38,8 @@ property :create_symlink, [true, false], default: true, desired_state: false
 action :install do
   raise 'Install method pip is only supported for version >= 0.5.0.' unless pyload_next?(new_resource.version)
 
-  if platform_family?('rhel')
-    # Setup EPEL repository on RHEL to install required packages
-    include_recipe 'yum-epel'
-
-    # Setup tesseract repository unless leptonica package is available
-    yum_repository 'tesseract' do
-      description "Tesseract Packages for #{node['platform_version'].to_i} - $basearch"
-      baseurl "https://download.opensuse.org/repositories/home:/Alexander_Pozdnyakov/CentOS_#{node['platform_version'].to_i}/"
-      enabled true
-      make_cache true
-      gpgcheck true
-      gpgkey "https://download.opensuse.org/repositories/home:/Alexander_Pozdnyakov/CentOS_#{node['platform_version'].to_i}/repodata/repomd.xml.key"
-      not_if 'yum whatprovides leptonica'
-    end
-  end
+  # Setup EPEL repository on RHEL to install required packages
+  include_recipe 'yum-epel' if platform_family?('rhel')
 
   # Some Ubuntu versions lack support of Python 3.6+ in their minimal install,
   # so add deadsnakes Ubuntu PPA
