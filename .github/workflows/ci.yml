@@ -19,7 +19,7 @@ jobs:
         os:
           - 'almalinux-8'
           - 'centos-7'
-          - 'centos-8'
+          - 'centos-stream-8'
           - 'debian-10'
           - 'fedora-latest'
           - 'oracle-7'
