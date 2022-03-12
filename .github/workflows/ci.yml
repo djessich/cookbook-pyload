@@ -17,6 +17,7 @@ jobs:
     strategy:
       matrix:
         os:
+          - 'almalinux-8'
           - 'centos-7'
           - 'centos-8'
           - 'debian-10'

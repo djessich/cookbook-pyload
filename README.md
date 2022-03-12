@@ -12,7 +12,7 @@ This cookbook provides resources for installing and configuring [Pyload](https:/
 ### Platforms
 
 * Debian / Ubuntu
-* RHEL / CentOS / Oracle / Rocky Linux
+* RHEL / CentOS / Oracle / Rocky Linux / Alma Linux
 * Fedora
 * openSUSE / SUSE Linux Enterprises
 
