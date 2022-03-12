@@ -35,10 +35,11 @@ This cookbook provides various resources for installing and configuring your Pyl
 Many of the resources provided in this cookbook need to share configuration values for an instance. Therefore each resource provides a property `instance_name` to correctly identify all the resources of a single instance, which must be unique obviously. As an example, the `pyload_config` resource needs to know the version of the instance and the download directory created by `pyload_install` to correctly configure the instance.
 
 All the resources of this cookbook use the following search order in Chefs run context to locate all the corresponding resources that apply to a unique instance:
+
 1. Resources that share the same resource name
-2. Resources that share the same value for property `instance_name`
-3. Resources named either *default* or *pyload* (fails if resources with both *default* or *pyload* as name exist)
-4. Resources with `instance_name` set to either *default* or *pyload* (fails if resources with both *default* or *pyload* as value for `instance_name` exist)
+1. Resources that share the same value for property `instance_name`
+1. Resources named either *default* or *pyload* (fails if resources with both *default* or *pyload* as name exist)
+1. Resources with `instance_name` set to either *default* or *pyload* (fails if resources with both *default* or *pyload* as value for `instance_name` exist)
 
 In case the `instance_name` of any resource is set to a value not a reserved default (*default* or *pyload*), the instance name will be appended to the resource properties default values. This is required to avoid conflicts for multi instance configurations. As an example, properties specifying a directory will have their default value automatically changed to a directory with the instance name included (`/opt/pyload` -> `/opt/pyload_INSTANCE_NAME`).
 
