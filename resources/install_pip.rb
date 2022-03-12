@@ -2,7 +2,7 @@
 # Cookbook:: pyload
 # Resource:: install_pip
 #
-# Copyright:: 2021, Dominik Jessich
+# Copyright:: 2022, Dominik Jessich
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
