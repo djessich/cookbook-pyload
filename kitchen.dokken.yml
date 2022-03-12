@@ -49,6 +49,11 @@ platforms:
       image: dokken/oraclelinux-8
       pid_one_command: /usr/lib/systemd/systemd
 
+  - name: rockylinux-8
+    driver:
+      image: dokken/rockylinux-8
+      pid_one_command: /usr/lib/systemd/systemd
+
   - name: ubuntu-16.04
     driver:
       image: dokken/ubuntu-16.04

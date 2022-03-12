@@ -23,6 +23,7 @@ jobs:
           - 'fedora-latest'
           - 'oracle-7'
           - 'oracle-8'
+          - 'rockylinux-8'
           - 'ubuntu-1604'
           - 'ubuntu-1804'
           - 'ubuntu-2004'
