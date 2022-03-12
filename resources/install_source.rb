@@ -204,7 +204,7 @@ action_class do
     else
       %w(
         Beaker beautifulsoup4 feedparser flup html5lib Jinja2 Js2Py Pillow
-        pycrypto pycurl pyOpenSSL pytesseract thrift
+        pycrypto pycurl pyOpenSSL pytesseract==0.3.6 thrift
       )
     end
   end
