@@ -21,6 +21,7 @@ jobs:
           - 'centos-7'
           - 'centos-stream-8'
           - 'debian-10'
+          - 'debian-11'
           - 'fedora-latest'
           - 'oracle-7'
           - 'oracle-8'
