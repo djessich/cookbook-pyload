@@ -125,7 +125,7 @@ action :install do
     execute 'build locale files for pyload in virtual environment' do
       cwd "#{full_install_path}/dist"
       command "#{full_install_path}/bin/python setup.py build_locale"
-      creates "#{full_install_path}/src/pyload/locale/pyload.pot"
+      creates "#{full_install_path}/dist/src/pyload/locale/pyload.pot"
     end
 
     execute 'install pyload distribution in virtual environment' do
