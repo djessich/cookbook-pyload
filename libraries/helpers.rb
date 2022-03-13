@@ -212,7 +212,7 @@ module PyloadCookbook
     # Returns the PIP 3 upgrade command for a virtual environment regarding the
     # nodes platform.
     def pip3_virtualenv_upgrade_command(path)
-      "#{path}/bin/pip install --disable-pip-version-check --no-cache-dir --upgrade pip setuptools wheel"
+      "#{path}/bin/pip install --disable-pip-version-check --no-cache-dir --upgrade pip setuptools==57.5.0 wheel"
     end
 
     # Returns dependency packages of pyload regarding nodes platform family.
