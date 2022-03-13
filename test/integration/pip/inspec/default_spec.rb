@@ -120,7 +120,7 @@ end
 describe command('/opt/pyload/bin/pip show pyload-ng') do
   its('exit_status') { should eq 0 }
   its('stdout') { should match(/Name\:\spyload-ng/) }
-  its('stdout') { should match(%r{Location\:\s/opt/pyload\-0\.5\.0b3\.dev14/lib(?:64)?/python3\.\d/site\-packages}) }
+  its('stdout') { should match(%r{Location\:\s/opt/pyload\-0\.5\.0b3\.dev14/lib(?:64)?/python3\.\d\d?/site\-packages}) }
 end
 
 describe file('/opt/pyload/bin/pyload') do

@@ -204,13 +204,13 @@ end
   describe command("/opt/pyload_instance1/bin/pip show #{pip_pkg}") do
     its('exit_status') { should eq 0 }
     its('stdout') { should match(/Name\:\s#{pip_pkg}/) }
-    its('stdout') { should match(%r{Location\:\s/opt/pyload_instance1\-0\.4\.20/lib(?:64)?/python2\.\d/site\-packages}) }
+    its('stdout') { should match(%r{Location\:\s/opt/pyload_instance1\-0\.4\.20/lib(?:64)?/python2\.\d\d?/site\-packages}) }
   end
 
   describe command("/opt/pyload_instance2/bin/pip show #{pip_pkg}") do
     its('exit_status') { should eq 0 }
     its('stdout') { should match(/Name\:\s#{pip_pkg}/) }
-    its('stdout') { should match(%r{Location\:\s/opt/pyload_instance2\-0\.4\.20/lib(?:64)?/python2\.\d/site\-packages}) }
+    its('stdout') { should match(%r{Location\:\s/opt/pyload_instance2\-0\.4\.20/lib(?:64)?/python2\.\d\d?/site\-packages}) }
   end
 end
 

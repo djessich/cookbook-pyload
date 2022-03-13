@@ -125,7 +125,7 @@ end
   describe command("/opt/pyload/bin/pip show #{pip_pkg}") do
     its('exit_status') { should eq 0 }
     its('stdout') { should match(/Name\:\s#{pip_pkg}/) }
-    its('stdout') { should match(%r{Location\:\s/opt/pyload\-0\.5\.0b3\.dev14/lib(?:64)?/python3\.\d/site\-packages}) }
+    its('stdout') { should match(%r{Location\:\s/opt/pyload\-0\.5\.0b3\.dev14/lib(?:64)?/python3\.\d\d?/site\-packages}) }
   end
 end
 
