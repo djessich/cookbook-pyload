@@ -3,7 +3,7 @@ maintainer 'Dominik Jessich'
 maintainer_email 'dominik.jessich@gmail.com'
 license 'Apache-2.0'
 description 'Installs/Configures Pyload'
-version '2.2.0'
+version '2.2.1'
 
 source_url 'https://github.com/djessich/cookbook-pyload'
 issues_url 'https://github.com/djessich/cookbook-pyload/issues'
