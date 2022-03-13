@@ -1,9 +1,8 @@
 # Pyload Cookbook
 
 [![Cookbook Version](https://img.shields.io/cookbook/v/pyload.svg)](https://supermarket.chef.io/cookbooks/pyload)
-[![Build](https://github.com/djessich/cookbook-pyload/workflows/kitchen/badge.svg)](https://github.com/djessich/cookbook-pyload/actions?query=workflow%3Akitchen)
-[![Delivery](https://github.com/djessich/cookbook-pyload/workflows/delivery/badge.svg)](https://github.com/djessich/cookbook-pyload/actions?query=workflow%3Adelivery)
-[![License](https://img.shields.io/badge/license-Apache_2-blue.svg)](https://www.apache.org/licenses/LICENSE-2.0)
+[![Build](https://github.com/djessich/cookbook-pyload/actions/workflows/ci.yml/badge.svg)](https://github.com/djessich/cookbook-pyload/actions/workflows/ci.yml)
+[![License](https://img.shields.io/badge/License-Apache%202.0-green.svg)](https://opensource.org/licenses/Apache-2.0)
 
 This cookbook provides resources for installing and configuring [Pyload](https://github.com/pyload/pyload).
 
