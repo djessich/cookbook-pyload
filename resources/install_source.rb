@@ -95,7 +95,7 @@ action :install do
       environment(
         'PYCURL_SSL_LIBRARY' => pycurl_ssl_library_backend
       )
-      not_if "#{full_install_path}/bin/pip show #{pip_pkg}"
+      not_if "#{full_install_path}/bin/pip show #{pip_pkg.split('==')[0]}"
     end
   end
 
