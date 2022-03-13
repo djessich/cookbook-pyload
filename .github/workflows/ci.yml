@@ -1,14 +1,18 @@
 ---
-name: kitchen
+name: ci
 
-on:
+"on":
   pull_request:
   push:
     branches:
       - master
 
 jobs:
-  dokken:
+  lint-unit:
+    uses: sous-chefs/.github/.github/workflows/lint-unit.yml@0.0.3
+
+  integration:
+    needs: lint-unit
     runs-on: ubuntu-latest
     strategy:
       matrix:
@@ -32,11 +36,11 @@ jobs:
       fail-fast: false
 
     steps:
-      - name: Check out cookbook code
+      - name: Check out code
         uses: actions/checkout@master
-      - name: Install Chef Infra Client
+      - name: Install Chef
         uses: actionshub/chef-install@master
-      - name: Dokken
+      - name: Run Kitchen
         uses: actionshub/kitchen-dokken@master
         env:
           CHEF_LICENSE: accept-no-persist
