@@ -19,7 +19,7 @@
 
 case os.family
 when 'debian'
-  packages = if os.release >= '11' || os.release == '20.04'
+  packages = if os.name == 'debian' && os.release >= '11' || os.name == 'ubuntu' && os.release == '20.04'
                %w(python-is-python2 python-dev-is-python2 virtualenv tar unzip curl libcurl4-openssl-dev openssl libssl-dev sqlite3 tesseract-ocr tesseract-ocr-eng)
              else
                %w(python python-dev virtualenv tar unzip curl libcurl4-openssl-dev openssl libssl-dev sqlite3 tesseract-ocr tesseract-ocr-eng)

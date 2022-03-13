@@ -19,7 +19,7 @@
 
 case os.family
 when 'debian'
-  packages = if os.release == '16.04'
+  packages = if os.name == 'ubuntu' && os.release == '16.04'
                %w(python3.6 python3.6-dev python3.6-venv tar unzip curl libcurl4-openssl-dev openssl libssl-dev sqlite3 tesseract-ocr tesseract-ocr-eng)
              else
                %w(python3 python3-dev python3-venv tar unzip curl libcurl4-openssl-dev openssl libssl-dev sqlite3 tesseract-ocr tesseract-ocr-eng)
