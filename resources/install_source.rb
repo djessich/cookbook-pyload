@@ -46,7 +46,7 @@ action :install do
   # so add deadsnakes Ubuntu PPA
   if platform?('ubuntu') && node['platform_version'] <= '16.04'
     apt_repository 'deadsnakes-ubuntu-ppa' do
-      uri 'ppa:deadsnakes/ppa'
+      uri 'ppa:fkrull/deadsnakes'
     end
   end
 
