@@ -27,6 +27,7 @@ jobs:
           - 'opensuse-leap-15'
           - 'oracle-7'
           - 'oracle-8'
+          - 'oracle-9'
           - 'rockylinux-8'
           - 'rockylinux-9'
           - 'ubuntu-1604'
