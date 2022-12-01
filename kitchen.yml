@@ -22,6 +22,7 @@ platforms:
   - name: oracle-7
   - name: oracle-8
   - name: rockylinux-8
+  - name: rockylinux-9
   - name: ubuntu-16.04
   - name: ubuntu-18.04
   - name: ubuntu-20.04
