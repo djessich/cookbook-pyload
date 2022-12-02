@@ -133,6 +133,10 @@ module PyloadCookbook
 
     # Returns Python 2 packages regarding the nodes platform.
     def python2_packages
+      # Some Ubuntu versions lack support of Python 3 in their minimal install,
+      # so set package names from deadsnakes Ubuntu PPA
+      return %w(python2 python2-dev virtualenv) if platform?('ubuntu') && node['platform_version'] == '22.04'
+
       case node['platform_family']
       when 'debian'
         %w(python python-dev virtualenv)

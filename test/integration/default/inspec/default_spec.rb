@@ -21,6 +21,8 @@ case os.family
 when 'debian'
   packages = if os.name == 'debian' && os.release >= '11' || os.name == 'ubuntu' && os.release == '20.04'
                %w(python-is-python2 python-dev-is-python2 virtualenv tar unzip curl libcurl4-openssl-dev openssl libssl-dev sqlite3 tesseract-ocr tesseract-ocr-eng)
+             elsif os.name == 'ubuntu' && os.release == '22.04'
+               %w(python2 python2-dev virtualenv tar unzip curl libcurl4-openssl-dev openssl libssl-dev sqlite3 tesseract-ocr tesseract-ocr-eng)
              else
                %w(python python-dev virtualenv tar unzip curl libcurl4-openssl-dev openssl libssl-dev sqlite3 tesseract-ocr tesseract-ocr-eng)
              end
