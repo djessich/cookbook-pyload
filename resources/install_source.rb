@@ -39,6 +39,10 @@ property :create_download_dir, [true, false], default: true, desired_state: fals
 property :create_symlink, [true, false], default: true, desired_state: false
 
 action :install do
+  # Python 2 packages are not available for RHEL 9+, so raise error in case
+  # Pyload version to be installed does not represent Pyload NG (>= 0.5.0)
+  raise 'Install method source is only supported for version >= 0.5.0 on RHEL 9+.' if platform_family?('rhel') && node['platform_version'].to_i >= 9 && !pyload_next?(new_resource.version)
+
   # Setup EPEL repository on RHEL to install required packages
   include_recipe 'yum-epel' if platform_family?('rhel')
 

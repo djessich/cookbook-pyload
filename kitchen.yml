@@ -35,10 +35,20 @@ suites:
     run_list:
       - recipe[test::default]
     attributes:
+    excludes:
+      - almalinux-9
+      - centos-stream-9
+      - oracle-9
+      - rockylinux-9
   - name: multiple
     run_list:
       - recipe[test::multiple]
     attributes:
+    excludes:
+      - almalinux-9
+      - centos-stream-9
+      - oracle-9
+      - rockylinux-9
   - name: pip
     run_list:
       - recipe[test::pip]
@@ -47,6 +57,11 @@ suites:
     run_list:
       - recipe[test::source]
     attributes:
+    excludes:
+      - almalinux-9
+      - centos-stream-9
+      - oracle-9
+      - rockylinux-9
   - name: source-next
     run_list:
       - recipe[test::source_next]
