@@ -63,7 +63,7 @@ describe etc_group.where(name: 'pyload') do
   its('users') { should eq [] }
 end
 
-describe file('/opt/pyload-0.5.0b3.dev14') do
+describe file('/opt/pyload-0.5.0b3.dev29') do
   it { should exist }
   it { should be_directory }
   its('owner') { should eq 'root' }
@@ -74,7 +74,7 @@ end
 describe file('/opt/pyload') do
   it { should exist }
   it { should be_symlink }
-  its('link_path') { should eq '/opt/pyload-0.5.0b3.dev14' }
+  its('link_path') { should eq '/opt/pyload-0.5.0b3.dev29' }
 end
 
 describe file('/opt/pyload/bin/activate') do
@@ -120,7 +120,7 @@ end
 describe command('/opt/pyload/bin/pip show pyload-ng') do
   its('exit_status') { should eq 0 }
   its('stdout') { should match(/Name\:\spyload-ng/) }
-  its('stdout') { should match(%r{Location\:\s/opt/pyload\-0\.5\.0b3\.dev14/lib(?:64)?/python3\.\d\d?/site\-packages}) }
+  its('stdout') { should match(%r{Location\:\s/opt/pyload\-0\.5\.0b3\.dev29/lib(?:64)?/python3\.\d\d?/site\-packages}) }
 end
 
 describe file('/opt/pyload/bin/pyload') do

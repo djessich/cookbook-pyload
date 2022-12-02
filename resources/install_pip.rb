@@ -22,7 +22,7 @@ include PyloadCookbook::Helpers
 unified_mode true
 
 property :instance_name, String, name_property: true
-property :version, String, default: '0.5.0b3.dev14'
+property :version, String, default: '0.5.0b3.dev29'
 property :install_dir, String, default: lazy { default_pyload_install_dir(instance_name) }
 property :data_dir, String, default: lazy { default_pyload_data_dir(instance_name) }
 property :log_dir, String, default: lazy { default_pyload_log_dir(instance_name) }
