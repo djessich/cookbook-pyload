@@ -23,6 +23,7 @@ Chef 15+
 
 This cookbook has the following dependencies:
 
+* [line](https://supermarket.chef.io/cookbooks/line)
 * [yum-epel](https://supermarket.chef.io/cookbooks/yum-epel)
 
 ## Usage

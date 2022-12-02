@@ -12,6 +12,7 @@ issues_url 'https://github.com/djessich/cookbook-pyload/issues'
   supports os
 end
 
+depends 'line', '>= 4.5.2'
 depends 'yum-epel', '>= 3.3.0'
 
 chef_version '>= 15.3'

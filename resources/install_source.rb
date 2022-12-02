@@ -126,6 +126,11 @@ action :install do
   end
 
   if pyload_next?(new_resource.version)
+    delete_lines "remove Jinja2 'autoescape' and 'with' extensions" do
+      path "#{full_install_path}/dist/babel.cfg"
+      pattern /^extensions\=jinja2\.ext\.autoescape,jinja2\.ext\.with\_$/
+    end
+
     execute 'build locale files for pyload in virtual environment' do
       cwd "#{full_install_path}/dist"
       command "#{full_install_path}/bin/python setup.py build_locale"
