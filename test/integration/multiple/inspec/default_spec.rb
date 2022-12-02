@@ -422,18 +422,7 @@ describe file('/var/lib/pyload_instance1/pyload.conf') do
   its('content') { should match(%r{webinterface\s[a-zA-Z0-9\-\."\:;_='\(\)/\n\s]*int\sport\s:\s"Port"\s\=\s8001}) }
   its('content') { should match(%r{webinterface\s[a-zA-Z0-9\-\."\:;_='\(\)/\n\s]*str\sprefix\s:\s"Path\sPrefix"\s\=\s}) }
   its('content') { should match(%r{webinterface\s[a-zA-Z0-9\-\."\:;_='\(\)/\n\s]*builtin;threaded;fastcgi;lightweight\sserver\s:\s"Server"\s=\sbuiltin}) }
-end
-
-# Due to different reordering of Pyload config tests may fail, so both versions
-# need to be checked. Important is here, that the value is set to default value.
-describe.one do
-  describe file('/var/lib/pyload_instance1/pyload.conf') do
-    its('content') { should match(%r{webinterface\s[a-zA-Z0-9\-\."\:;_='\(\)/\n\s]*classic;pyplex;modern\stemplate\s:\s"Template"\s=\sclassic}) }
-  end
-
-  describe file('/var/lib/pyload_instance1/pyload.conf') do
-    its('content') { should match(%r{webinterface\s[a-zA-Z0-9\-\."\:;_='\(\)/\n\s]*pyplex;classic;modern\stemplate\s:\s"Template"\s=\sclassic}) }
-  end
+  its('content') { should match(%r{webinterface\s[a-zA-Z0-9\-\."\:;_='\(\)/\n\s]*template\s:\s"Template"\s=\sclassic}) }
 end
 
 describe file('/var/lib/pyload_instance2/pyload.conf') do
