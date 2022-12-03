@@ -38,6 +38,7 @@ suites:
     excludes:
       - almalinux-9
       - centos-stream-9
+      - opensuse-leap-15
       - oracle-9
       - rockylinux-9
   - name: multiple
@@ -47,6 +48,7 @@ suites:
     excludes:
       - almalinux-9
       - centos-stream-9
+      - opensuse-leap-15
       - oracle-9
       - rockylinux-9
   - name: pip
@@ -60,6 +62,7 @@ suites:
     excludes:
       - almalinux-9
       - centos-stream-9
+      - opensuse-leap-15
       - oracle-9
       - rockylinux-9
   - name: source-next

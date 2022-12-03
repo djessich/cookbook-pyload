@@ -36,6 +36,8 @@ property :create_download_dir, [true, false], default: true, desired_state: fals
 property :create_symlink, [true, false], default: true, desired_state: false
 
 action :install do
+  # Raise error in case Pyload version to be installed does not represent a
+  # valid PyloadNG (>= 0.5.0) version
   raise 'Install method pip is only supported for version >= 0.5.0.' unless pyload_next?(new_resource.version)
 
   # Setup EPEL repository on RHEL to install required packages
