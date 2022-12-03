@@ -157,9 +157,9 @@ module PyloadCookbook
 
     # Returns Python 3 packages regarding the nodes platform.
     def python3_packages
-      # On Oracle 8+ the Python 3 package configured below, cannot be correctly
+      # On Oracle 8 the Python 3 package configured below, cannot be correctly
       # determined by system package manager, so specify direct Python 3 packages
-      return %w(python36 python36-devel) if platform?('oracle') && node['platform_version'].to_i >= 8
+      return %w(python36 python36-devel) if platform?('oracle') && node['platform_version'].to_i == 8
 
       case node['platform_family']
       when 'debian'
