@@ -37,6 +37,7 @@ property :create_user, [true, false], default: true, desired_state: false
 property :create_group, [true, false], default: true, desired_state: false
 property :create_download_dir, [true, false], default: true, desired_state: false
 property :create_symlink, [true, false], default: true, desired_state: false
+property :replace_curl_minimal_with_curl, [true, false], default: true, desired_state: false
 
 action :install do
   # Error messages in case Pyload version to be installed does not represent
@@ -62,8 +63,21 @@ action :install do
     options '--enablerepo=ol7_optional_latest' if platform?('oracle') && node['platform_version'].to_i == 7
   end
 
+  # Replace curl-minimal with curl package on Fedora 37+ or RHEL 9+ in case this
+  # is specified in resource configuration
+  {
+    'libcurl-minimal': 'libcurl',
+    'curl-minimal': 'curl',
+  }.each do |package, replacement|
+    execute "replace #{package} with #{replacement} package" do
+      command "dnf swap -y #{package} #{replacement}"
+      only_if { node['packages'].keys.include?(package.to_s) }
+      only_if { new_resource.replace_curl_minimal_with_curl }
+    end
+  end if platform_family?('fedora') && node['platform_version'].to_i >= 37 || platform_family?('rhel') && node['platform_version'].to_i >= 9
+
   package 'install dependency packages' do
-    package_name dependency_packages
+    package_name dependency_packages(new_resource.replace_curl_minimal_with_curl)
   end
 
   group new_resource.group do

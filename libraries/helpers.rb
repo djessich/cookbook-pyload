@@ -208,17 +208,34 @@ module PyloadCookbook
     end
 
     # Returns dependency packages of pyload regarding nodes platform family.
-    def dependency_packages
-      case node['platform_family']
-      when 'debian'
-        %w(curl libcurl4-openssl-dev openssl libssl-dev sqlite3 tesseract-ocr tesseract-ocr-eng)
-      when 'rhel', 'fedora'
-        %w(curl libcurl-devel openssl openssl-devel sqlite tesseract)
-      when 'suse'
-        %w(curl libcurl-devel openssl libopenssl-devel sqlite3 tesseract-ocr)
-      else
-        raise "Unsupported platform family #{node['platform_family']}. Is it supported by this cookbook?"
+    def dependency_packages(replace_curl_minimal_with_curl)
+      packages = case node['platform_family']
+                 when 'debian'
+                   %w(libcurl4-openssl-dev openssl libssl-dev sqlite3 tesseract-ocr tesseract-ocr-eng)
+                 when 'rhel', 'fedora'
+                   %w(libcurl-devel openssl openssl-devel sqlite tesseract)
+                 when 'suse'
+                   %w(libcurl-devel openssl libopenssl-devel sqlite3 tesseract-ocr)
+                 else
+                   raise "Unsupported platform family #{node['platform_family']}. Is it supported by this cookbook?"
+                 end
+      packages << curl_package_name(replace_curl_minimal_with_curl)
+      packages
+    end
+
+    # Determine curl package name regarding nodes platform family.
+    def curl_package_name(replace_curl_minimal_with_curl)
+      if platform_family?('fedora') && node['platform_version'].to_i >= 37 || platform_family?('rhel') && node['platform_version'].to_i >= 9
+        return 'curl' if replace_curl_minimal_with_curl
+        return 'curl-minimal' if node['packages'].keys.include?('curl-minimal')
       end
+      'curl'
+    end
+
+    # Returns the ssl library backend for pycurl pip package.
+    def pycurl_ssl_library_backend
+      return 'nss' if platform_family?('rhel') && node['platform_version'].to_i < 8
+      'openssl'
     end
 
     # Return resource with type :pyload_install matching given resource.
@@ -238,12 +255,6 @@ module PyloadCookbook
       return install_source_match if install_source_match
 
       find_pyload_resource!(run_context, :pyload_install, resource)
-    end
-
-    # Returns the ssl library backend for pycurl pip package.
-    def pycurl_ssl_library_backend
-      return 'nss' if platform_family?('rhel') && node['platform_version'].to_i < 8
-      'openssl'
     end
 
     # Return resource with type :pyload_config matching given resource.

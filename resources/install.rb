@@ -38,6 +38,7 @@ property :create_user, [true, false], default: true, desired_state: false
 property :create_group, [true, false], default: true, desired_state: false
 property :create_download_dir, [true, false], default: true, desired_state: false
 property :create_symlink, [true, false], default: true, desired_state: false
+property :replace_curl_minimal_with_curl, [true, false], default: true, desired_state: false
 
 action :install do
   case new_resource.install_method
@@ -52,12 +53,12 @@ end
 
 action :install_pip do
   pyload_install_pip new_resource.instance_name do
-    copy_properties_from(new_resource, :version, :install_dir, :data_dir, :log_dir, :download_dir, :tmp_dir, :user, :group, :create_user, :create_group, :create_download_dir, :create_symlink, :sensitive)
+    copy_properties_from(new_resource, :version, :install_dir, :data_dir, :log_dir, :download_dir, :tmp_dir, :user, :group, :create_user, :create_group, :create_download_dir, :create_symlink, :replace_curl_minimal_with_curl, :sensitive)
   end
 end
 
 action :install_source do
   pyload_install_source new_resource.instance_name do
-    copy_properties_from(new_resource, :version, :install_dir, :data_dir, :log_dir, :download_dir, :tmp_dir, :user, :group, :source_path, :source_url, :source_checksum, :create_user, :create_group, :create_download_dir, :create_symlink, :sensitive)
+    copy_properties_from(new_resource, :version, :install_dir, :data_dir, :log_dir, :download_dir, :tmp_dir, :user, :group, :source_path, :source_url, :source_checksum, :create_user, :create_group, :create_download_dir, :create_symlink, :replace_curl_minimal_with_curl, :sensitive)
   end
 end

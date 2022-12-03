@@ -98,6 +98,7 @@ Installs an instance of Pyload regarding configured install method.
 * `create_group` - Specifies if the group should be created. By default, this is set to `true`.
 * `create_download_dir` - Specifies if the download directory should be created.  By default, this is set to `true`.
 * `create_symlink` - Specifies if a symbolic link should be created from `install_dir` to latest version. By default, this is set to `true`.
+* `replace_curl_minimal_with_curl` - Specifies if package `curl-minimal` should be replaced with package `curl` in case `curl-minimal` is installed on the node. Applies only to Fedora 37+ and RHEL 9+. See following [article](https://fedoraproject.org/wiki/Changes/CurlMinimal_as_Default) for additional information. By default, this is set to `true`.
 
 #### Examples
 
