@@ -52,14 +52,6 @@ action :install do
   # Setup EPEL repository on RHEL to install required packages
   include_recipe 'yum-epel' if platform_family?('rhel')
 
-  # Some Ubuntu versions lack support of Python 3.6+ in their minimal install,
-  # so add deadsnakes Ubuntu PPA
-  if platform?('ubuntu') && node['platform_version'] <= '16.04'
-    apt_repository 'deadsnakes-ubuntu-ppa' do
-      uri 'ppa:fkrull/deadsnakes'
-    end
-  end
-
   # Some RHEL systems lack tar in their minimal install
   package %w(tar unzip)
 

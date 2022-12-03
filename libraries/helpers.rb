@@ -157,10 +157,6 @@ module PyloadCookbook
 
     # Returns Python 3 packages regarding the nodes platform.
     def python3_packages
-      # Some Ubuntu versions lack support of Python 3 in their minimal install,
-      # so set package names from deadsnakes Ubuntu PPA
-      return %w(python3.6 python3.6-dev python3.6-venv) if platform?('ubuntu') && node['platform_version'] <= '16.04'
-
       # On Oracle 8+ the Python 3 package configured below, cannot be correctly
       # determined by system package manager, so specify direct Python 3 packages
       return %w(python36 python36-devel) if platform?('oracle') && node['platform_version'].to_i >= 8
@@ -190,15 +186,7 @@ module PyloadCookbook
     # Returns the Python 3 virtual environment command regarding the nodes
     # platform.
     def python3_virtualenv_command(path)
-      # Some Ubuntu versions lack support of Python 3 in their minimal install,
-      # so refer to binary from deadsnakes Ubuntu PPA, otherwise use a default
-      cmd = if platform?('ubuntu') && node['platform_version'] <= '16.04'
-              '/usr/bin/python3.6'
-            else
-              '/usr/bin/python3'
-            end
-      cmd << " -m venv #{path}"
-      cmd
+      "/usr/bin/python3 -m venv #{path}"
     end
 
     # Returns the PIP upgrade command for a virtual environment regarding the
