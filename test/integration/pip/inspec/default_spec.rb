@@ -23,7 +23,7 @@ when 'debian'
 when 'fedora'
   packages = %w(python3 python3-devel curl libcurl-devel openssl openssl-devel sqlite tesseract)
 when 'redhat'
-  packages = if os.release.to_i >= 8
+  packages = if os.release.to_i == 8
                %w(python36 python36-devel curl libcurl-devel openssl openssl-devel sqlite tesseract)
              else
                %w(python3 python3-devel curl libcurl-devel openssl openssl-devel sqlite tesseract)
